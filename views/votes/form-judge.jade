@@ -18,3 +18,7 @@ table
       a.edit.change( href: '#' ) Cancel
     - else
       input.scary( type: 'submit', value: 'Vote' )
+      - if (vote.nextVote)
+        |  or 
+        a.skip( href: '#' ) skip this entry
+        | .

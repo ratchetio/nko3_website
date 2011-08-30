@@ -19,6 +19,7 @@ PersonSchema = module.exports = new mongoose.Schema
   slug:
     type: String
     index: true
+  skippedTeamIds: [ mongoose.Schema.ObjectId ]
 PersonSchema.plugin require('mongoose-types').useTimestamps
 PersonSchema.plugin auth,
   everymodule:
@@ -130,9 +131,11 @@ PersonSchema.method 'nextTeam', (next) ->
 
   Vote = mongoose.model 'Vote'
   Team = mongoose.model 'Team'
-  Vote.distinct 'teamId', personId: @id, (err, votedOn) ->
+  Vote.distinct 'teamId', personId: @id, (err, votedOn) =>
     next err if err
-    filter._id = $nin: votedOn # not already voted
+
+    # not already voted on or skipped
+    filter._id = $nin: votedOn.concat @skippedTeamIds
     Team.find filter, {}, { sort: sort, limit: 1 }, (err, teams) ->
       # findOne doesn't seem to work with sort
       next err if err

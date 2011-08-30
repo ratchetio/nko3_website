@@ -37,6 +37,10 @@ $('form.person .twitter input').live('blur', ->
 ).change()
 
 load = ->
+  $('#page.people-show .next-vote form.vote a.skip').click (e) ->
+    e.preventDefault()
+    $('#page.people-show .next-vote .skip-vote').submit()
+
   # editing votes on your page does an ajax submit
   $('#page.people-show .votes form.vote').submit (e) ->
     $form = $(this)

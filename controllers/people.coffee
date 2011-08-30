@@ -54,6 +54,11 @@ app.get '/people/:id/edit', [m.loadPerson, m.ensureAccess], (req, res, next) ->
 app.put '/people/:id', [m.loadPerson, m.ensureAccess], (req, res) ->
   unless req.user.admin
     delete req.body[attr] for attr in ['role', 'admin', 'technical']
+
+  if skip = req.body.skipTeamId
+    req.person.skippedTeamIds.push skip
+    delete req.body.skipTeamId
+
   _.extend req.person, req.body
   req.person.save (err) ->
     return next err if err && err.name != 'ValidationError'

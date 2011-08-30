@@ -50,6 +50,11 @@ h1.name= title(person.name)
           != markdown(nextVote.team.entry.instructions)
 
       != partial('votes/form', { vote: nextVote })
+      form.skip-vote( action: '/people/' + user, method: 'POST' )
+        input( type: 'hidden', name: '_method', value: 'PUT' )
+        != _csrf
+        input( type: 'hidden', name: 'skipTeamId', value: nextVote.team.id)
+        input( type: 'submit', value: 'Skip Entry' )
 
   - if (votes.length)
     - if (req.user && (req.user.id === req.person.id))
