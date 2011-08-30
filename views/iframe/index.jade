@@ -192,7 +192,7 @@ html
           return encoded.join('&');
         }
 
-        XHR = XMLHttpRequest || (function() {
+        XHR = typeof XMLHttpRequest !== 'undefined' ? XMLHttpRequest : (function() {
           try {
             return new ActiveXObject("Microsoft.XMLHTTP");
           } catch (e) {
