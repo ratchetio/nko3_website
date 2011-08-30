@@ -215,9 +215,9 @@ TeamSchema.method 'notifyAboutVote', (vote) ->
           innovation_score: vote.innovation
           completeness_score: vote.completeness
           comment: vote.comment
-          team_id: @id
+          team_id: @slug
           entry_name: @entry.name
-          person_team_id: voterTeam?.id
+          person_team_id: voterTeam?.slug
           person_entry_name: voterTeam?.entry?.name
 
 # associations
