@@ -16,6 +16,7 @@ ReplySchema = new mongoose.Schema
   personId:
     type: ObjectId
     required: true
+  person: {}
   message: String
 
 VoteSchema = module.exports = new mongoose.Schema

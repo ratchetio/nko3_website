@@ -8,9 +8,6 @@ md5 = (str) ->
   hash.update str
   hash.digest 'hex'
 
-gravatar_url = (md5, size) ->
-  "http://gravatar.com/avatar/#{md5}?s=#{size}&d=retro"
-
 module.exports = (app) ->
 
   app.helpers
@@ -31,15 +28,10 @@ module.exports = (app) ->
         "#{n} #{counter}s"
 
     avatar_url: (person, size = 30) ->
-      if person.github?.gravatarId
-        id = person.github.gravatarId # HACK getter bugs
-        gravatar_url id, size
-      else if person.imageURL
-        person.imageURL
-      else if person.email
-        gravatar_url md5(person.email.trim().toLowerCase()), size
+      if person.avatarURL
+        person.avatarURL size
       else
-        '/images/gravatar_fallback.png'
+        person.imageURL
 
     sponsors: require '../models/sponsor'
 

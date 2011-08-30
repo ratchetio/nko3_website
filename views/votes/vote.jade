@@ -1,4 +1,4 @@
-li.vote
+li.vote( id: vote.id )
   != partial('info', { vote: vote })
   - if (vote.type === 'voter')
     .heart ♥
@@ -12,6 +12,8 @@ li.vote
           td!= stars(vote[d])
       tr: td( colspan: 4 )
         .comment!= markdown(vote.comment)
-    ul.replies!= partial('replies/reply', vote.replies)
+
+    - if (vote.replies && vote.replies.length)
+      ul.replies!= partial('replies/reply', vote.replies)
     - if (user && vote.replyable(user))
       != partial('replies/form')

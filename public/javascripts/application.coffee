@@ -34,6 +34,7 @@ $.fx.speeds._default = 200
 load = ->
   $(':text:first').focus() # focus first input
 
+  # team and people delete confirm
   $('#page.teams-edit, #page.people-edit').each ->
     $('a.remove', this).click ->
       $this = $(this)
@@ -50,6 +51,7 @@ load = ->
       $(this).closest('form').fadeOut('fast')
       false
 
+  # voting form
   requestAt = Date.now()
   hoverAt = null
   $('form.vote')
@@ -73,6 +75,13 @@ load = ->
         .change() # reset stars
         .prop('disabled', $form.is('.view'))
     .find('input[type=range]').stars()
+
+  # replies
+  $('a.toggle-reply-form').click (e) ->
+    f = $('form.reply').slideToggle ->
+      console.log $('textarea:first', this).focus()
+    f[0].reset()
+    false
 
 $(load)
 $(document).bind 'end.pjax', load

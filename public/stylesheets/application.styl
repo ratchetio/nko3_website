@@ -206,7 +206,7 @@ aside
     li.interested
       margin 15px 0
 
-.vote
+li.vote, div.vote
   margin 1em 0
   border solid 1px hsla(0, 0%, 0%, 0.1)
   border-radius 2px
@@ -216,9 +216,12 @@ aside
   clear left
   overflow hidden
   line-height 100%
+  &.my
+    box-shadow inset 0 0 5px hsla(200, 30%, 50%, 0.2)
+    background-color hsla(200, 30%, 80%, 0.2)
   .info
     float left
-    width 120px
+    width 140px
     margin-right 10px
     img.avatar
       width 40px
@@ -230,6 +233,8 @@ aside
       font-size small
       margin-top 1em
       text-align center
+      &.toggle-reply
+        margin-top 0
     .created-at
       font-size x-small
       display block
@@ -239,10 +244,15 @@ aside
         font-size small
     &.person
       line-height 125%
+      font-size small
       .role, .created-at
         margin-left 45px
       .role
-        font-size small
+        font-size x-small
+  > table, > form > table, > .reply
+    width 405px
+    border-collapse collapse
+    margin-left 150px
   .voter
     text-align center
   div.stars
@@ -270,9 +280,23 @@ aside
   .heart
     font-size large
     color red
+  ul.replies
+    border-top dotted 2px hsl(0, 0%, 80%)
+    margin 1em 0
+    font-size small
+    > li
+      overflow hidden
+      margin 1em 0
+    .info img.avatar
+      width 30px
+      margin-left 10px
+    p:first-child
+      margin-top 0
+  form.reply
+    display none
+    textarea
+      font-size small
 form.vote
-  box-shadow inset 0 0 5px hsla(200, 30%, 50%, 0.2)
-  background-color hsla(200, 30%, 80%, 0.2)
   &.edit
     .view
       display none

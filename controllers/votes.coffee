@@ -58,12 +58,16 @@ app.put '/votes/:id', [ensureVoting, m.loadVote, m.ensureAccess], (req, res, nex
     res.redirect 'back'
 
 # reply
-app.post '/votes/:id/replies', [ensureVoting, m.loadVote, loadVoteTeam], (req, res, next) ->
+app.post '/votes/:id/replies', [ensureVoting, m.ensureAuth, m.loadVote, loadVoteTeam], (req, res, next) ->
   return next 401 unless req.vote.replyable req.user
   reply = new Vote.Reply
   _.extend reply,
-    personId: req.user.id
     message: req.body.message
+    personId: req.user.id
+    person:
+      login: req.user.login
+      role: req.user.role
+      imageURL: req.user.avatarURL(30)
 
   req.vote.replies.push reply
   req.vote.save (err) ->
