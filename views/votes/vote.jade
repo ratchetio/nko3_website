@@ -12,3 +12,6 @@ li.vote
           td!= stars(vote[d])
       tr: td( colspan: 4 )
         .comment!= markdown(vote.comment)
+    ul.replies!= partial('replies/reply', vote.replies)
+    - if (user && vote.replyable(user))
+      != partial('replies/form')

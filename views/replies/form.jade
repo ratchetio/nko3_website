@@ -1,0 +1,5 @@
+a.show-reply-form( href: '#' ) Reply
+form.reply( method: 'POST', action: '/votes/' + vote.id + '/replies' )
+  != _csrf
+  textarea( name: 'message' )
+  input( type: 'submit', value: 'Reply' )
