@@ -3,9 +3,6 @@ mongoose = require 'mongoose'
 rbytes = require 'rbytes'
 querystring = require 'querystring'
 request = require 'request'
-util = require 'util'
-env = require '../config/env'
-postageapp = require('postageapp')(env.secrets.postageapp)
 
 InviteSchema = require './invite'
 [Invite, Person, Deploy, Vote] = (mongoose.model m for m in ['Invite', 'Person', 'Deploy', 'Vote'])
@@ -198,27 +195,6 @@ TeamSchema.method 'updateScreenshot', (callback) ->
   r = request.get @screenshot() + '&expire=1', (error, response, body) ->
     throw error if error
     # no callback
-
-TeamSchema.method 'notifyAboutVote', (vote) ->
-  vote.person.team (err, voterTeam) =>
-    throw err if err
-    @people (err, people) =>
-      throw err if err
-      for person in people
-        util.log "Sending 'voted_on_by_#{vote.type}' to '#{person.email}'".yellow
-        postageapp.apiCall person.email, "voted_on_by_#{vote.type}", null, 'all@nodeknockout.com',
-          vote_id: vote.id
-          person_id: vote.person.id
-          person_name: vote.person.name
-          utility_score: vote.utility
-          design_score: vote.design
-          innovation_score: vote.innovation
-          completeness_score: vote.completeness
-          comment: vote.comment
-          team_id: @slug
-          entry_name: @entry.name
-          person_team_id: voterTeam?.slug
-          person_entry_name: voterTeam?.entry?.name
 
 # associations
 TeamSchema.method 'people', (next) ->
