@@ -2,6 +2,9 @@ _ = require 'underscore'
 mongoose = require 'mongoose'
 ObjectId = mongoose.Schema.ObjectId
 Person = mongoose.model 'Person'
+util = require 'util'
+env = require '../config/env'
+postageapp = require('postageapp')(env.secrets.postageapp)
 
 Dimension =
   type: Number
@@ -62,6 +65,29 @@ VoteSchema.static 'Reply', -> Reply
 VoteSchema.method 'replyable', (person) ->
   @personId.equals(person.id) or
     @team.includes(person)
+
+VoteSchema.method 'notifyTeam', ->
+  @team.people (err, people) =>
+    throw err if err
+
+    @person.team (err, voterTeam) =>
+      throw err if err
+
+      for person in people
+        util.log "Sending 'voted_on_by_#{@type}' to '#{person.email}'".yellow
+        postageapp.apiCall person.email, "voted_on_by_#{@type}", null, 'all@nodeknockout.com',
+          vote_id: @id
+          person_id: @person.id
+          person_name: @person.name
+          utility_score: @utility
+          design_score: @design
+          innovation_score: @innovation
+          completeness_score: @completeness
+          comment: @comment
+          team_id: @team.slug
+          entry_name: @team.entry.name
+          person_team_id: voterTeam?.slug
+          person_entry_name: voterTeam?.entry?.name
 
 # associations
 VoteSchema.static 'people', (votes, next) ->

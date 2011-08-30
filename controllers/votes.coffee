@@ -35,7 +35,9 @@ app.post '/teams/:teamId/votes', [ensureVoting, m.ensureAuth, m.loadTeam], (req,
     res.redirect 'back'
     if req.user.judge or req.user.contestant
       vote.person = req.user
-      req.team.notifyAboutVote vote
+      vote.team = req.team
+      vote.notifyTeam()
+
       req.team.voteCounts[req.user.role].increment()
       req.team.save()
 
