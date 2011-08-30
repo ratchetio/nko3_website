@@ -6,7 +6,7 @@
                             |__/                                                 
 
 [node.js knockout] is a 48-hour programming contest featuring [node.js]. it
-owes its roots to [rails rumble].
+owes its roots to [rails rumble]. holla.
 
 [node.js knockout]:http://nodeknockout.com/
 [node.js]:http://nodejs.org/
