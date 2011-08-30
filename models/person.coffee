@@ -102,6 +102,19 @@ PersonSchema.virtual('login').get ->
 PersonSchema.virtual('githubLogin').get -> @github?.login
 # twitterScreenName isn't here because you can edit it
 
+gravatarURL = (md5, size) ->
+  "http://gravatar.com/avatar/#{md5}?s=#{size}&d=retro"
+PersonSchema.method 'avatarURL', (size = 30) ->
+  if @github?.gravatarId
+    id = @github.gravatarId # HACK getter bugs
+    gravatarURL id, size
+  else if @imageURL
+    @imageURL
+  else if @email
+    gravatarURL md5(@email.trim().toLowerCase()), size
+  else
+    '/images/gravatar_fallback.png'
+
 # class methods
 PersonSchema.static 'findBySlug', (slug, rest...) ->
   Person.findOne { slug: slug }, rest...
