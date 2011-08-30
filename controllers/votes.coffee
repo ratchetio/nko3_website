@@ -2,6 +2,7 @@ app = require '../config/app'
 _ = require 'underscore'
 m = require './middleware'
 Vote = app.db.model 'Vote'
+Reply = app.db.model 'Reply'
 Team = app.db.model 'Team'
 
 ensureVoting = (req, res, next) ->
@@ -60,7 +61,7 @@ app.put '/votes/:id', [ensureVoting, m.loadVote, m.ensureAccess], (req, res, nex
 # reply
 app.post '/votes/:id/replies', [ensureVoting, m.ensureAuth, m.loadVote, loadVoteTeam], (req, res, next) ->
   return next 401 unless req.vote.replyable req.user
-  reply = new Vote.Reply
+  reply = new Reply()
   _.extend reply,
     message: req.body.message
     personId: req.user.id
@@ -73,6 +74,7 @@ app.post '/votes/:id/replies', [ensureVoting, m.ensureAuth, m.loadVote, loadVote
   req.vote.save (err) ->
     return next err if err
     res.redirect 'back'
+    reply.notifyPeople req.vote
 
 # delete
 app.delete '/votes/:id', [ensureVoting, m.loadVote, m.ensureAccess], (req, res, next) ->
