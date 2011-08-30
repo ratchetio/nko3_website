@@ -108,6 +108,7 @@ PersonSchema.static 'findBySlug', (slug, rest...) ->
 
 # associations
 PersonSchema.method 'team', (next) ->
+  return next() unless @contestant
   Team = mongoose.model 'Team'
   Team.findOne peopleIds: @id, next
 PersonSchema.method 'votes', (next) ->

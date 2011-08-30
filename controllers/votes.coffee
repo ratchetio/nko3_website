@@ -34,6 +34,8 @@ app.post '/teams/:teamId/votes', [ensureVoting, m.ensureAuth, m.loadTeam], (req,
     return next err if err
     res.redirect 'back'
     if req.user.judge or req.user.contestant
+      vote.person = req.user
+      req.team.notifyAboutVote vote
       req.team.voteCounts[req.user.role].increment()
       req.team.save()
 
@@ -55,7 +57,6 @@ app.put '/votes/:id', [ensureVoting, m.loadVote, m.ensureAccess], (req, res, nex
 
 # reply
 app.post '/votes/:id/replies', [ensureVoting, m.loadVote, loadVoteTeam], (req, res, next) ->
-  debugger
   return next 401 unless req.vote.replyable req.user
   reply = new Vote.Reply
   _.extend reply,
