@@ -19,6 +19,27 @@ ReplySchema = new mongoose.Schema
   person: {}
   message: String
 
+# instance methods
+ReplySchema.method 'notifyPeople', (vote) ->
+  console.log vote.team
+  peopleIds = vote.team.peopleIds.concat vote.personId
+  Person.find { _id: ($in: peopleIds) }, (err, people) =>
+    throw err if err
+    isCommenter = (p) => @personId.equals p.id
+    commenter = _.detect people, isCommenter
+    others = _.reject people, isCommenter
+
+    for person in others
+      template = "replied_#{if vote.personId.equals(person.id) then 'judge' else 'team'}"
+      util.log "Sending '#{template}' to '#{person.email}'".yellow
+      postageapp.apiCall person.email, template, null, 'all@nodeknockout.com',
+        vote_id: vote.id
+        person_id: commenter.id
+        person_name: commenter.name
+        message: @message
+        team_id: vote.team.slug
+        entry_name: vote.team.entry.name
+
 VoteSchema = module.exports = new mongoose.Schema
   personId:
     type: ObjectId
