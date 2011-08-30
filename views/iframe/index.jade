@@ -72,11 +72,11 @@ html
             , vote: "#{vote && vote.id}"
             , team: "#{req.team}" }
           , _csrf = "#{req.session._csrf}"
-          , requestAt = Date.now()
+          , requestAt = + new Date()
           , hoverAt;
 
         button.onmouseover = function(e) {
-          hoverAt = hoverAt || Date.now();
+          hoverAt = hoverAt || + new Date();
         }
         button.onclick = function(e) {
           if (nko.vote) { return; }
