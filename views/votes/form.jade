@@ -25,3 +25,7 @@
       != partial('form-voter', { vote: vote })
     - else if (user.contestant || user.judge)
       != partial('form-judge', { vote: vote })
+  - if (vote.replies.length)
+    ul.replies!= partial('replies/reply', vote.replies)
+    - if (user && vote.replyable(user))
+      != partial('replies/form')

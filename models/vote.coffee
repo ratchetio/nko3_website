@@ -9,6 +9,12 @@ Dimension =
     v == null || 0 < v < 6
   , 'out of bounds' ]
 
+ReplySchema = new mongoose.Schema
+  personId:
+    type: ObjectId
+    required: true
+  message: String
+
 VoteSchema = module.exports = new mongoose.Schema
   personId:
     type: ObjectId
@@ -33,6 +39,7 @@ VoteSchema = module.exports = new mongoose.Schema
     accept: String
     requestAt: Number
     hoverAt: Number
+  replies: [ReplySchema]
 VoteSchema.plugin require('mongoose-types').useTimestamps
 
 # one vote per person-team-type
@@ -40,6 +47,7 @@ VoteSchema.index { personId: 1, teamId: 1, type: 1 }, { unique: true }
 VoteSchema.index { personId: 1, updatedAt: -1 }
 VoteSchema.index { teamId: 1, updatedAt: -1 }
 
+# class methods
 VoteSchema.static 'dimensions',
   [ 'utility', 'design', 'innovation', 'completeness' ]
 VoteSchema.static 'label', (dimension) ->
@@ -48,6 +56,12 @@ VoteSchema.static 'label', (dimension) ->
     when 'design'       then 'Design'
     when 'innovation'   then 'Innovation'
     when 'completeness' then 'Completeness'
+VoteSchema.static 'Reply', -> Reply
+
+# instance methods
+VoteSchema.method 'replyable', (person) ->
+  @personId.equals(person.id) or
+    @team.includes(person)
 
 # associations
 VoteSchema.static 'people', (votes, next) ->
@@ -70,4 +84,5 @@ VoteSchema.static 'teams', (votes, next) ->
     _.each votes, (v) -> v.team = teams[v.teamId]
     next()
 
+Reply = mongoose.model 'Reply', ReplySchema
 Vote = mongoose.model 'Vote', VoteSchema

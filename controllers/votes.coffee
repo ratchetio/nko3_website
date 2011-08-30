@@ -2,10 +2,18 @@ app = require '../config/app'
 _ = require 'underscore'
 m = require './middleware'
 Vote = app.db.model 'Vote'
+Team = app.db.model 'Team'
 
 ensureVoting = (req, res, next) ->
   return next() if req.user?.admin
   if app.enabled 'voting' then next() else next 401
+
+loadVoteTeam = (req, res, next) ->
+  return next() if not req.vote or req.vote.team
+  Team.findById req.vote.teamId, (err, team) ->
+    return next err if err
+    req.vote.team = team
+    next()
 
 buildVote = (req) ->
   attr = _.clone req.body
@@ -41,6 +49,20 @@ app.post '/teams/:teamId/votes.iframe', [m.loadTeam], (req, res, next) ->
 app.put '/votes/:id', [ensureVoting, m.loadVote, m.ensureAccess], (req, res, next) ->
   delete req.body[attr] for attr in ['personId', 'teamId', 'type']
   _.extend req.vote, req.body
+  req.vote.save (err) ->
+    return next err if err
+    res.redirect 'back'
+
+# reply
+app.post '/votes/:id/replies', [ensureVoting, m.loadVote, loadVoteTeam], (req, res, next) ->
+  debugger
+  return next 401 unless req.vote.replyable req.user
+  reply = new Vote.Reply
+  _.extend reply,
+    personId: req.user.id
+    message: req.body.message
+
+  req.vote.replies.push reply
   req.vote.save (err) ->
     return next err if err
     res.redirect 'back'
