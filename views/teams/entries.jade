@@ -15,19 +15,19 @@ span.all See
 ul.teams
   - each team in teams
     li
-      - if (team.entry.name !== null)
-        - url = team.entry.url
-        .entry-info
-          a( href: url )
-            img.screenshot( src: 'http://pinkyurl.com/i?url=' + encodeURIComponent(url) + '&out-format=png&resize=160x93' )
-          h2: a( href: url )= team.entry.name
-          h4 by 
-            a( href: '/teams/' + team )= team.name
-          .description
-            - if (p = markdown(team.entry.description).match('<p>.+?</p>'))
-              != p
-      - else
-        h3: a( href: '/teams/' + team )= team.name
+      - url = team.entry.url
+      a( href: url )
+        img.screenshot( src: 'http://pinkyurl.com/i?url=' + encodeURIComponent(url) + '&out-format=png&resize=160x93' )
+      h2: a( href: url )= team.entry.name
+      h4 by 
+        a( href: '/teams/' + team )= team.name
+      .description
+        - if (p = markdown(team.entry.description).match('<p>.+?</p>'))
+          != p
+      .score
+        h2= team.scores.overall.toFixed(2)
+        .dimension overall
+      .clear
   - q = req.query
   - q.page = (+req.query.page || 1) + 1
   .more: a( href: req.url.split('?')[0] + '?' + qs.stringify(q) ) more
