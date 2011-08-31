@@ -140,7 +140,7 @@ TeamSchema.static 'updateAllSavedScores', (next) ->
   mongoose.connection.db.executeDbCommand mrCommand, (err, result) ->
     if err or not result.documents[0].ok
       console.log err
-      console.log result
+      #console.log result
       return next [err,result]
 
     computedScores = result.documents[0].results
@@ -150,7 +150,7 @@ TeamSchema.static 'updateAllSavedScores', (next) ->
     popularityCount = popularities.length
     for p, rank in popularities
       popularityRanks[p] = rank / (popularityCount - 1)
-    console.log popularityRanks
+    #console.log popularityRanks
 
     Team.find {}, (err,teams) ->
       teams.forEach (team) ->

@@ -21,7 +21,6 @@ ReplySchema = new mongoose.Schema
 
 # instance methods
 ReplySchema.method 'notifyPeople', (vote) ->
-  console.log vote.team
   peopleIds = vote.team.peopleIds.concat vote.personId
   Person.find { _id: ($in: peopleIds) }, (err, people) =>
     throw err if err
