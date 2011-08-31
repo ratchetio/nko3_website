@@ -3,7 +3,7 @@ Vote = app.db.model 'Vote'
 m = require './middleware'
 
 app.get '/iframe/:teamId', [m.loadTeam, m.loadMyVote], (req, res) ->
-  css = req.query.css if /^https?:\/\//.test(req.query.css)
+  css = req.query.css if /^https?:\/\//.test(req.query.css) and not /\.htc$/.test(req.query.css)
   req.vote = null unless req.user?.voter
   Vote.count teamId: req.team._id, type: 'voter', (err, count) ->
     next err if err
