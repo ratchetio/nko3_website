@@ -25,8 +25,9 @@ ul.teams
         - if (p = markdown(team.entry.description).match('<p>.+?</p>'))
           != p
       .score
-        h3= team.scores[sort].toFixed(2)
-        .dimension= sort
+        a( href: '/scores#' + team )
+          h3= team.scores[sort].toFixed(2)
+          .dimension= sort
       .clear
   - q = req.query
   - q.page = (+req.query.page || 1) + 1
