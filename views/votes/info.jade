@@ -12,8 +12,8 @@
       a( href: '/teams/' + vote.team )= vote.team.name
 
   - if (!vote.isNew)
-    time.created-at( datetime: vote.createdAt.toJSON(), title: vote.createdAt )
-      = relativeDate(vote.createdAt)
+    time.created-at( datetime: vote.updatedAt.toJSON(), title: vote.updatedAt )
+      = relativeDate(vote.updatedAt)
 
   // show the change link only when the user is a voter, owns the vote, and the info partial is in a form
   - if (user && vote.personId && !user.voter && (typeof(form) !== 'undefined') && (vote.personId.toString() === user.id))
