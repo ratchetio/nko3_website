@@ -153,6 +153,10 @@ PersonSchema.method 'nextTeam', (next) ->
   Vote.distinct 'teamId', personId: @id, (err, votedOn) =>
     next err if err
 
+    # every third vote should be for something good
+    if votedOn.length % 3 is 0
+      filter['scores.overall'] = ($gt: 35)
+
     # not already voted on or skipped
     filter._id = $nin: votedOn.concat @skippedTeamIds
     Team.find filter, {}, { sort: sort, limit: 1 }, (err, teams) ->
