@@ -136,6 +136,8 @@ h1
 
 - if (people.length)
   h2 Who
+  - if (admin)
+    a( href: 'mailto:' + _.pluck(people, 'email').join(',') ) Email team
   ul.people
     - each person in people
       li
