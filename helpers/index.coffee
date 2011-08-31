@@ -1,12 +1,6 @@
-crypto = require 'crypto'
 _ = require 'underscore'
 md = require 'discount'
 mongoose = require 'mongoose'
-
-md5 = (str) ->
-  hash = crypto.createHash 'md5'
-  hash.update str
-  hash.digest 'hex'
 
 module.exports = (app) ->
 

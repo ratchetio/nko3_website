@@ -1,3 +1,4 @@
+crypto = require 'crypto'
 _ = require 'underscore'
 mongoose = require 'mongoose'
 auth = require 'mongoose-auth'
@@ -102,6 +103,10 @@ PersonSchema.virtual('login').get ->
 PersonSchema.virtual('githubLogin').get -> @github?.login
 # twitterScreenName isn't here because you can edit it
 
+md5 = (str) ->
+  hash = crypto.createHash 'md5'
+  hash.update str
+  hash.digest 'hex'
 gravatarURL = (md5, size) ->
   "http://gravatar.com/avatar/#{md5}?s=#{size}&d=retro"
 PersonSchema.method 'avatarURL', (size = 30) ->
