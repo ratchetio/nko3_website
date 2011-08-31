@@ -12,7 +12,7 @@ li.vote( id: vote.id )
           td!= stars(vote[d])
       tr: td( colspan: 4 )
         .comment!= markdown(vote.comment)
-
+    .clear
     - if (vote.replies && vote.replies.length)
       ul.replies!= partial('replies/reply', vote.replies)
     - if (user && vote.replyable(user))

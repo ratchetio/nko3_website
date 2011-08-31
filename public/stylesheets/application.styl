@@ -233,8 +233,6 @@ li.vote, div.vote
       font-size small
       margin-top 1em
       text-align center
-      &.toggle-reply
-        margin-top 0
     .created-at
       font-size x-small
       display block
@@ -253,6 +251,8 @@ li.vote, div.vote
     width 405px
     border-collapse collapse
     margin-left 150px
+  .clear
+    clear both
   .voter
     text-align center
   div.stars
@@ -292,10 +292,17 @@ li.vote, div.vote
       margin-left 10px
     p:first-child
       margin-top 0
+    .body
+      margin-left 150px
+  .reply .toggle
+    text-align center
+    font-size small
   form.reply
     display none
     textarea
       font-size small
+    a.toggle-reply-form
+      display none
 form.vote
   &.edit
     .view
@@ -905,7 +912,7 @@ form.vote
   .next-vote
     box-shadow inset 0 0 5px hsla(200, 30%, 50%, 0.2)
     background-color hsla(200, 30%, 80%, 0.2)
-    padding 20px
+    padding 10px
     .entry-info
       margin 0 0 1em 0
       img.screenshot
@@ -914,7 +921,7 @@ form.vote
         margin-top 15px
       font-size small
       padding 0
-    form.vote
+    div.vote
       box-shadow none
       background-color transparent
       border none
@@ -1057,7 +1064,7 @@ form.person
     margin-right 1em
     a.button
       display inline-block
-      width 120px
+      width 130px
     .dude
       width 80px
       height 170px

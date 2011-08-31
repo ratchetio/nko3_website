@@ -78,8 +78,9 @@ load = ->
 
   # replies
   $('a.toggle-reply-form').click (e) ->
-    f = $('form.reply').slideToggle ->
-      console.log $('textarea:first', this).focus()
+    $('a.toggle-reply-form').toggle();
+    f = $('form.reply', $(this).closest('.vote')).slideToggle ->
+      $('textarea:first', this).focus()
     f[0].reset()
     false
 

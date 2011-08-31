@@ -1,6 +1,5 @@
-.info
-  .change.toggle-reply: a.toggle-reply-form( href: '#' ) Reply
 .reply
+  .toggle: a.toggle-reply-form( href: '#' ) Reply
   form.reply( method: 'POST', action: '/votes/' + vote.id + '/replies' )
     != _csrf
     textarea( name: 'message' )

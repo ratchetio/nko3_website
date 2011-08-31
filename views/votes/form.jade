@@ -28,6 +28,7 @@
         != partial('form-judge', { vote: vote })
 
     - if (vote.replies.length)
+      .clear
       ul.replies!= partial('replies/reply', vote.replies)
       - if (user && vote.replyable(user))
         != partial('replies/form')
