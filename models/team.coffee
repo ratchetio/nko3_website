@@ -77,7 +77,7 @@ TeamSchema.static 'sortedByScore', (next) ->
   Team.find { 'entry.votable': true, lastDeploy: {$ne:null} }, {}, {sort: [['scores.overall', -1]]}, (error,teams) ->
     return next error if error
     next null, teams
-    
+
 TeamSchema.static 'updateAllSavedScores', (next) ->
   map = ->
     ret =
@@ -108,7 +108,7 @@ TeamSchema.static 'updateAllSavedScores', (next) ->
       for field of ret
         ret[ field ] += val[ field ]
     ret
-    
+
   finalize = (key,val) ->
     ret = {}
     [ 'contestant_utility', 'contestant_design', 'contestant_innovation', 'contestant_completeness' ].forEach (field) ->
@@ -125,24 +125,29 @@ TeamSchema.static 'updateAllSavedScores', (next) ->
     ret[ 'judge_count' ] = val.judge_count
     ret[ 'popularity_count' ] = val.popularity_count
     ret
-             
+
   mrCommand =
     mapreduce:'votes'
     map:map.toString()
     reduce:reduce.toString()
     finalize:finalize.toString()
     out:{inline:1}
-    
+
   mongoose.connection.db.executeDbCommand mrCommand, (err,result) ->
     if err or not result.documents[0].ok
       console.log err
       console.log result
       return next [err,result]
-    
-    max_popularity_count = 0
+
     computedScores = result.documents[0].results
-    computedScores.forEach (computedScore) ->
-      max_popularity_count = Math.max max_popularity_count, computedScore.value.popularity_count
+
+    popularities = _.uniq computedScores.map((s) -> s.value.popularity_count).sort((a, b) -> a - b)
+    popularityRanks = {}
+    popularityCount = popularities.length
+    for p, rank in popularities
+      popularityRanks[p] = rank / (popularityCount - 1)
+    console.log popularityRanks
+
     Team.find {}, (err,teams) ->
       teams.forEach (team) ->
         id = team._id
@@ -154,11 +159,10 @@ TeamSchema.static 'updateAllSavedScores', (next) ->
             team.scores[ field ] = computedScore.value[ field ]
             if field != 'contestant_count' and field != 'judge_count' and field != 'popularity_count'
               overall += computedScore.value[ field ]
-          if max_popularity_count == 0
-            team.scores.popularity = 0
-          else
-            team.scores.popularity = computedScore.value.popularity_count / max_popularity_count * 10
+
+          team.scores.popularity = (popularityRanks[computedScore.value.popularity_count] or 0) * 8 + 2
           overall += team.scores.popularity
+
           team.scores.overall = overall
         else
           TeamSchema.eachPath (path) ->
