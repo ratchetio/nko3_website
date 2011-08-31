@@ -39,6 +39,7 @@ app.get /^\/(entries)?\/?$/, (req, res, next) ->
   sort = if _.include(Vote.dimensions, req.param('sort')) then req.param('sort') else 'overall'
   query = { 'entry.votable': true, lastDeploy: {$ne: null} }
   query.search = new RegExp(req.param('q'), 'i') if req.param('q')
+  query.peopleIds = ($size: 1) if req.param('sort') == 'solo'
   options = { sort: [["scores.#{sort}", -1]], limit: 50, skip: 50 * page }
   Team.find query, {}, options, (err, teams) ->
     return next err if err
