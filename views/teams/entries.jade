@@ -4,8 +4,12 @@ h1 Entries (#{teams.count})
 form.search
   input( type: 'search', name: 'q', value: req.query.q, placeholder: 'Search' )
 
-span.all See 
-  a( href: '/teams' ) all teams
+ul.sorts
+  li Order by:
+  - each k in [ 'Overall', 'Solo', 'Popularity', 'Utility / Fun', 'Design', 'Innovation', 'Completeness' ]
+    - s = k.split(' ')[0].toLowerCase()
+    li( class: (req.query.sort || 'overall') === s ? 'current' : '' )
+      a( href: urlFor({ sort: s }) )= k
 
 - if (req.user && req.user.contestant)
   p Don't see your team? 
@@ -29,6 +33,5 @@ ul.teams
           h3= team.scores[sort].toFixed(2)
           .dimension= sort
       .clear
-  - q = req.query
-  - q.page = (+req.query.page || 1) + 1
-  .more: a( href: req.url.split('?')[0] + '?' + qs.stringify(q) ) more
+  - nextPage = (+req.query.page || 1) + 1
+  .more: a( href: urlFor({ page: nextPage }) ) more

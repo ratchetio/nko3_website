@@ -1,4 +1,5 @@
 _ = require 'underscore'
+qs = require 'querystring'
 md = require 'discount'
 mongoose = require 'mongoose'
 
@@ -7,7 +8,7 @@ module.exports = (app) ->
   app.helpers
 
     inspect: require('util').inspect
-    qs: require('querystring')
+    qs: qs
     _: _
 
     markdown: (str) -> if str? then md.parse str, md.flags.noHTML else ''
@@ -79,3 +80,10 @@ module.exports = (app) ->
       (thing) ->
         if u = req.user
           u.admin or (u.id is thing.id)
+
+    urlFor: (req, res) ->
+      (options) ->
+        q = _.clone req.query
+        delete q._pjax
+        _.extend q, options
+        req.url.split('?')[0] + '?' + qs.stringify(q)

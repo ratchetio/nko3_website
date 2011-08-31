@@ -22,6 +22,5 @@ ul.teams
               li: a( href: '/people/' + m )= m.login
       .location= locations(members)
       .description!= markdown(team.description)
-  - q = req.query
-  - q.page = (+req.query.page || 1) + 1
-  .more: a( href: req.url.split('?')[0] + '?' + qs.stringify(q) ) more
+  - nextPage = (+req.query.page || 1) + 1
+  .more: a( href: urlFor({ page: nextPage }) ) more

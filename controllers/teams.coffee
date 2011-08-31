@@ -36,7 +36,7 @@ app.get /^\/teams(\/pending)?\/?$/, (req, res, next) ->
 # also services / possibly
 app.get /^\/(entries)?\/?$/, (req, res, next) ->
   page = (req.param('page') or 1) - 1
-  sort = if _.include(Vote.dimensions, req.param('sort')) then req.param('sort') else 'overall'
+  sort = if _.include(Vote.dimensions.concat('popularity'), req.param('sort')) then req.param('sort') else 'overall'
   query = { 'entry.votable': true, lastDeploy: {$ne: null} }
   query.search = new RegExp(req.param('q'), 'i') if req.param('q')
   query.peopleIds = ($size: 1) if req.param('sort') == 'solo'
