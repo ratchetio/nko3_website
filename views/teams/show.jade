@@ -186,6 +186,7 @@ h1
             img( src: '/images/iframe/heart.png' )
         .people
           - each vote in publicVotes
-            a( href: '/people/' + vote.person, title: vote.person.login )
-              img.avatar( src: avatar_url(vote.person, 30) )
+            - if (vote.person)
+              a( href: '/people/' + vote.person, title: vote.person.login )
+                img.avatar( src: avatar_url(vote.person, 30) )
   ul.votes!= partial('votes/vote', votes)
