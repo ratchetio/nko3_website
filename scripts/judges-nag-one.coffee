@@ -7,7 +7,7 @@ postageapp = require('postageapp')(env.secrets.postageapp)
 Vote = mongoose.model 'Vote'
 Person = mongoose.model 'Person'
 
-Person.find { role: 'judge', email: /@/, twitterScreenName: /gerad/ }, (err, judges) ->
+Person.find { role: 'judge', email: /@/, twitterScreenName: /\w/ }, (err, judges) ->
   throw err if err
   judges.forEach (judge) ->
     Vote.count { personId: judge.id }, (err, count) ->
