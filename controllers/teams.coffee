@@ -37,7 +37,7 @@ app.get /^\/teams(\/pending)?\/?$/, (req, res, next) ->
 app.get /^\/(entries)?\/?$/, (req, res, next) ->
   page = (req.param('page') or 1) - 1
   query = { 'entry.votable': true, lastDeploy: {$ne: null} }
-  options = { sort: [['updatedAt', 1]], limit: 50, skip: 50 * page }
+  options = { sort: [['voteCounts.judge', 1]], limit: 50, skip: 50 * page }
   Team.find query, {}, options, (err, teams) ->
     return next err if err
     Team.count query, (err, count) ->
