@@ -1,6 +1,9 @@
 - title('Entries')
 h1 Entries (#{teams.count})
 
+form.search
+  input( type: 'search', name: 'q', value: req.query.q, placeholder: 'Search' )
+
 span.all See 
   a( href: '/teams' ) all teams
 
