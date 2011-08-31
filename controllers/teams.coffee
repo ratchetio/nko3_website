@@ -36,16 +36,17 @@ app.get /^\/teams(\/pending)?\/?$/, (req, res, next) ->
 # also services / possibly
 app.get /^\/(entries)?\/?$/, (req, res, next) ->
   page = (req.param('page') or 1) - 1
+  sort = if _.include(Vote.dimensions, req.param('sort')) then req.param('sort') else 'overall'
   query = { 'entry.votable': true, lastDeploy: {$ne: null} }
   query.search = new RegExp(req.param('q'), 'i') if req.param('q')
-  options = { sort: [['voteCounts.judge', 1]], limit: 50, skip: 50 * page }
+  options = { sort: [["scores.#{sort}", -1]], limit: 50, skip: 50 * page }
   Team.find query, {}, options, (err, teams) ->
     return next err if err
     Team.count query, (err, count) ->
       return next err if err
       teams.count = count
       layout = req.header('x-pjax')? || !req.xhr
-      res.render2 'teams/entries', teams: teams, layout: layout
+      res.render2 'teams/entries', teams: teams, sort: sort, layout: layout
 
 # new
 app.get '/teams/new', (req, res, next) ->
