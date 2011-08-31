@@ -11,11 +11,6 @@ ul.sorts
     li( class: (req.query.sort || 'overall') === s ? 'current' : '' )
       a( href: urlFor({ sort: s }) )= k
 
-- if (req.user && req.user.contestant)
-  p Don't see your team? 
-    a.button( href: '/teams/mine#votable' ) Submit your entry
-    |  for voting
-
 ul.teams
   - each team in teams
     li
