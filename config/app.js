@@ -131,13 +131,11 @@ app.configure('production', function() {
 });
 
 app.configure(function() {
-  var RedisStore = require('connect-redis')(express)
-    , fortnight = 1000 * 60 * 60 * 24 * 7 * 2;
+  var RedisStore = require('connect-redis')(express);
 
   app.use(express.cookieParser());
   app.use(express.session({
     secret: secrets.session,
-    cookie: { maxAge: fortnight },
     store: new RedisStore
   }));
   app.use(express.bodyParser());
