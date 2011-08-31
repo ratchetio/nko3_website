@@ -80,8 +80,16 @@ module.exports =
       query.personId = $ne: req.user.id
     Vote.find query, {}, { sort: [['updatedAt', -1]] }, (err, votes) ->
       return next err if err
-      votes.forEach (v) -> v.team = req.team
-      req.votes = votes
+      publicVotes = []
+      judgeVotes = []
+      votes.forEach (v) ->
+        v.team = req.team
+        if v.type == 'voter'
+          publicVotes.push v
+        else
+          judgeVotes.push v
+      req.publicVotes = publicVotes
+      req.votes = judgeVotes
       Vote.people votes, next
 
   loadMyVote: (req, res, next) ->

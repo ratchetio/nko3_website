@@ -1,7 +1,7 @@
 li.vote( id: vote.id )
   != partial('info', { vote: vote })
   - if (vote.type === 'voter')
-    .heart ♥
+     img.heart( src: '/images/iframe/heart.png' )
   - else
     table
       tr

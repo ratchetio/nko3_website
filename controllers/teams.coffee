@@ -84,6 +84,7 @@ app.get '/teams/:id', [m.loadTeam, m.loadTeamPeople, m.loadTeamVotes, m.loadMyVo
   res.render2 'teams/show'
     team: req.team
     people: req.people
+    publicVotes: req.publicVotes
     votes: req.votes
     vote: vote
 
