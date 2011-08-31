@@ -50,6 +50,10 @@ TeamSchema = module.exports = new mongoose.Schema
     judge_innovation: Number
     judge_completeness: Number
     judge_count: Number
+    utility: Number
+    design: Number
+    innovation: Number
+    completeness: Number
     popularity: Number
     popularity_count: Number
     overall: Number
@@ -133,7 +137,7 @@ TeamSchema.static 'updateAllSavedScores', (next) ->
     finalize:finalize.toString()
     out:{inline:1}
 
-  mongoose.connection.db.executeDbCommand mrCommand, (err,result) ->
+  mongoose.connection.db.executeDbCommand mrCommand, (err, result) ->
     if err or not result.documents[0].ok
       console.log err
       console.log result
@@ -151,27 +155,32 @@ TeamSchema.static 'updateAllSavedScores', (next) ->
     Team.find {}, (err,teams) ->
       teams.forEach (team) ->
         id = team._id
+        scores = team.scores
         computedScore = _.detect computedScores, (x) ->
           id.equals x._id
         if computedScore
           overall = 0
           for field of computedScore.value
-            team.scores[ field ] = computedScore.value[ field ]
+            scores[ field ] = computedScore.value[ field ]
             if field != 'contestant_count' and field != 'judge_count' and field != 'popularity_count'
               overall += computedScore.value[ field ]
 
-          team.scores.popularity = (popularityRanks[computedScore.value.popularity_count] or 0) * 8 + 2
-          overall += team.scores.popularity
+          scores.popularity = (popularityRanks[computedScore.value.popularity_count] or 0) * 8 + 2
+          overall += scores.popularity
 
-          team.scores.overall = overall
+          scores.overall = overall
+          scores.utility = scores.contestant_utility + scores.judge_utility
+          scores.design = scores.contestant_design + scores.judge_design
+          scores.innovation = scores.contestant_innovation + scores.judge_innovation
+          scores.completeness = scores.contestant_completeness + scores.judge_completeness
         else
           TeamSchema.eachPath (path) ->
             if path.indexOf('scores.') == 0
-              team.scores[ path.substring 7 ] = 0
+              scores[ path.substring 7 ] = 0
         _.extend team.voteCounts,
-          judge: team.scores.judge_count
-          contestant: team.scores.contestant_count
-          voter: team.scores.popularity_count
+          judge: scores.judge_count
+          contestant: scores.contestant_count
+          voter: scores.popularity_count
         team.save()
     next()
 
