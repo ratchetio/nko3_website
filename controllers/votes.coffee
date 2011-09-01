@@ -47,7 +47,8 @@ app.post '/teams/:teamId/votes.iframe', [m.loadTeam], (req, res, next) ->
   return res.send 401 unless req.user?.voter
   vote = buildVote req
   vote.save (err) ->
-    res.send 500 if err
+    console.log err if err
+    return next err if err
     res.send vote.id, 200
 
 # update
