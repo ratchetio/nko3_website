@@ -157,8 +157,8 @@ PersonSchema.method 'nextTeam', (next) ->
     # if votedOn.length % 3 is 0
     #   filter['scores.overall'] = ($gt: 35)
 
-    # between 5 and 50 votes, focus on good stuff
-    if 5 <= votedOn.length <= 50
+    # between 2 and 20 votes, focus on good stuff
+    if 2 < votedOn.length < 20
       filter['scores.overall'] = ($gt: 30)
 
     # not already voted on or skipped
