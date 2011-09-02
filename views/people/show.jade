@@ -13,7 +13,7 @@ h1.name= title(person.name)
     a( href: '/teams/' + team )= team.name
     | .
 
-- if (req.user && (person.id === req.user.id) && req.user.judge)
+- if ((admin || voting) && req.user && (person.id === req.user.id) && req.user.judge)
   p.instructions
     | You've reviewed
     b #{votes.length} of 10
@@ -23,14 +23,14 @@ h1.name= title(person.name)
     - else
       a( href: '#next-vote' ) See below
       |  for a suggestion about where to get started.
+  - if (!nextVote.team)
+    h1 No More Entries to Review
+    p.no-more-teams: img(src: 'http://images.memegenerator.net/instances/500x/9715681.jpg' )
 - else
   .bio!= markdown(person.bio)
 
 - if (admin || voting)
-  - if (!nextVote.team)
-    h1 No More Entries to Review
-    p.no-more-teams: img(src: 'http://images.memegenerator.net/instances/500x/9715681.jpg' )
-  - else
+  - if (nextVote.team)
     h1#next-vote Suggested Entry to Review
     p
       | We think you should take a look at
