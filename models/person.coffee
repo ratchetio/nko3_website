@@ -157,6 +157,10 @@ PersonSchema.method 'nextTeam', (next) ->
     # if votedOn.length % 3 is 0
     #   filter['scores.overall'] = ($gt: 35)
 
+    # between 5 and 50 votes, focus on good stuff
+    if 5 <= votedOn.length <= 50
+      filter['scores.overall'] = ($gt: 30)
+
     # not already voted on or skipped
     filter._id = $nin: votedOn.concat @skippedTeamIds
     Team.find filter, {}, { sort: sort, limit: 1 }, (err, teams) ->
