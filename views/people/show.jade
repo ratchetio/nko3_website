@@ -27,7 +27,10 @@ h1.name= title(person.name)
   .bio!= markdown(person.bio)
 
 - if (admin || voting)
-  - if (nextVote.team)
+  - if (!nextVote.team)
+    h1 No More Entries to Review
+    p.no-more-teams: img(src: 'http://images.memegenerator.net/instances/500x/9715681.jpg' )
+  - else
     h1#next-vote Suggested Entry to Review
     p
       | We think you should take a look at
