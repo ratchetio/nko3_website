@@ -81,7 +81,6 @@ PersonSchema.plugin auth,
       myHostname: env.hostname
       appId: env.facebook_app_id
       appSecret: env.secrets.facebook
-      scope: 'email'
       findOrCreateUser: (session, accessTok, accessTokExtra, face) ->
         promise = @Promise()
         Person.findOne 'fb.id': face.id, role: 'voter',
