@@ -34,9 +34,15 @@ app.get '/about', (req, res) ->
     return next err if err
     Person.count { role: 'contestant' }, (err, people) ->
       return next err if err
-      res.render2 'index/about',
-        teams: teams - 1   # compensate for team fortnight
-        people: people - 4
+      Team.count 'entry.votable': true, lastDeploy: {$ne: null}, (err, entries) ->
+        return next err if err
+        Vote.count {}, (err, votes) ->
+          return next err if err
+          res.render2 'index/about',
+            teams: teams - 1   # compensate for team fortnight
+            people: people - 4
+            entries: entries
+            votes: votes
 
 app.get '/judging', (req, res) ->
   res.redirect '/judges/new'
