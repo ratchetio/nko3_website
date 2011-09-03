@@ -40,7 +40,7 @@ app.get /^\/(entries)?\/?$/, (req, res, next) ->
   query = { 'entry.votable': true, lastDeploy: {$ne: null} }
   query.search = new RegExp(req.param('q'), 'i') if req.param('q')
   query.peopleIds = ($size: 1) if req.param('sort') == 'solo'
-  options = { sort: [["scores.#{sort}", -1]], limit: 50, skip: 50 * page }
+  options = { sort: [["scores.#{sort}", -1]], limit: 30, skip: 30 * page }
   Team.find query, {}, options, (err, teams) ->
     return next err if err
     Team.count query, (err, count) ->
