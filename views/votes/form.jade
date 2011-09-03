@@ -1,5 +1,5 @@
 - if (!user)
-  p.sign-in: a.scary.button( href: '/login' ) Sign in to vote
+  p.sign-in: a.scary.button( href: '/login?returnTo=' + encodeURIComponent(req.url + '#votes') ) Sign in to vote
 - else
   .vote.my
     form.vote(

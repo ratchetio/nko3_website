@@ -148,6 +148,10 @@ img.spinner
   height 16px
   margin 0px 2px
 
+img.heart
+  width 16px
+  height 16px
+
 img.avatar
   vertical-align middle
   margin 2px 5px 2px 0
@@ -255,6 +259,7 @@ li.vote, div.vote
     clear both
   .voter
     text-align center
+    line-height 150%
   div.stars
     display inline-block
     .star
@@ -277,9 +282,6 @@ li.vote, div.vote
     height 9em
   .comment p
     margin 0.5em 0
-  img.heart
-    width 16px
-    height 16px
   ul.replies
     border-top dotted 2px hsl(0, 0%, 80%)
     margin 1em 0
@@ -795,9 +797,11 @@ form.vote
       border solid 2px hsl(0, 0%, 90%)
       border solid 2px hsla(0, 0%, 0%, 0.1)
       border-radius 2px
-    a.button.vote
+    a.vote
       margin 0.5em 0 0
       display inline-block
+      img.heart
+        vertical-align middle
     .score
       position absolute
       top -2px

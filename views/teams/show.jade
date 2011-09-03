@@ -127,7 +127,12 @@ h1
       img.screenshot( src: '/images/blank.png' )
       h2= team.entry.name
     h3= 'by ' + team.name
-    a.button.vote.scary( href: '#votes' ) Vote
+    - if (req.vote)
+      a.vote.scary( href: '#votes' )
+        img.heart( src: '/images/iframe/heart.png' )
+        |  You've voted for this entry
+    - else
+      a.button.vote.scary( href: '#votes' ) Vote
     .score
       a( href: '/scores#' + team )
         h2= team.scores.overall.toFixed(2)
