@@ -2,7 +2,8 @@
   - if (vote.isNew)
     input.scary( type: 'submit', value: 'Vote for this entry' )
   - else
-    | You've voted for this entry
+    img.heart( src: '/images/iframe/heart.png' )
+    |  You've voted for this entry
     .view: a.change( href: '#' ) Change your mind
     .edit
       input.scary( type: 'submit', value: 'Delete your vote' )

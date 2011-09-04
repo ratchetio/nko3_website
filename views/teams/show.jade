@@ -192,7 +192,8 @@ h1
       li.vote
         .info.hearts
           - each vote in publicVotes
-            img( src: '/images/iframe/heart.png' )
+            img.heart( src: '/images/iframe/heart.png' )
+          |  (#{publicVotes.length})
         .people
           - each vote in publicVotes
             - if (vote.person)
