@@ -81,7 +81,7 @@ app.configure(function() {
         'vendor/hoptoad-notifier.js',
         'vendor/hoptoad-key.js',
         'vendor/json2.js',
-        'vendor/jquery-1.6.2.js',
+        'vendor/jquery-1.6.3.js',
         'vendor/jquery.ba-hashchange.js',
         'vendor/jquery.border-image.js',
         'vendor/jquery.infinitescroll.js',
@@ -116,7 +116,7 @@ app.configure(function() {
 app.configure('development', function() {
   app.use(express.static(app.paths.public));
   app.use(express.profiler());
-  app.disable('voting');
+  app.enable('voting');
   require('../lib/mongo-log')(app.db.mongo);
 });
 app.configure('production', function() {
