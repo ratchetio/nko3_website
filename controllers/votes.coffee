@@ -43,7 +43,7 @@ app.post '/teams/:teamId/votes', [ensureVoting, m.ensureAuth, m.loadTeam], (req,
       req.team.save()
 
 # create - iframe
-app.post '/teams/:teamId/votes.iframe', [m.loadTeam], (req, res, next) ->
+app.post '/teams/:teamId/votes.iframe', [ensureVoting, m.loadTeam], (req, res, next) ->
   return res.send 401 unless req.user?.voter
   vote = buildVote req
   vote.save (err) ->
@@ -84,7 +84,7 @@ app.delete '/votes/:id', [ensureVoting, m.loadVote, m.ensureAccess], (req, res, 
     res.redirect 'back'
 
 # delete - iframe
-app.delete '/votes/:id.iframe', [m.loadVote], (req, res, next) ->
+app.delete '/votes/:id.iframe', [ensureVoting, m.loadVote], (req, res, next) ->
   return res.send 401 unless req.user?.id is req.vote.id
   req.vote.remove (err) ->
     return next err if err

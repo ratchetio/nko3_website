@@ -13,7 +13,7 @@ h1.name= title(person.name)
     a( href: '/teams/' + team )= team.name
     | .
 
-- if ((admin || voting) && req.user && (person.id === req.user.id) && req.user.judge)
+- if (voting && req.user && (person.id === req.user.id) && req.user.judge)
   p.instructions
     | You've reviewed
     b #{votes.length} of 10
@@ -29,7 +29,7 @@ h1.name= title(person.name)
 - else
   .bio!= markdown(person.bio)
 
-- if (admin || voting)
+- if (voting)
   - if (nextVote.team)
     h1#next-vote Suggested Entry to Review
     p
@@ -59,15 +59,15 @@ h1.name= title(person.name)
         input( type: 'hidden', name: 'skipTeamId', value: nextVote.team.id)
         input( type: 'submit', value: 'Skip Entry' )
 
-  - if (votes.length)
-    - if (req.user && (req.user.id === req.person.id))
-      h1#votes Your Votes (#{votes.length})
-      .votes
-        - each vote in votes
-          != partial('votes/form', { vote: vote })
-    - else
-      h1#votes Votes (#{votes.length})
-      ul.votes!= partial('votes/vote', votes)
+- if (votes.length)
+  - if (req.user && (req.user.id === req.person.id))
+    h1#votes Your Votes (#{votes.length})
+    .votes
+      - each vote in votes
+        != partial('votes/form', { vote: vote })
+  - else
+    h1#votes Votes (#{votes.length})
+    ul.votes!= partial('votes/vote', votes)
 
 - if (admin)
   - var twitterBase = 'http://twitter.com/intent/tweet?text=' + encodeURIComponent(('@' + person.twitterScreenName).replace('@@', '@') + ' ');

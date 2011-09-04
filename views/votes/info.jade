@@ -16,5 +16,5 @@
       = relativeDate(vote.updatedAt)
 
   // show the change link only when the user is a voter, owns the vote, and the info partial is in a form
-  - if (user && vote.personId && !user.voter && (typeof(form) !== 'undefined') && (vote.personId.toString() === user.id))
+  - if (voting && user && vote.personId && !user.voter && (typeof(form) !== 'undefined') && (vote.personId.toString() === user.id))
     .view.change: a.change( href: '#' ) Edit your vote
