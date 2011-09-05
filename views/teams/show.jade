@@ -131,7 +131,7 @@ h1
       a.vote.scary( href: '#votes' )
         img.heart( src: '/images/iframe/heart.png' )
         |  You've voted for this entry
-    - else
+    - else if (voting)
       a.button.vote.scary( href: '#votes' ) Vote
     .score
       a( href: '/scores#' + team )

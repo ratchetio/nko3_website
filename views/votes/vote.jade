@@ -1,7 +1,10 @@
 li.vote( id: vote.id )
   != partial('info', { vote: vote })
   - if (vote.type === 'voter')
-     img.heart( src: '/images/iframe/heart.png' )
+    .voter
+      img.heart( src: '/images/iframe/heart.png' )
+      - if (user && vote.personId.toString() === user.id.toString())
+        |  You've voted for this entry.
   - else
     table
       tr
@@ -15,5 +18,5 @@ li.vote( id: vote.id )
     .clear
     - if (vote.replies && vote.replies.length)
       ul.replies!= partial('replies/reply', vote.replies)
-    - if (user && vote.replyable(user))
+    - if (voting && user && vote.replyable(user))
       != partial('replies/form')

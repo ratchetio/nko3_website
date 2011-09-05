@@ -1,34 +1,42 @@
-- if (!user)
-  p.sign-in: a.scary.button( href: '/login?returnTo=' + encodeURIComponent(req.url + '#votes') ) Sign in to vote
+- if (!voting)
+  - if (!vote.isNew)
+    != partial('votes/vote', { vote: vote })
+  - else if (user)
+    p You have not voted for this entry. Voting is now closed.
+  - else
+    p Voting is now closed.
 - else
-  .vote.my
-    form.vote(
-      'class': vote.isNew ? 'edit' : 'view',
-      action: vote.isNew ? '/teams/' + vote.team + '/votes' : '/votes/' + vote.id,
-      method: 'POST'
-    )
-      - if (!vote.isNew)
+  - if (!user)
+    p.sign-in: a.scary.button( href: '/login?returnTo=' + encodeURIComponent(req.url + '#votes') ) Sign in to vote
+  - else
+    .vote.my
+      form.vote(
+        'class': vote.isNew ? 'edit' : 'view',
+        action: vote.isNew ? '/teams/' + vote.team + '/votes' : '/votes/' + vote.id,
+        method: 'POST'
+      )
+        - if (!vote.isNew)
+          - if (user.voter)
+            input( type: 'hidden', name: '_method', value: 'DELETE' )
+          - else
+            input( type: 'hidden', name: '_method', value: 'PUT' )
+        != _csrf
+
+        input( type: 'hidden', name: 'audit[userAgent]', value: req.header('user-agent') )
+        input( type: 'hidden', name: 'audit[referrer]', value: req.header('referrer') )
+        input( type: 'hidden', name: 'audit[accept]', value: req.header('accept') )
+        - each f in [ 'requestAt', 'hoverAt' ]
+          input( type: 'hidden', name: 'audit[' + f + ']', class: f )
+
+        != partial('info', { vote: vote, form: true })
+
         - if (user.voter)
-          input( type: 'hidden', name: '_method', value: 'DELETE' )
-        - else
-          input( type: 'hidden', name: '_method', value: 'PUT' )
-      != _csrf
+          != partial('form-voter', { vote: vote })
+        - else if (user.contestant || user.judge)
+          != partial('form-judge', { vote: vote })
 
-      input( type: 'hidden', name: 'audit[userAgent]', value: req.header('user-agent') )
-      input( type: 'hidden', name: 'audit[referrer]', value: req.header('referrer') )
-      input( type: 'hidden', name: 'audit[accept]', value: req.header('accept') )
-      - each f in [ 'requestAt', 'hoverAt' ]
-        input( type: 'hidden', name: 'audit[' + f + ']', class: f )
-
-      != partial('info', { vote: vote, form: true })
-
-      - if (user.voter)
-        != partial('form-voter', { vote: vote })
-      - else if (user.contestant || user.judge)
-        != partial('form-judge', { vote: vote })
-
-    - if (vote.replies.length)
-      .clear
-      ul.replies!= partial('replies/reply', vote.replies)
-      - if (user && vote.replyable(user))
-        != partial('replies/form')
+      - if (vote.replies.length)
+        .clear
+        ul.replies!= partial('replies/reply', vote.replies)
+        - if (user && vote.replyable(user))
+          != partial('replies/form')
