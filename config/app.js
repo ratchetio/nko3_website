@@ -127,7 +127,7 @@ app.configure('production', function() {
     else
       next();
   });
-  app.enable('voting');
+  app.disable('voting');
 });
 
 app.configure(function() {
