@@ -44,11 +44,11 @@ app.post '/teams/:teamId/votes', [ensureVoting, m.ensureAuth, m.loadTeam], (req,
 
 # create - iframe
 app.post '/teams/:teamId/votes.iframe', [ensureVoting, m.loadTeam], (req, res, next) ->
-  return res.send 401 unless req.user?.voter
+  return res.send 'Unauthorized', 401 unless req.user?.voter
   vote = buildVote req
   vote.save (err) ->
     console.log err if err
-    return next err if err
+    return res.send err.toString(), 422 if err
     res.send vote.id, 200
 
 # update

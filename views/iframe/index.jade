@@ -115,7 +115,7 @@ html
               nko.vote = xhr.responseText;
               update('voted', 1);
             } else {
-              error(xhr, 'Error could not vote.');
+              error(xhr, xhr.responseText);
             }
           });
         }
@@ -126,7 +126,7 @@ html
               nko.vote = null;
               update('', -1);
             } else {
-              error(xhr, 'Error could not remove vote.');
+              error(xhr, xhr.responseText);
             }
           });
         }
