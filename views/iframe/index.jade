@@ -72,6 +72,7 @@ html
             , vote: "#{vote && vote.id}"
             , team: "#{req.team}" }
           , _csrf = "#{req.session._csrf}"
+          , voting = #{voting}
           , requestAt = + new Date()
           , hoverAt;
 
@@ -79,6 +80,7 @@ html
           hoverAt = hoverAt || + new Date();
         }
         button.onclick = function(e) {
+          if (!voting) { alert('Voting is closed.'); return false; }
           if (nko.vote) { return; }
           if (nko.role === "voter") {
             vote()
@@ -89,6 +91,7 @@ html
           }
         };
         $('x').onclick = function(e) {
+          if (!voting) { alert('Voting is closed.'); return false; }
           unvote()
         };
 
