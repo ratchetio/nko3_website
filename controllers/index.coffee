@@ -19,12 +19,9 @@ loadCanRegister = (req, res, next) ->
     req.teamsLeft = left
     next()
 
-app.get '/', [loadCurrentPersonWithTeam, loadCanRegister], (req, res, next) ->
-  return next()
+app.get '/', (req, res, next) ->
   res.render2 'index/index',
     team: req.team
-    canRegister: req.canRegister
-    teamsLeft: req.teamsLeft
 
 ['how-to-win', 'locations', 'prizes', 'rules', 'sponsors', 'scoring'].forEach (p) ->
   app.get '/' + p, (req, res) -> res.render2 "index/#{p}"
