@@ -43,7 +43,7 @@
     "redis": "0.6.7"
   },
   "devDependencies": {
-    "nodemon": "0.5.3",
+    "nodemon": "0.6.20",
     "node-inspector": "0.1.8"
   }
 }
