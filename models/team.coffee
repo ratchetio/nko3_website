@@ -1,6 +1,6 @@
 _ = require 'underscore'
 mongoose = require 'mongoose'
-rbytes = require 'rbytes'
+crypto = require 'crypto'
 querystring = require 'querystring'
 request = require 'request'
 
@@ -36,7 +36,7 @@ TeamSchema = module.exports = new mongoose.Schema
   lastDeploy: {}
   code:
     type: String
-    default: -> rbytes.randomBytes(12).toString('base64')
+    default: -> crypto.randomBytes(12).toString('base64')
   linode: {}
   search: String
   scores:

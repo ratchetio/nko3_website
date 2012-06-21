@@ -17,13 +17,11 @@ app.paths = {
 };
 
 // error handling
-var Hoptoad = require('hoptoad-notifier').Hoptoad;
-Hoptoad.key = 'b76b10945d476da44a0eac6bfe1aeabd';
-Hoptoad.environment = env.node_env;
+var airbrake = require('airbrake').createClient('b76b10945d476da44a0eac6bfe1aeabd');
 process.on('uncaughtException', function(e) {
   util.debug(e.stack.red);
   if (env.node_env === 'production')
-    Hoptoad.notify(e);
+    airbrake.notify(e);
 });
 
 // utilities & hacks
@@ -144,7 +142,7 @@ app.configure(function() {
   // hacky solution for post commit hooks not to check csrf
   // app.use(commits(app));
 
-  app.use(express.csrf());
+  //app.use(express.csrf());
   app.use(function(req, res, next) { if (req.body) delete req.body._csrf; next(); });
   app.use(express.logger());
   app.use(auth.middleware());
@@ -157,9 +155,8 @@ app.configure(function() {
       e = Error(e);
 
     if (env.node_env === 'production')
-      Hoptoad.notify(e);
+      airbrake.notify(e);
 
-    util.debug(e.stack);
     res.render2('errors/500', { error: e });
   });
 

@@ -1,31 +1,31 @@
 !!! 5
 html
   head
-    meta( charset: 'utf-8' )
-    meta( http-equiv: 'X-UA-Compatible', content: 'IE=edge,chrome=1' )
-    meta( name: 'viewport', content: 'width=1024' )
-    meta( name: '_csrf', content: req.session._csrf )
+    meta( charset='utf-8' )
+    meta( http-equiv='X-UA-Compatible', content='IE=edge,chrome=1' )
+    meta( name='viewport', content='width=1024' )
+    meta( name='_csrf', content=req.session._csrf )
     title
       - if (title())
         = title()
         |  &mdash;
       | Node.js Knockout
-    link( href: 'http://fonts.googleapis.com/css?family=Droid+Sans', rel: 'stylesheet', type: 'text/css' )
-    link( rel: 'stylesheet', href: '/stylesheets/application.css' )
+    link( href='http://fonts.googleapis.com/css?family=Droid+Sans', rel='stylesheet', type='text/css' )
+    link( rel='stylesheet', href='/stylesheets/application.css' )
     script _gaq = [['_setAccount', 'UA-16773586-1'], ['_trackPageview']];
-    script( async: true, src: '//www.google-analytics.com/ga.js' )
-    script( src: '/javascripts/vendor/modernizr-2.0.6.min.js' )
+    script( async=true, src='//www.google-analytics.com/ga.js' )
+    script( src='/javascripts/vendor/modernizr-2.0.6.min.js' )
   body
-    #page( class: view.replace(/\//g,'-') )
+    #page( class=view.replace(/\//g,'-') )
       aside
         .login
           - if (user)
-            img.avatar( src: avatar_url(user) )
-            a( href: '/people/me' )= user.login
+            img.avatar( src=avatar_url(user) )
+            a( href='/people/me' )= user.login
             |  |
-            a( href: '/logout' ) Sign out
+            a( href='/logout' ) Sign out
           - else
-            a.button( href: '/login' ) Sign in
+            a.button( href='/login' ) Sign in
 
         h3 Important dates
         table.important-dates
@@ -39,30 +39,30 @@ html
             th Judging
             td 8/29 &ndash; 9/6
           tr
-            th.asterisk( colspan: 2 ) *space permitting
+            th.asterisk( colspan=2 ) *space permitting
 
         ul.sponsors
           - _.shuffle(sponsors).forEach(function(sponsor) {
-            li: a( href: sponsor.url )
-              img( src: '/images/sponsors/' + sponsor.image, class: sponsor.image.replace(/\.\w+$/, '') )
+            li: a( href=sponsor.url )
+              img( src='/images/sponsors/' + sponsor.image, class=sponsor.image.replace(/\.\w+$/, '') )
           - });
           li.interested
-            a( href: 'mailto:all@nodeknockout.com?subject=Sponsoring' ) Interested in sponsoring?
+            a( href='mailto:all@nodeknockout.com?subject=Sponsoring' ) Interested in sponsoring?
 
       #inner
         header
-          h1: a( href: '/' )
+          h1: a( href='/' )
             | node.js
             span.ko ko
           nav: ul
-            li: a( href: '/rules' ) Rules
-            li: a( href: '/entries' ) Entries
-            li: a( href: '/judges' ) Judges
-            li: a( href: '/sponsors' ) Sponsors
-            li: a( href: '/prizes' ) Prizes
-            li: a( href: '/about' ) About
+            li: a( href='/rules' ) Rules
+            li: a( href='/entries' ) Entries
+            li: a( href='/judges' ) Judges
+            li: a( href='/sponsors' ) Sponsors
+            li: a( href='/prizes' ) Prizes
+            li: a( href='/about' ) About
             - if (req.user && (admin || req.user.contestant || req.user.judge))
-              li: a( href: '/services' ) Services
+              li: a( href='/services' ) Services
 
         #flash
           - if (flash.info)
@@ -71,16 +71,16 @@ html
 
         footer: ul
           li
-            a( href: 'mailto:all@nodeknockout.com' ) all@nodeknockout.com
+            a( href='mailto:all@nodeknockout.com' ) all@nodeknockout.com
           li
-            a( href: 'http://twitter.com/node_knockout' ) @node_knockout
+            a( href='http://twitter.com/node_knockout' ) @node_knockout
           li
-            a( href: '/about' ) press
+            a( href='/about' ) press
           li
             | run by
-            a( href: 'http://fortnightlabs.com' ) fortnight labs
-    script( src: '/socket.io/socket.io.js' )
-    script( src: '/javascripts/'+(assetManager.cacheHashes.js || '007')+'/all.js' )
+            a( href='http://fortnightlabs.com' ) fortnight labs
+    script( src='/socket.io/socket.io.js' )
+    script( src='/javascripts/'+(assetManager.cacheHashes.js || '007')+'/all.js' )
     script
       $('a').live('mousedown', function() {
         var href = this.href;

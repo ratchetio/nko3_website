@@ -1,7 +1,7 @@
 {
   "name": "nko-website",
   "description": "node.js knockout: 48-hour node.js hackathon",
-  "version": "2011.6.26",
+  "version": "2012.6.21",
   "homepage": "http://nodeknockout.com",
   "repository": {
     "type": "git",
@@ -10,40 +10,37 @@
   "author": "NKO Team <all@nodeknockout.com>",
   "main": "./server.js",
   "scripts": {
-    "start": "./node_modules/.bin/nodemon --debug"
+    "start": "./node_modules/.bin/nodemon"
   },
   "directories": {
     "lib": "."
   },
   "engines": {
-    "node": "~0.4.10"
+    "node": "~0.7.11"
   },
   "dependencies": {
-    "coffee-script": "1.1.2",
-    "colors": "0.5.0",
-    "connect-assetmanager": "0.0.21",
-    "connect-redis": "1.0.7",
-    "discount": "0.2.0",
-    "express": "2.4.4",
-    "jade": "0.11.0",
-    "hoptoad-notifier": "0.1.3",
-    "mongoose": "1.8.1",
-    "mongoose-auth": "0.0.11",
-    "mongoose-types": "1.0.3",
-    "postageapp": "0.0.2",
-    "rbytes": "0.0.2",
-    "relative-date": "1.1.0",
-    "request": "2.1.1",
-    "socket.io": "0.8.2",
-    "stylus": "0.14.0",
-    "uglify-js": "1.0.6",
-    "underscore": "1.1.7",
-    "irc": "0.2.0",
-    "twitter-node": "0.0.2",
-    "redis": "0.6.7"
+    "airbrake": "*",
+    "coffee-script": "*",
+    "colors": "*",
+    "connect-assetmanager": "*",
+    "connect-redis": "*",
+    "discount": "*",
+    "express": "*",
+    "jade": "*",
+    "mongoose": "*",
+    "mongoose-auth": "*",
+    "mongoose-types": "*",
+    "postageapp": "*",
+    "relative-date": "*",
+    "request": "*",
+    "socket.io": "*",
+    "stylus": "*",
+    "uglify-js": "*",
+    "underscore": "*",
+    "irc": "*",
+    "redis": "*"
   },
   "devDependencies": {
-    "nodemon": "0.6.20",
-    "node-inspector": "0.1.8"
+    "nodemon": "*"
   }
 }

@@ -1,5 +1,5 @@
 mongoose = require 'mongoose'
-rbytes = require 'rbytes'
+crypto = require 'crypto'
 util = require 'util'
 env = require '../config/env'
 postageapp = require('postageapp')(env.secrets.postageapp)
@@ -12,7 +12,7 @@ InviteSchema = module.exports = new mongoose.Schema
     default: no
   code:
     type: String
-    default: -> rbytes.randomBytes(12).toString('base64')
+    default: -> crypto.randomBytes(12).toString('base64')
 
 InviteSchema.method 'send', (force) ->
   if not @sent or force
