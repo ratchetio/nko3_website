@@ -41,6 +41,6 @@
     "redis": "*"
   },
   "devDependencies": {
-    "nodemon": "*"
+    "nodemon": "0.6.18"
   }
 }
