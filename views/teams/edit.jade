@@ -1,23 +1,23 @@
 - title(team.name)
 
-form( method: 'POST', action: '/teams/' + team )
-  input( type: 'hidden', name: '_method', value: 'PUT' )
+form( method='POST', action='/teams/' + team )
+  input( type='hidden', name='_method', value='PUT' )
   h1 Entry
   #entry!= partial('entries/form', { entry: team.entry })
 
   h1 Team
   #team!= partial('form')
 
-  input( type: 'submit', value: 'Update' )
+  input( type='submit', value='Update' )
   | 
-  a( href: '/teams/' + team ) Cancel
+  a( href='/teams/' + team ) Cancel
   |  or
-  a.scary.remove( href: '#' ) Delete?
+  a.scary.remove( href='#' ) Delete?
 
-form.delete( method: 'POST', action: '/teams/' + team )
+form.delete( method='POST', action='/teams/' + team )
   != _csrf
-  input( type: 'hidden', name: '_method', value: 'DELETE' )
+  input( type='hidden', name='_method', value='DELETE' )
   p Are you sure? This can't be undone.
-  input.scary( type: 'submit', value: 'Delete' )
+  input.scary( type='submit', value='Delete' )
   | 
-  a( href: '#' ) Cancel
+  a( href='#' ) Cancel

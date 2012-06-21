@@ -1,19 +1,19 @@
-li.vote( id: vote.id )
+li.vote( id=vote.id )
   != partial('info', { vote: vote })
   - if (vote.type === 'voter')
     .voter
-      img.heart( src: '/images/iframe/heart.png' )
+      img.heart( src='/images/iframe/heart.png' )
       - if (user && vote.personId.toString() === user.id.toString())
         |  You've voted for this entry.
   - else
     table
       tr
         - each d in Vote.dimensions
-          th: label( for: d )= Vote.label(d)
+          th: label( for=d )= Vote.label(d)
       tr.stars
         - each d in Vote.dimensions
           td!= stars(vote[d])
-      tr: td( colspan: 4 )
+      tr: td( colspan=4 )
         .comment!= markdown(vote.comment)
     .clear
     - if (vote.replies && vote.replies.length)

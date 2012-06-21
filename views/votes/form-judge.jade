@@ -1,24 +1,24 @@
 table
   tr
     - each d in Vote.dimensions
-      th: label( for: d )= Vote.label(d)
+      th: label( for=d )= Vote.label(d)
   tr.stars
     - each d in Vote.dimensions
-      td: input( name: d, id: d, type: 'range', min: 0, max: 5,
-        value: vote[d] || 0
-        disabled: !vote.isNew )
-  tr: td( colspan: 4 )
-    textarea.edit( name: 'comment',
-              placeholder: 'Be awesome. Give some feedback.'
+      td: input( name=d, id=d, type='range', min=0, max=5,
+        value=vote[d] || 0
+        disabled=!vote.isNew )
+  tr: td( colspan=4 )
+    textarea.edit( name='comment',
+              placeholder='Be awesome. Give some feedback.'
             )= vote.comment
     - if (!vote.isNew)
       .comment.view!= markdown(vote.comment)
-      input.edit( type: 'submit', value: 'Save' )
+      input.edit( type='submit', value='Save' )
       | 
-      a.edit.change( href: '#' ) Cancel
+      a.edit.change( href='#' ) Cancel
     - else
-      input.scary( type: 'submit', value: 'Vote' )
+      input.scary( type='submit', value='Vote' )
       - if (vote.nextVote)
         |  or 
-        a.skip( href: '#' ) skip this entry
+        a.skip( href='#' ) skip this entry
         | .

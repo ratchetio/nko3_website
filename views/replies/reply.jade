@@ -1,7 +1,7 @@
 li
   .info.person
-    a( href: '/people/' + reply.personId )
-      img.avatar( src: avatar_url(reply.person, 40) )
+    a( href='/people/' + reply.personId )
+      img.avatar( src=avatar_url(reply.person, 40) )
       = reply.person.login
     .role= reply.person.role
   .body!= markdown(reply.message)

@@ -7,26 +7,26 @@
     p Voting is now closed.
 - else
   - if (!user)
-    p.sign-in: a.scary.button( href: '/login?returnTo=' + encodeURIComponent(req.url + '#votes') ) Sign in to vote
+    p.sign-in: a.scary.button( href='/login?returnTo=' + encodeURIComponent(req.url + '#votes') ) Sign in to vote
   - else
     .vote.my
       form.vote(
-        'class': vote.isNew ? 'edit' : 'view',
-        action: vote.isNew ? '/teams/' + vote.team + '/votes' : '/votes/' + vote.id,
-        method: 'POST'
+        class=vote.isNew ? 'edit' : 'view',
+        action=vote.isNew ? '/teams/' + vote.team + '/votes' : '/votes/' + vote.id,
+        method='POST'
       )
         - if (!vote.isNew)
           - if (user.voter)
-            input( type: 'hidden', name: '_method', value: 'DELETE' )
+            input( type='hidden', name='_method', value='DELETE' )
           - else
-            input( type: 'hidden', name: '_method', value: 'PUT' )
+            input( type='hidden', name='_method', value='PUT' )
         != _csrf
 
-        input( type: 'hidden', name: 'audit[userAgent]', value: req.header('user-agent') )
-        input( type: 'hidden', name: 'audit[referrer]', value: req.header('referrer') )
-        input( type: 'hidden', name: 'audit[accept]', value: req.header('accept') )
+        input( type='hidden', name='audit[userAgent]', value=req.header('user-agent') )
+        input( type='hidden', name='audit[referrer]', value=req.header('referrer') )
+        input( type='hidden', name='audit[accept]', value=req.header('accept') )
         - each f in [ 'requestAt', 'hoverAt' ]
-          input( type: 'hidden', name: 'audit[' + f + ']', class: f )
+          input( type='hidden', name='audit[' + f + ']', class=f )
 
         != partial('info', { vote: vote, form: true })
 

@@ -1,20 +1,20 @@
-.info( class: vote.person ? 'person' : 'team' )
+.info( class=vote.person ? 'person' : 'team' )
   - if (vote.nextVote)
     h3 Your Vote
   - else if (vote.person)
-    a( href: '/people/' + vote.person )
-      img.avatar( src: avatar_url(vote.person, 40) )
+    a( href='/people/' + vote.person )
+      img.avatar( src=avatar_url(vote.person, 40) )
       = vote.person.login
     .role= vote.person.role
   - else if (vote.team)
-    a( href: vote.team.entry.url )= vote.team.entry.name
+    a( href=vote.team.entry.url )= vote.team.entry.name
     .by by 
-      a( href: '/teams/' + vote.team )= vote.team.name
+      a( href='/teams/' + vote.team )= vote.team.name
 
   - if (!vote.isNew)
-    time.created-at( datetime: vote.updatedAt.toJSON(), title: vote.updatedAt )
+    time.created-at( datetime=vote.updatedAt.toJSON(), title=vote.updatedAt )
       = relativeDate(vote.updatedAt)
 
   // show the change link only when the user is a voter, owns the vote, and the info partial is in a form
   - if (voting && user && vote.personId && !user.voter && (typeof(form) !== 'undefined') && (vote.personId.toString() === user.id))
-    .view.change: a.change( href: '#' ) Edit your vote
+    .view.change: a.change( href='#' ) Edit your vote

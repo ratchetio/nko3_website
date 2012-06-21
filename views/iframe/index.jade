@@ -52,15 +52,15 @@ html
           display inline-block
     - if (css)
       <!--[if lt IE 7]><!-->
-      link( rel: 'stylesheet', href: css)
+      link( rel='stylesheet', href=css)
       <!--<![endif]-->
   body
-    span#button( class: req.vote ? 'voted' : '' )
+    span#button( class=req.vote ? 'voted' : '' )
       #icon
-        img#facebook(src: '/images/iframe/facebook.png')
-        img#heart(src: '/images/iframe/heart.png')
-        img#x(src: '/images/iframe/x.png')
-      img#vote(src: '/images/iframe/vote.png' )
+        img#facebook(src='/images/iframe/facebook.png')
+        img#heart(src='/images/iframe/heart.png')
+        img#x(src='/images/iframe/x.png')
+      img#vote(src='/images/iframe/vote.png' )
     span#count= count
     script
       (function() {

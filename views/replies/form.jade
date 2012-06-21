@@ -1,8 +1,8 @@
 .reply
-  .toggle: a.button.toggle-reply-form( href: '#' ) Reply
-  form.reply( method: 'POST', action: '/votes/' + vote.id + '/replies' )
+  .toggle: a.button.toggle-reply-form( href='#' ) Reply
+  form.reply( method='POST', action='/votes/' + vote.id + '/replies' )
     != _csrf
-    textarea( name: 'message' )
-    input( type: 'submit', value: 'Reply' )
+    textarea( name='message' )
+    input( type='submit', value='Reply' )
     | 
-    a.toggle-reply-form( href: '#' ) Cancel
+    a.toggle-reply-form( href='#' ) Cancel
