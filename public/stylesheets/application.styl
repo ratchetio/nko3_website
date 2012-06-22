@@ -183,10 +183,11 @@ aside
     border-collapse collapse
     td
       text-align center
-      text-align '-'
+      text-align '-' center
     th.asterisk
       font-weight normal
       font-size small
+      padding-top 0.25em
   ul.sponsors
     list-style-type none
     margin 2em 0 0
@@ -428,14 +429,8 @@ form.vote
       margin 0 1ex
   > h4
     margin 0
-  img
-    float right
-    border solid 2px hsl(0, 0%, 90%)
-    border solid 2px hsla(0, 0%, 0%, 0.1)
-    border-radius 2px
-    margin 0 0 0 10px
-    width 240px
-    height 148px
+  section.when
+    text-align center
   .dates
     font-size x-large
     margin 0.25em 0px
@@ -445,124 +440,6 @@ form.vote
   #countdown
     display inline-block
     font-weight bold
-  #dashboards
-    overflow hidden
-    clear left
-  .commits-dashboard
-    text-align left
-    margin-top 1em
-    li
-      overflow hidden
-      margin-bottom 1em
-    img.screenshot
-      float left
-      margin 0 10px 0 0
-      width 160px
-      height 93px
-      border solid 2px hsl(0, 0%, 90%)
-      border solid 2px hsla(0, 0%, 0%, 0.1)
-      border-radius 2px
-    h3
-      margin 0.25em 0 0
-    .by, .when
-      font-size small
-      line-height 150%
-      display inline-block
-    .when
-      font-size x-small
-      padding 0 0 0 10px
-    .commit
-      font-size 13px
-      line-height 18px
-      padding 5px 0 0
-    .date
-      float right
-      font-size 12px
-      font-weight bold
-      position relative
-      top 3px
-  .twitter-dashboard, .irc-dashboard
-    float left
-    text-align left
-    width 50%
-    font-size small
-    max-height 600px
-    overflow hidden
-    margin 0 0 20px
-    h2
-      margin 0 0 0.5em
-    ul
-      margin 0
-      overflow hidden
-    li
-      padding 5px 0
-      border-bottom 1px solid #eee
-      border-top 1px solid #fff
-      overflow hidden
-      .avatar
-        float left
-      .name
-        display inline
-        font-weight bold
-        padding 0 5px 0 0
-      .msg
-        display inline
-  .twitter-dashboard
-    margin-right -1px
-    border-right 1px solid #eee
-    ul
-      padding-right 10px
-  .irc-dashboard
-    margin-left -1px
-    border-left 1px solid #fff
-    ul, h2
-      padding-left 10px
-  #make-dashboard-fullscreen
-    float right
-    cursor pointer
-    margin 6px 50px 0 0
-  .github-commits
-    font-size 12px
-    overflow hidden
-    margin 20px 0 0
-    ul
-      margin 0
-    li
-      position relative
-      top -1px
-      padding 7px 0 10px
-      border-bottom 1px solid #eee
-      border-top 1px solid #fff
-    .teamname
-      font-family '04b_03', monospace
-      font-size 17px
-      padding 0 0 5px
-      display block
-      color #292929
-    .count
-      position absolute
-      bottom 27px
-      right 0
-      font-family '04b_03', monospace
-      font-size 14px
-    .bar
-      background #fff
-      height 12px
-      margin-right 100px
-      overflow hidden
-      border-left 3px solid #e1e1e1
-    .progress
-      background #cad0d3
-      border-right 3px solid #a6a5a5
-      margin-left -3px
-      height 100%
-    .message
-      font-size 12px
-      white-space nowrap
-      overflow hidden
-      text-overflow ellipsis
-      height 17px
-      padding 5px 0 0
 
 #page.index-locations #inner
   p#map iframe, img.map

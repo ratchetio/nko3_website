@@ -1,7 +1,7 @@
 load = ->
   # countdown
   $('#page.index-index time:first').each ->
-    $.get '/now', (data) ->
+    $.get '/now', (data) =>
       serverLoadTime = new Date parseInt data
       localLoadTime = new Date
       parts = $(this).attr('datetime').split(/[-:TZ]/)
@@ -15,11 +15,11 @@ load = ->
         pluralize = (count, str) ->
           count + ' ' + str + (if parseInt(count) != 1 then 's ' else ' ')
 
-        names = ['hour', 'minute', 'second']
+        names = ['day', 'hour', 'minute', 'second']
         do tick = ->
           secs = ((start - serverLoadTime) - (new Date - localLoadTime)) / 1000
           if secs > 0
-            parts = [secs / 3600, secs % 3600 / 60, secs % 60]
+            parts = [secs / 86400, secs % 86400 / 3600, secs % 3600 / 60, secs % 60]
             $this.html null
             $.each parts, (i, num) ->
               $this.append pluralize(Math.floor(num), names[i])
