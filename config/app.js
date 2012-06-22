@@ -120,8 +120,8 @@ app.configure('development', function() {
 app.configure('production', function() {
   app.use(express.static(app.paths.public, { maxAge: 1000 * 5 * 60 }));
   app.use(function(req, res, next) {
-    if (req.headers.host !== 'nodeknockout.com')
-      res.redirect('http://nodeknockout.com' + req.url);
+    if (req.headers.host !== '2012.nodeknockout.com')
+      res.redirect('http://2012.nodeknockout.com' + req.url);
     else
       next();
   });
