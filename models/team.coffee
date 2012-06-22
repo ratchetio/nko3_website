@@ -71,7 +71,7 @@ TeamSchema.static 'canRegister', (next) ->
   return next null, false, 0 # cut off team registration
   Team.count {}, (err, count) ->
     return next err if err
-    max = 330 + 1 # +1 because team fortnight labs doesn't count
+    max = 0 # +1 because team fortnight labs doesn't count
     next null, count < max, max - count
 TeamSchema.static 'uniqueName', (name, next) ->
   Team.count { name: name }, (err, count) ->
