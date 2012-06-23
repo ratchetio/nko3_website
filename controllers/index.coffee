@@ -23,7 +23,8 @@ app.get '/', (req, res, next) ->
   res.render2 'index/index',
     team: req.team
 
-['how-to-win', 'locations', 'prizes', 'rules', 'sponsors', 'scoring'].forEach (p) ->
+[ 'locations', 'prizes', 'rules', 'sponsors', 'scoring',
+  'how-to-win', 'tell-me-a-story' ].forEach (p) ->
   app.get '/' + p, (req, res) -> res.render2 "index/#{p}"
 
 app.get '/about', (req, res) ->
