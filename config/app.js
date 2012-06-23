@@ -56,7 +56,7 @@ app.configure(function() {
 
   var assetManager = require('connect-assetmanager')({
     js: {
-      route: /\/javascripts\/[a-z0-9]+\/all\.js/,
+      route: /\/javascripts\/all-[a-z0-9]+\.js/,
       path: __dirname + '/../public/javascripts/',
       dataType: 'javascript',
       debug: true,
