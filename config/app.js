@@ -79,7 +79,7 @@ app.configure(function() {
         'vendor/hoptoad-notifier.js',
         'vendor/hoptoad-key.js',
         'vendor/json2.js',
-        'vendor/jquery-1.6.4.js',
+        'vendor/jquery-1.7.2.js',
         'vendor/jquery.ba-hashchange.js',
         'vendor/jquery.border-image.js',
         'vendor/jquery.infinitescroll.js',
