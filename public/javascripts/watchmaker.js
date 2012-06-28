@@ -284,7 +284,7 @@ var nko = {};
     nko.goTo = function goTo(selector) {
       var page = $(selector)
       , $window = $(window)
-      , pos = page.position()
+      , pos = page.offset()
       , left = pos.left - ($window.width() - page.width()) / 2
       , top = pos.top - ($window.height() - page.height()) / 2;
 
