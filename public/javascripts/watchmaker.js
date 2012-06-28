@@ -262,7 +262,7 @@ var nko = {};
     //// helper methods
     function randomPositionOn(selector) {
       var page = $(selector)
-        , pos = page.position()
+        , pos = page.offset()
 
       return new nko.Vector(pos.left + 20 + Math.random() * (page.width()-40),
                             pos.top + 20 + Math.random() * (page.height()-40));
@@ -270,7 +270,7 @@ var nko = {};
 
     nko.warpTo = function warpTo(selector) {
       var page = $(selector)
-        , pos = page.position();
+        , pos = page.offset();
 
       pos = randomPositionOn(page);
 
@@ -284,7 +284,7 @@ var nko = {};
     nko.goTo = function goTo(selector) {
       var page = $(selector)
       , $window = $(window)
-      , pos = page.position()
+      , pos = page.offset()
       , left = pos.left - ($window.width() - page.width()) / 2
       , top = pos.top - ($window.height() - page.height()) / 2;
 
