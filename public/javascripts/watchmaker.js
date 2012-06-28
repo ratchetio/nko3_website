@@ -158,7 +158,7 @@ var nko = {};
 
     var self = this
       , delta = pos.minus(this.pos)
-      , duration = arguments.length > 1 ? duration : delta.length() / 200 * 1000;
+      , duration = duration !== undefined ? duration : delta.length() / 200 * 1000;
     this.animate(delta.cardinalDirection());
     if (duration && duration > 0)
       this.div.stop();
@@ -211,7 +211,6 @@ var nko = {};
 
 
   $(function() {
-
     //// a dude
     var types = [ 'suit', 'littleguy', 'beast', 'gifter' ];
     var me = nko.me = new nko.Dude({
@@ -284,7 +283,14 @@ var nko = {};
     }
     nko.goTo = function goTo(selector) {
       var page = $(selector)
-        , pos = page.position();
+      , $window = $(window)
+      , pos = page.position()
+      , left = pos.left - ($window.width() - page.width()) / 2
+      , top = pos.top - ($window.height() - page.height()) / 2;
+
+      $('body')
+        .stop()
+        .animate({ scrollLeft: left, scrollTop: top }, 1000, 'swing');
 
       pos = randomPositionOn(page);
 
@@ -329,6 +335,7 @@ var nko = {};
         resizeTimeout = setTimeout(function() { me.resetOrigin(); }, 50);
       })
       .click(function(e) { // move on click
+        if (e.pageX === undefined || e.pageY === undefined) return;
         var pos = { x: e.pageX, y: e.pageY };
         me.goTo(pos);
         nko.send({
@@ -338,7 +345,6 @@ var nko = {};
         });
       })
       .keydown(function(e) {
-        return true;
         if ($(e.target).is('input')) return true;
         if (e.altKey) return true;
         var d = (function() {
@@ -367,7 +373,6 @@ var nko = {};
         }
       })
       .keyup(function(e) {
-        return true;
         if ($(e.target).is('input')) return true;
         if (e.altKey) return true;
         switch (e.keyCode) {
@@ -395,23 +400,13 @@ var nko = {};
         var t = e.originalEvent.changedTouches.item(0);
         me.goTo(new nko.Vector(t.pageX, t.pageY));
       })
-
-    // #foo links: walk to, then warp there
-    /*
-    $('a[href^="#"]').live('click', function(e) {
-      if ($(this).attr('href') === '#') return;
-      e.preventDefault();
-      var page = $($(this).attr('href'));
-      setTimeout(function checkArrived() {
-        if (me.div.queue().length === 0) {
-          nko.warpTo(page);
-          page.click();
-        } else {
-          setTimeout(checkArrived, 500);
-        }
-      }, 1);
-    });
-    */
+      .on('click', '.slide', function() {
+        var $this = $(this)
+          , id = $(this).attr('id');
+        $this.removeAttr('id');
+        location.hash = '#' + id;
+        $this.attr('id', id);
+      });
 
     // chat
     var speakTimeout, $text = $('<textarea>')
@@ -441,7 +436,15 @@ var nko = {};
             }, 5000);
         }
       }).focus();
+    var slide = Number(location.hash.replace('#slide-', ''));
     $(document).keylisten(function(e) {
+      switch (e.keyName) {
+        case 'alt+right':
+          return nko.goTo('#slide-' + ++slide);
+        case 'alt+left':
+          return nko.goTo('#slide-' + --slide);
+      }
+
       if (e.altKey || e.ctrlKey || e.metaKey) return true;
       switch (e.keyName) {
         case 'meta':
@@ -478,6 +481,25 @@ var nko = {};
     new nko.Thing({ name: 'livetree', pos: new nko.Vector(120, 1800) });
     new nko.Thing({ name: 'deadtree', pos: new nko.Vector(70, 1700) });
     new nko.Thing({ name: 'livetree', pos: new nko.Vector(-10, 1900) });
+
+
+    //// nodeconf
+    $('#page.index-tell-me-a-story').each(function() {
+      // #target links: warp to target
+      $('a[href^="#"]').on('click', function(e) {
+        var href = $(this).attr('href');
+        if (href === '#') return;
+
+        e.stopPropagation();
+        nko.warpTo(href);
+      });
+
+      // slide 0 - story time
+      new nko.Dude({ name: 'fire', pos: new nko.Vector(2200, 360) });
+      new nko.Thing({ name: 'livetree', pos: new nko.Vector(1900, 200) });
+      new nko.Thing({ name: 'deadtree', pos: new nko.Vector(1840, 300) });
+      new nko.Thing({ name: 'livetree', pos: new nko.Vector(1960, 500) });
+    });
   });
 
   nko.Bubble = [
