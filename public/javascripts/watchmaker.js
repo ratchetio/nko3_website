@@ -294,7 +294,7 @@ var nko = {};
 
       $('body')
         .stop()
-        .animate({ scrollLeft: left, scrollTop: top }, 1000, 'swing');
+        .animate({ scrollLeft: left, scrollTop: top }, 1000);
 
       pos = randomPositionOn(page);
 
@@ -487,6 +487,43 @@ var nko = {};
 
     //// nodeconf
     $('#page.index-tell-me-a-story').each(function() {
+      // edge flip when moving around
+      var scrolling = false;
+      if (!Modernizr.touch)
+        $(window)
+          .on('click', function(e) {
+            if (e.pageX === undefined || e.pageY === undefined) return;
+            var pos = { x: e.pageX, y: e.pageY }
+              , $win = $(this)
+              , left = $win.scrollLeft()
+              , top = $win.scrollTop()
+              , right = left + $win.width()
+              , bottom = top + $win.height()
+              , buffer = 160
+              , newLeft = left, newTop = top;
+
+            if (pos.x < left + buffer)
+              newLeft = left - $win.width()/2;
+            else if (pos.x > right - buffer)
+              newLeft = left + $win.width()/2;
+
+            if (pos.y < top + buffer)
+              newTop = top - $win.height()/2;
+            else if (pos.y > bottom - buffer)
+              newTop = top + $win.height()/2;
+
+            scrolling = true;
+            $('body')
+              .stop()
+              .animate({ scrollLeft: newLeft, scrollTop: newTop }, 800);
+          })
+          .on('mousewheel', function(e) {
+            if (scrolling) {
+              $('body').stop();
+              scrolling = false;
+            }
+          });
+
       // #target links: warp to target
       $('a[href^="#"]').on('click', function(e) {
         var href = $(this).attr('href');
@@ -496,12 +533,14 @@ var nko = {};
         nko.warpTo(href);
       });
 
+      // popup for image links
       $('.slide').each(function() {
         $('a[href$=".png"]', this)
           .attr('rel', this.id)
           .fancybox({ padding: 0 });
       });
 
+      // more flare
       new nko.Dude({ name: 'fire', pos: new nko.Vector(2300, 360) });
       map.push(
         // slide 0 - story time
