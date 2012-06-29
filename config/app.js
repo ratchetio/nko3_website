@@ -39,37 +39,24 @@ app.db = require('../models')(env.mongo_url);
 // config
 app.configure(function() {
   var coffee = require('coffee-script')
-    , uglify_jsp = require("uglify-js").parser
-    , uglify_pro = require("uglify-js").uglify
     , stylus = require('stylus');
-
-  app.use(stylus.middleware({
-    src: app.paths.public,
-    dest: app.paths.public,
-    compile: function(str, path) {
-      return stylus(str)
-        .set('compress', true)
-        .set('filename', path)
-        .set('paths', [ __dirname, app.paths.public ]);
-    }
-  }));
 
   var assetManager = require('connect-assetmanager')({
     js: {
       route: /\/javascripts\/all-[a-z0-9]+\.js/,
       path: __dirname + '/../public/javascripts/',
       dataType: 'javascript',
-      debug: true,
+      debug: env.node_env === 'development',
       preManipulate: {
         '^': [
-          function(file, path, index, isLast, callback) {
-            callback(file.replace(/#socketIoPort#/g, env.port));
+          function(src, path, index, isLast, callback) {
+            callback(src.replace(/#socketIoPort#/g, env.port));
           }
-          , function(file, path, index, isLast, callback) {
+          , function(src, path, index, isLast, callback) {
             if (/\.coffee$/.test(path)) {
-              callback(coffee.compile(file));
+              callback(coffee.compile(src));
             } else {
-              callback(file);
+              callback(src);
             }
           }
         ]
@@ -91,20 +78,33 @@ app.configure(function() {
         'application.coffee',
         '*'
       ]
-      , 'postManipulate': {
+    },
+    css: {
+      route: /\/stylesheets\/all-[a-z0-9]+\.css/,
+      path: __dirname + '/../public/stylesheets/',
+      dataType: 'css',
+      debug: env.node_env === 'development',
+      preManipulate: {
         '^': [
-          function(file, path, index, isLast, callback) {
-            if (env.production) {
-              var ast = uglify_jsp.parse(file);
-              ast = uglify_pro.ast_mangle(ast);
-              ast = uglify_pro.ast_squeeze(ast);
-              callback(uglify_pro.gen_code(ast, { beautify: true, indent_level: 0 }));
+          function(src, path, index, isLast, callback) {
+            if (/\.styl$/.test(path)) {
+              stylus(src)
+                .set('compress', false)
+                .set('filename', path)
+                .set('paths', [ __dirname, app.paths.public ])
+                .render(function(err, css) {
+                  callback(err || css);
+                });
             } else {
-              callback(file);
+              callback(src);
             }
           }
         ]
-      }
+      },
+      files: [ // order matters here
+        'vendor/normalize.css',
+        'application.styl'
+      ]
     }
   });
   app.use(assetManager);

@@ -1,7 +1,6 @@
 # https://github.com/remy/nodemon
 
 .git/*
-/public/stylesheets/*
 /views/*
 /designs/*
 /LICENSE
