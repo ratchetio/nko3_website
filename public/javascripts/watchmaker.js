@@ -332,12 +332,8 @@ var nko = {};
     });
 
     // movement
-    var resizeTimeout = null;
     $(window)
-      .resize(function(e) {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(function() { me.resetOrigin(); }, 50);
-      })
+      .resize(_.debounce(function() { me.resetOrigin(); }, 300))
       .click(function(e) { // move on click
         if (e.pageX === undefined || e.pageY === undefined) return;
         var pos = { x: e.pageX, y: e.pageY };
