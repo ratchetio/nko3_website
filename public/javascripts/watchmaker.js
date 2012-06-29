@@ -500,13 +500,19 @@ var nko = {};
         nko.warpTo(href);
       });
 
+      $('.slide').each(function() {
+        $('a', this)
+          .attr('rel', this.id)
+          .fancybox({ padding: 0 });
+      });
+
       new nko.Dude({ name: 'fire', pos: new nko.Vector(2300, 360) });
       map.push(
         // slide 0 - story time
         { 'livetree':   [ 1860, 200 ] },
         { 'deadtree':   [ 1800, 300 ] },
         { 'livetree':   [ 1920, 500 ] },
-        { 'arrowright': [ 2460, 460 ] },
+        { 'arrowright': [ 2570, 560 ] },
         { 'deadtree':   [ 2600, 20  ] },
         { 'tent':       [ 2000, 330 ] },
 
