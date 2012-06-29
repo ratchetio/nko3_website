@@ -497,7 +497,7 @@ var nko = {};
       });
 
       $('.slide').each(function() {
-        $('a', this)
+        $('a[href$=".png"]', this)
           .attr('rel', this.id)
           .fancybox({ padding: 0 });
       });
