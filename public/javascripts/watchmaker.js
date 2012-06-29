@@ -511,6 +511,8 @@ var nko = {};
         { 'arrowright': [ 2570, 560 ] },
         { 'deadtree':   [ 2600, 20  ] },
         { 'tent':       [ 2000, 330 ] },
+        { 'log':        [ 2230, 420 ] },
+        { 'log':        [ 2360, 330 ] },
 
         // slide 1 - rails rumble 2008
         { 'livetree': [ 3900, 250 ] },
