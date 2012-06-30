@@ -114,6 +114,41 @@ var nko = {};
   };
 
 
+  //// Idle Thing
+  nko.IdleThing = function(options) {
+    nko.Thing.call(this, options);
+    this.frame = 0;
+
+    this.cycles = options && options.cycles;
+    this.cycle = 0;
+  };
+  nko.IdleThing.prototype = new nko.Thing();
+  nko.IdleThing.prototype.constructor = nko.IdleThing;
+
+  nko.IdleThing.prototype.draw = function draw() {
+    this.frames = this.size.x / 80;
+    this.size.x = 80;
+
+    if (this.cycles) this.cycles = this.cycles * this.frames;
+
+    return nko.Thing.prototype.draw.call(this);
+  };
+
+  nko.IdleThing.prototype.animate = function animate(state) {
+    var self = this;
+
+    clearTimeout(this.animateTimeout);
+
+    this.frame = ((this.frame + 1) % this.frames);
+    this.div.css('background-position', (-this.frame * this.size.x) + 'px 0px');
+
+    if (!this.cycles || ++this.cycle < this.cycles)
+      this.animateTimeout = setTimeout(function() { self.animate() }, 400);
+    else
+      $(this.div).remove();
+  };
+
+
   //// Dude
   nko.Dude = function(options) {
     nko.Thing.call(this, options);

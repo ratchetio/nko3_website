@@ -55,7 +55,7 @@
       });
 
       // more flare
-      new nko.Dude({ name: 'fire', pos: new nko.Vector(2300, 360) });
+      new nko.IdleThing({ name: 'fire', pos: new nko.Vector(2300, 360) });
       nko.map([
         // slide 0 - story time
         { 'livetree':   [ 1860, 200 ] },
