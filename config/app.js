@@ -77,6 +77,7 @@ app.configure(function() {
         'vendor/jquery.transloadit2.js',
         'vendor/md5.js',
         'vendor/underscore-1.3.3.js',
+        'watchmaker.js',
         'application.coffee',
         '*'
       ]
