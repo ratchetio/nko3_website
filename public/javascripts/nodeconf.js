@@ -83,9 +83,12 @@
         { 'livetree': [ 1740, 1770 ] },
         { 'livetree': [ 1820, 1650 ] },
         { 'livetree': [ 2480, 1930 ] },
+        { 'portopotty': [ 2630, 1520 ] },
+        { 'portopotty': [ 2700, 1520 ] },
 
         // slide 4 - "rails"?
         { 'livetree': [ 840, 1120 ] },
+        { 'log':      [ 890, 1150 ] },
 
         // slide 5 - forcing 2009 to be realtime
         { 'deadtree': [ 760, 2560 ] },
@@ -96,6 +99,7 @@
         { 'livetree': [  870, 3370 ] },
         { 'livetree': [  940, 3600 ] },
         { 'livetree': [ 1100, 3810 ] },
+        { 'obelisk':  [  820, 3170 ] },
 
         // slide 7 - omg dilemma
         { 'livetree': [ 2520, 3700 ] },
@@ -113,6 +117,7 @@
         { 'livetree':   [ 2780, 1990 ] },
         { 'arrowright': [ 2520, 2510 ] },
         { 'deadtree':   [ 2750, 2760 ] },
+        { 'chair':      [ 2930, 2410 ] },
 
         // slide 10 - 2012 winners
         { 'livetree': [ 4720, 2790 ] },
@@ -122,20 +127,23 @@
         { 'livetree': [ 5900, 2100 ] },
         { 'livetree': [ 5970, 2360 ] },
         { 'livetree': [ 5810, 2900 ] },
+        { 'desk':     [ 5830, 2150 ] },
 
         // slide 12 - 2012
-        { 'livetree': [ 5750, 3140 ] },
-        { 'livetree': [ 5660, 3460 ] },
-        { 'livetree': [ 5720, 3600 ] },
+        { 'livetree':   [ 5750, 3140 ] },
+        { 'livetree':   [ 5660, 3460 ] },
+        { 'livetree':   [ 5720, 3600 ] },
+        { 'streetlamp': [ 5640, 3550 ] },
 
         // slide 13 - nko3 changes
-        { 'livetree': [ 3800, 3300 ] },
-        { 'livetree': [ 3760, 3600 ] },
+        { 'livetree':   [ 3800, 3300 ] },
+        { 'livetree':   [ 3760, 3600 ] },
+        { 'streetlamp': [ 3970, 3330 ] },
 
         // slide 14 - thanks
-        { 'livetree': [ 4610, 4000 ] },
-        { 'livetree': [ 4550, 4140 ] },
-        { 'deadtree': [ 4610, 4370 ] },
+        { 'livetree':     [ 4610, 4000 ] },
+        { 'livetree':     [ 4550, 4140 ] },
+        { 'deadtree':     [ 4610, 4370 ] },
 
         {}
       ]);
