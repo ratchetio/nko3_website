@@ -246,9 +246,9 @@ var nko = {};
 
     this.div
       .stop()
-      .fadeToggle(function() {
+      .fadeOut(null, null, function() {
         self.goTo(pos, 0);
-        self.div.fadeToggle();
+        self.div.fadeIn();
       });
   };
 
