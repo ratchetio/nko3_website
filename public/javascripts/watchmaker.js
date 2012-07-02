@@ -274,7 +274,7 @@ var nko = {};
 
   $(function() {
     //// a dude
-    var types = location.hash === '#slide-8' ? [ 'flannel' ] : [ 'suit', 'littleguy', 'beast', 'gifter' ];
+    var types = [ 'suit', 'littleguy', 'beast', 'gifter', 'flannel' ];
     var me = nko.me = new nko.Dude({
       name: types[Math.floor(types.length * Math.random())],
       pos: new nko.Vector(-100, -100),
