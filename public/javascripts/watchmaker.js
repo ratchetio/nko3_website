@@ -521,9 +521,9 @@ var nko = {};
       var slide = Number(location.hash.replace('#slide-', ''));
       switch (e.keyName) {
         case 'alt+right':
-          return nko.goTo('#slide-' + ++slide);
+          return nko.goTo('#slide-' + (slide+1));
         case 'alt+left':
-          return nko.goTo('#slide-' + --slide);
+          return nko.goTo('#slide-' + (slide-1));
       }
 
       if (e.altKey || e.ctrlKey || e.metaKey) return true;
