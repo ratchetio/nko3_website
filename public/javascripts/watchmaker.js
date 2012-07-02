@@ -153,12 +153,21 @@ var nko = {};
   nko.Dude = function(options) {
     nko.Thing.call(this, options);
 
+    this.id = options.id;
     this.state = 'idle';
     this.frame = 0;
     this.bubbleFrame = 0;
+    this.div.addClass('dude');
   };
   nko.Dude.prototype = new nko.Thing();
   nko.Dude.prototype.constructor = nko.Dude;
+
+  nko.Dude.prototype.toJSON = function() {
+    var json = nko.Thing.prototype.toJSON.call(this);
+    json.id = this.id;
+
+    return json;
+  };
 
   nko.Dude.prototype.draw = function draw() {
     this.idleFrames = (this.size.x - 640) / 80;
@@ -192,12 +201,16 @@ var nko = {};
     this.animateTimeout = setTimeout(function() { self.animate() }, 400);
   };
 
-  nko.Dude.prototype.goTo = function(pos, duration) {
+  nko.Dude.prototype.goTo = function(pos, duration, callback) {
     pos = new nko.Vector(pos).minus(this.origin);
+
+    if (typeof(duration) === 'function')
+      callback = duration;
 
     var self = this
       , delta = pos.minus(this.pos)
-      , duration = duration !== undefined ? duration : delta.length() / 200 * 1000;
+      , duration = duration !== undefined && typeof(duration) !== 'function' ? duration : delta.length() / 200 * 1000;
+
     this.animate(delta.cardinalDirection());
     if (duration && duration > 0)
       this.div.stop();
@@ -223,6 +236,7 @@ var nko = {};
           self.pos = pos;
           // z-index?
           self.animate('idle');
+          if (callback) callback();
         }
       });
   };
@@ -246,6 +260,15 @@ var nko = {};
         .text(text)
         .scrollTop(this.bubble.prop("scrollHeight"))
         .fadeIn();
+  };
+
+  nko.Dude.prototype.hug = function hug(otherDude) {
+    var pos = otherDude.pos.minus(this.pos).times(0.5).plus(this.pos);
+    new nko.IdleThing({ name: 'heart', pos: pos.plus({ x: 0, y: -80 }), cycles: 2 });
+  };
+
+  nko.Dude.prototype.near = function near(pos) {
+    return this.pos.minus(pos).length() < 150;
   };
 
 
@@ -275,6 +298,8 @@ var nko = {};
       'port': '#socketIoPort#'
     });
     ws.on('connect', function() {
+      me.id = ws.socket.sessionid;
+      nko.dudes[me.id] = me;
       (function heartbeat() {
         nko.send({ obj: me }, true);
         setTimeout(heartbeat, 5000);
@@ -289,13 +314,21 @@ var nko = {};
       }
 
       if (data.obj && !dude && data.obj.pos.x < 10000 && data.obj.pos.y < 10000)
-        dude = dudes[data.id] = new nko.Dude(data.obj).draw();
+        dude = dudes[data.id] = new nko.Dude(_.extend(data.obj, { id: data.id })).draw();
 
       if (dude && data.method) {
         dude.origin = data.obj.origin;
-        nko.Dude.prototype[data.method].apply(dude, data.arguments);
+        var arguments = _.map(data.arguments, function(obj) {
+          return obj.id ? nko.dudes[obj.id] : obj;
+        });
+        nko.Dude.prototype[data.method].apply(dude, arguments);
       }
     });
+    nko.near = function near(pos) {
+      return _.find(nko.dudes, function(dude) {
+        return dude !== me && dude.near(pos);
+      });
+    };
 
 
     //// helper methods
@@ -373,8 +406,19 @@ var nko = {};
       .resize(_.debounce(function() { me.resetOrigin(); }, 300))
       .click(function(e) { // move on click
         if (e.pageX === undefined || e.pageY === undefined) return;
-        var pos = { x: e.pageX, y: e.pageY };
-        me.goTo(pos);
+        var pos = { x: e.pageX, y: e.pageY }
+          , other = nko.near(pos);
+
+        me.goTo(pos, function() {
+          if (other && me.near(other.pos)) {
+            me.hug(other);
+            nko.send({
+              obj: me,
+              method: 'hug',
+              arguments: [ other ]
+            });
+          }
+        });
         nko.send({
           obj: me,
           method: 'goTo',
