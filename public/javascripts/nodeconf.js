@@ -143,7 +143,7 @@
         // slide 14 - thanks
         { 'livetree':     [ 4610, 4000 ] },
         { 'livetree':     [ 4550, 4140 ] },
-        { 'deadtree':     [ 4610, 4370 ] },
+        { 'deadtree':     [ 4630, 4290 ] },
 
         {}
       ]);
