@@ -110,6 +110,11 @@ button, input[type=submit], a.button
     font-size 18px
   &.loved
     background-color red
+  &[disabled]
+    background-color gray
+    background-image none
+    &:active
+      box-shadow inherit
 
 input[type=text], input[type=email], input[type=password], textarea
   outline none
