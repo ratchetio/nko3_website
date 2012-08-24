@@ -1,6 +1,6 @@
 _ = require 'underscore'
 qs = require 'querystring'
-md = require 'discount'
+md = require 'marked'
 mongoose = require 'mongoose'
 
 module.exports = (app) ->

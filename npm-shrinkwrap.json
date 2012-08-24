@@ -46,9 +46,6 @@
         }
       }
     },
-    "discount": {
-      "version": "0.2.3"
-    },
     "express": {
       "version": "2.5.11",
       "dependencies": {
@@ -81,6 +78,9 @@
           "version": "0.3.0"
         }
       }
+    },
+    "marked": {
+      "version": "0.2.5"
     },
     "mongoose": {
       "version": "3.0.3",
