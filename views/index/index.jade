@@ -11,6 +11,18 @@ section.when
         time.end( datetime="2012-11-12T00:00:00Z" ) Nov 12, 2012
   #countdown from now
 
+  if req.canRegister
+    h1 Registration is Open
+    p
+      a.register.button( href="/teams/new" ) Register Now
+    p
+      i= req.teamsLeft + " spots remaining"
+  else
+    h1 Registration is Full
+    p
+      a( href="/teams/new" ) More spots may open at [0:00 GMT]
+
+
   h4: a( href="/tell-me-a-story" ) NodeConf 2012 Slides
 
   :markdown
