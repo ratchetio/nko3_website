@@ -22,5 +22,6 @@ ul.teams
               li: a( href='/people/' + m )= m.login
       .location= locations(members)
       .description!= markdown(team.description)
-  - nextPage = (+req.query.page || 1) + 1
-  .more: a( href=urlFor({ page: nextPage }) ) more
+  if teams.count > 50 * req.query.page
+    - nextPage = (+req.query.page || 1) + 1
+    .more: a( href=urlFor({ page: nextPage }) ) more

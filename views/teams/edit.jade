@@ -2,8 +2,8 @@
 
 form( method='POST', action='/teams/' + team )
   input( type='hidden', name='_method', value='PUT' )
-  h1 Entry
-  #entry!= partial('entries/form', { entry: team.entry })
+  //- h1 Entry
+  //- #entry!= partial('entries/form', { entry: team.entry })
 
   h1 Team
   #team!= partial('form')
@@ -11,7 +11,7 @@ form( method='POST', action='/teams/' + team )
   input( type='submit', value='Update' )
   | 
   a( href='/teams/' + team ) Cancel
-  |  or
+  |  or 
   a.scary.remove( href='#' ) Delete?
 
 form.delete( method='POST', action='/teams/' + team )

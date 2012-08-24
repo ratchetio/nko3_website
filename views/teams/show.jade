@@ -175,7 +175,7 @@ h1
   h2 What
   != markdown(team.description)
 
-- if (publicVotes || votes)
+- if (publicVotes && publicVotes.length || votes && votes.length)
   h1#votes Votes
 
   h2 Your Vote
