@@ -17,12 +17,12 @@ InviteSchema = module.exports = new mongoose.Schema
 InviteSchema.method 'send', (force) ->
   if not @sent or force
     util.log "Sending 'teams_new' to '#{@email}'".yellow
-    team = @parentArray._parent
+    team = @parentArray()._parent
     postageapp.sendMessage
       recipients: @email,
       template: 'teams_new'
       variables:
-        team_id: team.id
+        team_id: team._id
         team_name: team.name
         invite_code: qs.escape @code
       , (err, data) ->
