@@ -21,7 +21,7 @@ PersonSchema = module.exports = new mongoose.Schema
     type: String
     index: true
   skippedTeamIds: [ mongoose.Schema.ObjectId ]
-PersonSchema.plugin require('mongoose-types').useTimestamps
+PersonSchema.plugin require('../lib/use-timestamps')
 PersonSchema.plugin auth,
   everymodule:
     everyauth:

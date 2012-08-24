@@ -64,7 +64,7 @@ VoteSchema = module.exports = new mongoose.Schema
     requestAt: Number
     hoverAt: Number
   replies: [ReplySchema]
-VoteSchema.plugin require('mongoose-types').useTimestamps
+VoteSchema.plugin require('../lib/use-timestamps')
 
 # one vote per person-team-type
 VoteSchema.index { personId: 1, teamId: 1, type: 1 }, { unique: true }

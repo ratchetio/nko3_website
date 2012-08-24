@@ -61,7 +61,7 @@ TeamSchema = module.exports = new mongoose.Schema
     judge: Number
     contestant: Number
     voter: Number
-TeamSchema.plugin require('mongoose-types').useTimestamps
+TeamSchema.plugin require('../lib/use-timestamps')
 TeamSchema.index updatedAt: -1
 
 # class methods
