@@ -5,6 +5,8 @@ h1
   = title(team.entry.name || team.name)
   //!= partial('secrets')
 
+ != markdown(team.description, { sanitize: true })
+
 - if (team.invited(session.invite))
   h2 You're invited to this team!
   p.accept
