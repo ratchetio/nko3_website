@@ -26,12 +26,13 @@ PersonSchema.plugin auth,
   everymodule:
     everyauth:
       moduleTimeout: 10000
-      User: -> Person
+      findUserById: (userId, fn) -> Person.findById(userId, fn)
       handleLogout: (req, res) ->
         req.logout()
         res.redirect(req.param('returnTo') || req.header('referrer') || '/')
   github:
     everyauth:
+      scope: 'user'
       redirectPath: '/login/done'
       myHostname: env.hostname
       appId: env.github_app_id

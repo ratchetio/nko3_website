@@ -5,6 +5,9 @@
     "airbrake": {
       "version": "0.2.9",
       "dependencies": {
+        "request": {
+          "version": "2.9.202"
+        },
         "xmlbuilder": {
           "version": "0.1.5"
         },
@@ -36,7 +39,7 @@
       }
     },
     "connect-redis": {
-      "version": "1.4.0",
+      "version": "1.4.1",
       "dependencies": {
         "debug": {
           "version": "0.7.0"
@@ -47,10 +50,10 @@
       "version": "0.2.3"
     },
     "express": {
-      "version": "2.5.10",
+      "version": "2.5.11",
       "dependencies": {
         "connect": {
-          "version": "1.9.0",
+          "version": "1.9.2",
           "dependencies": {
             "formidable": {
               "version": "1.0.11"
@@ -69,10 +72,10 @@
       }
     },
     "jade": {
-      "version": "0.26.1",
+      "version": "0.27.2",
       "dependencies": {
         "commander": {
-          "version": "0.5.2"
+          "version": "0.6.1"
         },
         "mkdirp": {
           "version": "0.3.0"
@@ -80,45 +83,58 @@
       }
     },
     "mongoose": {
-      "version": "2.7.0",
+      "version": "3.0.3",
       "dependencies": {
         "hooks": {
           "version": "0.2.1"
         },
         "mongodb": {
-          "version": "1.0.2",
+          "version": "1.1.4",
           "dependencies": {
             "bson": {
-              "version": "0.0.6"
+              "version": "0.1.1"
             }
           }
+        },
+        "ms": {
+          "version": "0.1.0"
         }
       }
     },
     "mongoose-auth": {
       "version": "0.0.12",
+      "from": "git://github.com/nko3/mongoose-auth.git#master",
       "dependencies": {
         "bcrypt": {
-          "version": "0.5.0"
+          "version": "0.7.1",
+          "dependencies": {
+            "bindings": {
+              "version": "1.0.0"
+            }
+          }
         },
         "everyauth": {
-          "version": "0.2.32",
+          "version": "0.3.0",
+          "from": "git://github.com/nko3/everyauth.git#master",
           "dependencies": {
             "oauth": {
-              "version": "0.9.7",
+              "version": "0.9.8",
               "from": "https://github.com/ciaranj/node-oauth/tarball/master"
             },
-            "restler": {
-              "version": "2.0.1"
+            "request": {
+              "version": "2.9.203"
             },
             "connect": {
-              "version": "1.0.1",
+              "version": "1.9.2",
               "dependencies": {
                 "qs": {
                   "version": "0.5.0"
                 },
                 "mime": {
-                  "version": "1.2.5"
+                  "version": "1.2.7"
+                },
+                "formidable": {
+                  "version": "1.0.11"
                 }
               }
             },
@@ -129,7 +145,7 @@
               "version": "0.1.14",
               "dependencies": {
                 "sax": {
-                  "version": "0.4.0"
+                  "version": "0.4.2"
                 }
               }
             },
@@ -156,22 +172,22 @@
       "version": "1.1.1"
     },
     "request": {
-      "version": "2.9.202"
+      "version": "2.10.0"
     },
     "socket.io": {
-      "version": "0.9.6",
+      "version": "0.9.10",
       "dependencies": {
         "socket.io-client": {
-          "version": "0.9.6",
+          "version": "0.9.10",
           "dependencies": {
             "uglify-js": {
               "version": "1.2.5"
             },
             "ws": {
-              "version": "0.4.19",
+              "version": "0.4.21",
               "dependencies": {
                 "commander": {
-                  "version": "0.5.2"
+                  "version": "0.6.1"
                 },
                 "tinycolor": {
                   "version": "0.0.1"
@@ -182,7 +198,7 @@
               }
             },
             "xmlhttprequest": {
-              "version": "1.2.2"
+              "version": "1.4.2"
             },
             "active-x-obfuscator": {
               "version": "0.0.1",
@@ -196,20 +212,17 @@
         },
         "policyfile": {
           "version": "0.0.4"
-        },
-        "redis": {
-          "version": "0.6.7"
         }
       }
     },
     "stylus": {
-      "version": "0.27.2",
+      "version": "0.29.0",
       "dependencies": {
         "cssom": {
-          "version": "0.2.3"
+          "version": "0.2.5"
         },
         "mkdirp": {
-          "version": "0.3.3"
+          "version": "0.3.4"
         },
         "debug": {
           "version": "0.7.0"
@@ -217,7 +230,7 @@
       }
     },
     "uglify-js": {
-      "version": "1.3.1"
+      "version": "1.3.3"
     },
     "underscore": {
       "version": "1.3.3"
