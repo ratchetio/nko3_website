@@ -24,6 +24,6 @@ module.exports = [
     email. Also, [come hack with us during node.js knockout][2].
 
     [1]: http://www.nodejitsu.com/
-    [2]: http://nodeknockout.com/locations#nyc
+    [2]: /locations#nyc
     '''
 ]
