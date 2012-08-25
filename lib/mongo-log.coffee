@@ -2,7 +2,7 @@ require 'colors'
 inspect = require('util').inspect
 
 module.exports = (mongo) ->
-  executeCommand = mongo.Db.prototype.executeCommand
+  write = mongo.Connection.prototype.write
 
   commandName = (command) ->
     switch command.constructor
@@ -15,14 +15,14 @@ module.exports = (mongo) ->
       when mongo.QueryCommand       then 'query'
       when mongo.UpdateCommand      then 'update'
 
-  mongo.Db.prototype.executeCommand = (db_command, options, callback) ->
+  mongo.Connection.prototype.write = (db_command, callback) ->
     output = collectionName: db_command.collectionName
     for k in [ 'query', 'documents', 'spec', 'document', 'selector', \
                'returnFieldSelector', 'numberToSkip', 'numberToReturn' ]
       output[k] = db_command[k] if db_command[k]
     console.log "#{commandName(db_command).underline}: #{inspect(output, null, 8)}".grey
 
-    executeCommand.apply this, arguments
+    write.apply this, arguments
 
     ###
     ms = Date.now()
