@@ -56,12 +56,12 @@ html
           nav: ul
             li: a( href='/rules' ) Rules
             li: a( href='/teams' ) Teams
-            li: a( href='/judges' ) Judges
+            //- li: a( href='/judges' ) Judges
             li: a( href='/sponsors' ) Sponsors
             li: a( href='/prizes' ) Prizes
             li: a( href='/about' ) About
-            - if (req.user && (admin || req.user.contestant || req.user.judge))
-              li: a( href='/services' ) Services
+            //- if (req.user && (admin || req.user.contestant || req.user.judge))
+              //- li: a( href='/services' ) Services
 
         #flash
           - if (flash.info)
@@ -79,9 +79,6 @@ html
             a( href='http://twitter.com/node_knockout' ) @node_knockout
           li
             a( href='/about' ) press
-          li
-            | run by 
-            a( href='http://fortnightlabs.com' ) fortnight labs
     script( src='/socket.io/socket.io.js' )
     script( src='/javascripts/all-'+(assetManager.cacheHashes.js || '007')+'.js' )
     script
