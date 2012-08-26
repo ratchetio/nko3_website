@@ -14,8 +14,11 @@ module.exports = (mongo) ->
       when mongo.KillCursorCommand  then 'kill_cursor'
       when mongo.QueryCommand       then 'query'
       when mongo.UpdateCommand      then 'update'
+      else command
 
   mongo.Connection.prototype.write = (db_command, callback) ->
+    return unless db_command
+
     output = collectionName: db_command.collectionName
     for k in [ 'query', 'documents', 'spec', 'document', 'selector', \
                'returnFieldSelector', 'numberToSkip', 'numberToReturn' ]
