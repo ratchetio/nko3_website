@@ -13,8 +13,12 @@ section.when
 
   if req.canRegister
     h1 Registration is Open
-    p
-      a.register.button( href="/teams/new" ) Register Now
+    - if (req.team)
+      h3
+        | Your team: 
+        a( href="/teams/#{team}" )= team.name
+    - else
+      p: a.register.button( href="/teams/new" ) Register Now
     p
       i= req.teamsLeft + " spots remaining"
   else
