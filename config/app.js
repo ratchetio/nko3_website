@@ -37,6 +37,8 @@ app.events = new EventEmitter();
 app.db = require('../models')(env.mongo_url);
 
 // config
+app.disable('voting');
+
 app.configure(function() {
   var coffee = require('coffee-script')
     , stylus = require('stylus');
@@ -118,7 +120,6 @@ app.configure(function() {
 app.configure('development', function() {
   app.use(express.static(app.paths.public));
   app.use(express.profiler());
-  app.disable('voting');
   require('../lib/mongo-log')(app.db.mongo);
 });
 app.configure('production', function() {
@@ -129,7 +130,6 @@ app.configure('production', function() {
     else
       next();
   });
-  app.disable('voting');
 });
 
 app.configure(function() {
