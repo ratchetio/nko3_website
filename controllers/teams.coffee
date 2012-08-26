@@ -55,7 +55,7 @@ app.get '/teams/new', (req, res, next) ->
     return next err if err
     if yeah
       team = new Team
-      team.emails = [ req.user.github.email ] if req.loggedIn
+      team.emails = [ req.user.github.email ] if req.user
       res.render2 'teams/new', team: team
     else
       res.render2 'teams/max'
