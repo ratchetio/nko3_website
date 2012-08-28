@@ -39,7 +39,7 @@ PersonSchema.plugin auth,
       appSecret: env.secrets.github
       findOrCreateUser: (sess, accessTok, accessTokExtra, ghUser) ->
         promise = @Promise()
-        Person.findOne 'github.id': ghUser.id, role: 'contestant',
+        Person.findOne 'github.id': ghUser.id,
           (err, foundUser) ->
             if foundUser
               foundUser.updateWithGithub ghUser, accessTok, (err, updatedUser) ->
@@ -54,7 +54,9 @@ PersonSchema.plugin auth,
                   return promise.fail err if err
                   promise.fulfill createdUser
             else
-              promise.fulfill id: null
+              Person.createWithGithub ghUser, accessTok, (err, createdUser) ->
+                return promise.fail err if err
+                promise.fulfill createdUser
         promise
   twitter:
     everyauth:
