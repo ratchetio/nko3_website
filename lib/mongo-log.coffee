@@ -16,15 +16,20 @@ module.exports = (mongo) ->
       when mongo.UpdateCommand      then 'update'
       else command
 
+  log = (command) ->
+    output = collectionName: command.collectionName
+    for k in [ 'query', 'documents', 'spec', 'document', 'selector', \
+               'returnFieldSelector', 'numberToSkip', 'numberToReturn' ]
+      output[k] = command[k] if command[k]
+    console.log "#{commandName(command).underline}: #{inspect(output, null, 8)}".grey
+
   mongo.Connection.prototype.write = (db_command, callback) ->
     return unless db_command
 
-    output = collectionName: db_command.collectionName
-    for k in [ 'query', 'documents', 'spec', 'document', 'selector', \
-               'returnFieldSelector', 'numberToSkip', 'numberToReturn' ]
-      output[k] = db_command[k] if db_command[k]
-    console.log "#{commandName(db_command).underline}: #{inspect(output, null, 8)}".grey
-
+    if db_command.constructor == Array
+      log command for command in db_command
+    else
+      log db_command
     write.apply this, arguments
 
     ###
