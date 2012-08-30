@@ -77,6 +77,10 @@ TeamSchema.static 'uniqueName', (name, next) ->
   Team.count { name: name }, (err, count) ->
     return next err if err
     next null, !count
+TeamSchema.static 'uniqueSlug', (slug, next) ->
+  Team.count { slug: slug }, (err, count) ->
+    return next err if err
+    next null, !count
 TeamSchema.static 'sortedByScore', (next) ->
   Team.find { 'entry.votable': true, lastDeploy: {$ne:null} }, {}, {sort: [['scores.overall', -1]]}, (error,teams) ->
     return next error if error
@@ -251,6 +255,34 @@ TeamSchema.pre 'save', (next) ->
       error = new mongoose.Document.ValidationError this
       error.errors.name = 'unique'
       next error
+
+## unique slug
+
+uniquifySlug = (s, attempt, next) ->
+  unique = if attempt is 0
+      s
+    else
+      "#{s}-#{attempt}"
+  Team.uniqueSlug unique, (err, isUnique) ->
+    return next err if err
+    if isUnique
+      next null, unique
+    else
+      uniquifySlug s, attempt + 1, next
+
+TeamSchema.pre 'save', (next) ->
+  s = @name
+    .toLowerCase()
+    .replace(/[^-a-z0-9]+/g, '-')
+    .replace(/^-/, '')
+    .substring(0, 20)  # arbitrarily below heroku's 30 limit
+    .replace(/-$/, '')
+
+  uniquifySlug s, 0, (err, uniqueSlug) =>
+    return next err if err
+    @slug = uniqueSlug
+    next()
+
 
 # callbacks
 

@@ -69,7 +69,7 @@ app.post '/teams', (req, res, next) ->
       res.render2 'teams/new', team: team
     else
       req.session.team = team.code
-      res.redirect "/teams/#{team.id}"
+      res.redirect "/teams/#{team}"
 
 # my team
 app.get '/teams/mine(\/edit)?', [m.ensureAuth, m.loadPerson, m.loadPersonTeam], (req, res, next) ->
@@ -93,7 +93,7 @@ app.get '/teams/:id', [m.loadTeam, m.loadTeamPeople, m.loadTeamVotes, m.loadMyVo
 # resend invitation
 app.all '/teams/:id/invites/:inviteId', [m.loadTeam, m.ensureAccess], (req, res) ->
   req.team.invites.id(req.param('inviteId')).send(true)
-  res.redirect "/teams/#{req.team.id}"
+  res.redirect "/teams/#{req.team}"
 
 # edit
 app.get '/teams/:id/edit', [m.loadTeam, m.ensureAccess, m.loadTeamPeople], (req, res) ->
@@ -116,7 +116,7 @@ app.put '/teams/:id', [m.loadTeam, m.ensureAccess], (req, res, next) ->
         return next err if err
         res.render2 'teams/edit', team: req.team, people: people
     else
-      res.redirect "/teams/#{req.team.id}"
+      res.redirect "/teams/#{req.team}"
   null
 
 # delete
