@@ -271,6 +271,8 @@ uniquifySlug = (s, attempt, next) ->
       uniquifySlug s, attempt + 1, next
 
 TeamSchema.pre 'save', (next) ->
+  return next() if @slug?
+
   s = @name
     .toLowerCase()
     .replace(/[^-a-z0-9]+/g, '-')
