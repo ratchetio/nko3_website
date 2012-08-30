@@ -426,7 +426,7 @@ var nko = {};
         });
       })
       .keydown(function(e) {
-        if ($(e.target).is('input')) return true;
+        if ($(e.target).is('input,textarea')) return true;
         if (e.altKey) return true;
         var d = (function() {
           switch (e.keyCode) {
@@ -454,7 +454,7 @@ var nko = {};
         }
       })
       .keyup(function(e) {
-        if ($(e.target).is('input')) return true;
+        if ($(e.target).is('input,textarea')) return true;
         if (e.altKey) return true;
         switch (e.keyCode) {
           case 37: // left
