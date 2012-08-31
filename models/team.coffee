@@ -5,7 +5,7 @@ querystring = require 'querystring'
 request = require 'request'
 
 InviteSchema = require './invite'
-[Invite, Person, Deploy, Vote] = (mongoose.model m for m in ['Invite', 'Person', 'Deploy', 'Vote'])
+[TeamLimit, Invite, Person, Deploy, Vote] = (mongoose.model m for m in ['TeamLimit', 'Invite', 'Person', 'Deploy', 'Vote'])
 
 TeamSchema = module.exports = new mongoose.Schema
   slug:
@@ -71,8 +71,10 @@ TeamSchema.static 'canRegister', (next) ->
   # return next null, false, 0 # cut off team registration
   Team.count {}, (err, count) ->
     return next err if err
-    max = 101 # +1 because team fortnight labs doesn't count
-    next null, count < max, max - count
+    TeamLimit.current (err, limit) ->
+      return next err if err
+      limit++ # +1 for fortnight labs team
+      next null, count < limit, limit - count
 TeamSchema.static 'uniqueName', (name, next) ->
   Team.count { name: name }, (err, count) ->
     return next err if err
