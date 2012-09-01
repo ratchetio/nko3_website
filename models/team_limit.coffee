@@ -20,7 +20,8 @@ TeamLimitSchema.static 'current', (next) ->
   if lastLimit?.updatedAt > now - (1000*60*60) and not @aroundMeridian(now)
     next null, lastLimit.limit
   else
-    TeamLimit.findOne { effectiveAt: { $lte: now } }, {}, { sort: [[ 'effectiveAt', -1 ]] }, (err, limit) ->
+    latest = { effectiveAt: { $lte: now }, limit: { $ne: null } }
+    TeamLimit.findOne latest, {}, { sort: [[ 'effectiveAt', -1 ]] }, (err, limit) ->
       return next err if err
 
       limit ||= new TeamLimit limit: 0, effectiveAt: now # default to 0
