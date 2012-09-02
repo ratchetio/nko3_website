@@ -5,7 +5,7 @@
   "homepage": "http://nodeknockout.com",
   "repository": {
     "type": "git",
-    "url": "git://github.com/nko2/website.git"
+    "url": "git://github.com/nko3/website.git"
   },
   "author": "NKO Team <all@nodeknockout.com>",
   "main": "./server.js",
