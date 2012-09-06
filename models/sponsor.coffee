@@ -20,6 +20,10 @@ module.exports = [
   url:   'http://www.nodejitsu.com/'
   description:
     '''
-    Enterprise-class cloud hosting for node.js applications and websites.
+    Nodejitsu offers the most scalable and user-friendly Node.js PaaS anywhere,
+    and robust orchestration software for your cloud. The team is comprised
+    of some of the earliest adopters of Node, and is dedicated to knowledge
+    sharing and community empowerment through their open source
+    contributions.
     '''
 ]
