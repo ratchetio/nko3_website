@@ -31,6 +31,7 @@ app.get '/login/done', [ensureAuth, loadPerson, loadPersonTeam], (req, res, next
             delete req.session.invite
             res.redirect "/people/#{req.person}"
       else
+        delete req.session.invite
         res.redirect '/teams/new'
   else if false and req.user.contestant and (code = req.session.team)
     # no longer needed now that all teams are created
