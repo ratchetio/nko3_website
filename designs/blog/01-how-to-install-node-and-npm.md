@@ -14,9 +14,7 @@ We personally use package managers to make it easier to keep our node
 installation up to date, so that's the approach we generally describe below.
 
 However if you want to skip the steps and download pre-built binaries, you can
-do so at Joyent's site:
-
-[Download a binary](http://nodejs.org/download/)
+do so at Joyent's site: **[download a binary](http://nodejs.org/download/)**.
 
 <h2 id="mac">Mac</h2>
 
@@ -44,14 +42,13 @@ Then, check it worked with a simple [Hello, World!](#hello) example.
 
 <h2 id="windows">Windows</h2>
 
-Since Windows package managers are less common, it's probably best
-just to [download the windows binary](http://nodejs.org/download/).
+Since Windows package managers are less common, we recommend just
+[downloading the Windows binary](http://nodejs.org/download/).
 
 <h2 id="hello">Hello, Node.js</h2>
 
 Here's a quick program to make sure everything is up and running correctly.
 
-    #!javascript
     // hello_node.js
     var http = require('http');
     http.createServer(function (req, res) {
