@@ -1,8 +1,7 @@
-_This is the 2nd in series of posts leading up
+_This is the 2nd in series of posts leading up to
 [Node.js Knockout](http://nodeknockout.com) about how to use
-[npm](http://npmjs.org). This post was written by npm author and
-[Node.js Knockout judge](http://nodeknockout.com/people/4e2819db6fd024010000192e)
-Isaac Schlueter._
+[npm](http://npmjs.org). This post was written by npm author
+[Isaac Schlueter](http://izs.me/)._
 
 npm is a [NodeJS](http://nodejs.org/) package manager.  As its name
 would imply, you can use it to install node programs.  Also, if you use
@@ -10,14 +9,13 @@ it in development, it makes it easier to specify and link dependencies.
 
 ## Installing npm
 
-To install npm in one command, you can do this:
+npm now comes with node. So once you [install node] you'll generally have npm
+too.
 
-    curl http://npmjs.org/install.sh | sh
+More advanced ways to get npm can be found in the [npm README].
 
-Of course, if you're more paranoid than lazy, you can also get the
-[latest code](http://github.com/isaacs/npm), check it all out, and when
-you're happy there's nothing in there to pwn your machine, issue a `make
-install` or `make dev`.
+[install node]: http://blog.nodeknockout.com/post/33857791331/how-to-install-node-npm
+[npm README]: https://github.com/isaacs/npm/blob/master/README.md
 
 ## Getting help: `npm help`
 
@@ -70,7 +68,7 @@ Instead, you can specify your dependencies in the `package.json` file.
 The `package.json` file goes in the root of your project.  It tells npm
 how your package is structured, and what to do to install it, and most
 importantly, what dependencies it relies on.  Here's what the
-[Node.js Knockout `package.json` file looks like](https://github.com/nko2/website/blob/master/package.json).
+[Node.js Knockout `package.json` file looks like](https://github.com/nko3/website/blob/master/package.json).
 
 For projects without dependencies, you only need the `"name"`,
 `"version"`, and `"main"` fields  (even for node-waf compiled addons).
@@ -186,10 +184,10 @@ I think that's pretty cool.
 
 ## What to do when npm lets you down
 
-npm's pretty young software, and still being actively developed.
-Especially if you find yourself using some newer features, occasionally
-npm will have a bug.  Or, perhaps equally likely, you'll need npm to do
-something that it doesn't yet do, and want to request a feature.
+npm's still being actively developed. Especially if you find yourself using
+some newer features, occasionally npm will have a bug.  Or, perhaps equally
+likely, you'll need npm to do something that it doesn't yet do, and want to
+request a feature.
 
 You can post bugs and feature requests on [the issues
 page](http://github.com/isaacs/npm/issues).  If you want to ask general
