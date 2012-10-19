@@ -1,5 +1,7 @@
 - if (typeof(errors) !== 'undefined')
   ul.errors
-    - each message, field in errors
-      - message = message.replace(/^Validator "|" failed for path \w+$/g, '')
-      li #{field}: #{message}
+    - each error in errors
+      - parsed = error.message.match(/^Validator "([^"]*)" failed for path (\w+)$/);
+      - field = parsed[2].replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase().replace(/^([a-z])/, function(m, $1) { return $1.toUpperCase(); });
+      - message = parsed[1]
+      li #{field} #{message}
