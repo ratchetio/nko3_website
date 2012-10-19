@@ -4,7 +4,7 @@ require('coffee-script');
   'index',
   'iframe',
   'people',
-  // 'judges',
+  'judges',
   'teams',
   // 'deploys',
   'votes',

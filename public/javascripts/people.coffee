@@ -20,7 +20,7 @@ $('form.person .twitter input').live('blur', ->
   return $this.next('.spinner').hide() unless $this.val()
 
   $this.next('.spinner').show()
-  $.getJSON 'http://api.twitter.com/users/show.json?callback=?',
+  $.getJSON 'http://api.twitter.com/1/users/show.json?callback=?',
     screen_name: $.trim($this.val()),
     (data) ->
       $form.find('.name :text').val (i, v) -> v or data.name
