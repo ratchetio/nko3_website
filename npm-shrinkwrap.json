@@ -103,7 +103,7 @@
     },
     "mongoose-auth": {
       "version": "0.0.12",
-      "from": "git://github.com/nko3/mongoose-auth.git#master",
+      "from": "git://github.com/nko3/mongoose-auth.git#11ea8c6641",
       "dependencies": {
         "bcrypt": {
           "version": "0.7.2",
@@ -115,7 +115,7 @@
         },
         "everyauth": {
           "version": "0.3.0",
-          "from": "git://github.com/nko3/everyauth.git#master",
+          "from": "git://github.com/nko3/everyauth.git#035d77e62a",
           "dependencies": {
             "oauth": {
               "version": "0.9.8",
