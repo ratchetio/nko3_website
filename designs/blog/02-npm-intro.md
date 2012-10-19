@@ -1,6 +1,6 @@
 _This is the 2nd in series of posts leading up to
 [Node.js Knockout](http://nodeknockout.com) about how to use
-[npm](http://npmjs.org). This post was written by npm author
+[npm](https://npmjs.org). This post was written by npm author
 [Isaac Schlueter](http://izs.me/)._
 
 npm is a [NodeJS](http://nodejs.org/) package manager.  As its name
@@ -14,8 +14,8 @@ too.
 
 More advanced ways to get npm can be found in the [npm README].
 
-[install node]: http://blog.nodeknockout.com/post/33857791331/how-to-install-node-npm
-[npm README]: https://github.com/isaacs/npm/blob/master/README.md
+[install node]: http://nodejs.org/download/
+[npm README]: https://npmjs.org/doc/README.html
 
 ## Getting help: `npm help`
 
@@ -97,21 +97,6 @@ and invalid packages; which is useful for troubleshooting.
 
 `npm help ls` for more info.
 
-## Updating packages: `npm update`
-
-The `update` command does a few things.
-
-1. Search the registry for new versions of all the packages installed.
-2. If there's a newer version, then install it.
-3. Point dependent packages at the new version, if it satisfies their dependency.
-4. Remove the old versions, if no other package names them as a dependency.
-
-So basically, update behaves a lot like a "standard" package manager's
-update command, except that it also checks to make sure that the new
-version isn't going to break anything before it points stuff at it.
-
-You see, npm keeps you out of dependency hell.
-
 ## Development: `npm link`
 
 npm is a development tool, first and foremost.  People sometimes say
@@ -170,14 +155,13 @@ then you've got two options:
 1. Statically compile the dependency into the program.
 2. Hate life.
 
-Option #2 is Not Fun.  So eff that noise.  That sucks, and is dumb.
+Option #2 is Not Fun.  So eff that noise.
 
 Option #1 is less than ideal if you want to be able to abstract out
 parts of your program and benefit from updates to the dependencies.
 
-Thankfully, unlike most programming environments, the CommonJS Securable
-Module system lets you avoid dependency hell by modifying the
-`require.paths` at runtime, so that each package sees the version that
+Thankfully, Node's module system allows for locally bundled
+dependencies, so that each package sees the version that
 it depends on.
 
 I think that's pretty cool.
