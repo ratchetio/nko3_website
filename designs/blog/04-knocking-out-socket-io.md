@@ -1,14 +1,14 @@
 _This is the 4th in a series of posts leading up to [Node.js
 Knockout][1] on how to use [Socket.IO][2]. This post was written by
-guest author and [Node.js Knockout judge][3] Guillermo Rauch._
+socket.io creator [Guillermo Rauch][3]._
 
 [1]: http://nodeknockout.com
 [2]: http://socket.io/
-[3]: http://nodeknockout.com/people/4e30cdcb2986dffb49001acd
+[3]: http://www.devthought.com/
 
 # Knocking out Socket.IO
 
-Ready to rock the Node Knockout 2011 edition?  Considering making a
+Ready to rock the Node Knockout 3?  Considering making a
 real-time app or game? Then you're likely considering
 [Socket.IO](http://socket.io)
 
@@ -185,4 +185,4 @@ You can check out [the example on GitHub][4]. Clone the repo, then run
 
 These are all the tools in your toolbox. Go make great realtime apps!
 
-[4]: https://github.com/nko2/knocking-out-socket.io
+[4]: https://github.com/nko3/knocking-out-socket.io
