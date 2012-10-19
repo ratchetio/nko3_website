@@ -1,7 +1,0 @@
-h1= title('Judge Nominations') + ' (' + judges.length + ')'
-ul
-  - each judge in judges
-    li.judge
-      a( href: '/people/' + judge )= judge.name
-      | 
-      span= judge.updatedAt
