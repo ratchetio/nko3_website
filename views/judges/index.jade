@@ -7,3 +7,8 @@ ul.judges
       h3: a( href='/people/' + judge )= judge.name
       != partial('people/details', { person: judge })
       .bio!= markdown(judge.bio)
+      if admin && judge.nomination
+        form.delete( method='POST', action='/people/' + judge )
+          != _csrf
+          input( type='hidden', name='_method', value='DELETE' )
+          input.scary( type='submit', value='Delete' )
