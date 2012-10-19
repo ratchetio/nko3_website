@@ -8,4 +8,8 @@ ul.judges
       != partial('people/details', { person: judge })
       .bio!= markdown(judge.bio)
       if admin && judge.nomination
-        a.button.scary.delete( href='/people/' + judge ) Delete
+        p.buttons
+          - var twitterBase = 'http://twitter.com/intent/tweet?text=' + encodeURIComponent(('@' + judge.twitterScreenName).replace('@@', '@') + ' ');
+          a.button( href=twitterBase + encodeURIComponent("You've been nominated to judge @node_knockout! Interested? Takes ~2hrs online, at your convenience, between 11/12 and 11/18."), target='twitter' ) Confirm
+          | 
+          a.button.scary.delete( href='/people/' + judge ) Delete
