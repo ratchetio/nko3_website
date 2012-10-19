@@ -165,7 +165,7 @@ h1
     ul.invites
       - each invite in team.invites
         li
-          a( href="mailto: " + invite.email ) #{invite.email}
+          = invite.email
           |  &mdash; 
           a( href='/teams/' + team + '/invites/' + invite.id, rel='nofollow' ) resend
           span.sending

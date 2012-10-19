@@ -71,4 +71,7 @@ app.put '/people/:id', [m.loadPerson, m.ensureAccess], (req, res) ->
 app.delete '/people/:id', [m.loadPerson, m.ensureAccess], (req, res, next) ->
   req.person.remove (err) ->
     return next err if err
-    res.redirect '/'
+    if req.xhr
+      res.send("OK")
+    else
+      res.redirect '/'
