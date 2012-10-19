@@ -4,6 +4,7 @@ mongoose = require 'mongoose'
 auth = require 'mongoose-auth'
 env = require '../config/env'
 ROLES = [ 'nomination', 'contestant', 'judge', 'voter' ]
+request = require('request')
 
 # auth decoration
 PersonSchema = module.exports = new mongoose.Schema
@@ -95,6 +96,17 @@ PersonSchema.plugin auth,
                 return promise.fail err if err
                 promise.fulfill updatedUser
         promise
+
+# validations
+twitterValidator = (twitterHandle, callback) ->
+  return callback(true) unless @nomination or @judge
+  request
+    url: 'http://api.twitter.com/1/users/show.json'
+    qs: { screen_name: twitterHandle }
+    callback: (error, res) ->
+      callback(not error and res.statusCode is 200)
+PersonSchema.path('twitterScreenName').validate twitterValidator,
+  'is required to exist and be valid for judges'
 
 # instance methods
 PersonSchema.method 'toString', -> @id
