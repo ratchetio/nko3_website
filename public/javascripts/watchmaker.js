@@ -426,6 +426,7 @@ var nko = {};
         });
       })
       .keydown(function(e) {
+        return true; // gets in the way of page scrolling
         if ($(e.target).is(':input')) return true;
         if (e.altKey) return true;
         var d = (function() {
