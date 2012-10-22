@@ -1,6 +1,6 @@
 _This is the 6th in a series of posts leading up to [Node.js
 Knockout][1] on using [Mongoose][].  This post was
-written by [Node Knockout judge][2] and [Mongoose][] co-maintainer Aaron
+written by [Node Knockout judge][2] and [Mongoose][] maintainer Aaron
 Heckmann._
 
 [1]: http://nodeknockout.com
@@ -84,7 +84,7 @@ _**TIP: Note that we needed to declare the subdocument Rating schema before
 using it within our Movie schema definition for everything to work
 properly.**_
 
-This is what a movie might look like within the [mongo shell][6]:
+This is what a movie might look like within the [mongo shell][6] (included when you install MongoDB):
 
 [6]: http://www.mongodb.org/display/DOCS/mongo+-+The+Interactive+Shell (MongoDB shell)
 
@@ -103,28 +103,27 @@ Now that we've finished our schemas we're ready to create our movie model.
 And thats it! Everything is all set with the exception of being able to
 actually talk to MongoDB. So let's create a connection.
 
-    mongoose.connect('mongodb://localhost/nodeknockout');
-    var db = mongoose.connection;
-    db.on('open', function () {
-      // now we can start talking
+    mongoose.connect('mongodb://localhost/nodeknockout', function (err) {
+      if (err) return handleErrorSomehow(err);
+      // ok we're set
     });
 
 Now we're ready to create a movie and save it.
 
-    var super8 = new Movie({ name: "Super 8", director: anObjectId, year: 2011 });
+    var movie = new Movie({ name: "Frankenweenie", director: anObjectId, year: 2012 });
 
-    super8.save(function (err) {
+    movie.save(function (err) {
       if (err) return console.error(err); // we should handle this
     });
 
 Oh, but what about adding ratings?
 
-    Movie.findOne({ name: "Super 8" }).where('year', 2011).run(function (err, super8) {
+    Movie.findOne({ name: "Frankenweenie" }).where("year").equals(2012).exec(function (err, movie) {
       if (err) // handle this
 
       // add a rating
-      super8.ratings.push({ stars: 7.7, comment: "it made me happy" });
-      super8.save(callback);
+      movie.ratings.push({ stars: 9.0, comment: "it made me happy" });
+      movie.save(callback);
     });
 
 To look up our movie we used _Model.findOne_ which accepts a where
@@ -135,23 +134,23 @@ called the Query's _run_ method to execute it.
 We didn't have to do it this way, instead you could just pass all of
 your _where_ params directly as the first argument like so:
 
-    Movie.findOne({ name: "Super 8", year: 2011 }, callback);
+    Movie.findOne({ name: "Frankenweenie", year: 2012 }, callback);
 
 Though the first example is more verbose it highlights some of the
-expressive flexibility provided by the Query object returned.
+expressive flexibility provided by the [Query](http://mongoosejs.com/docs/api.html#query_Query) object returned.
 
 Here are a couple more ways we could write this query:
 
-    Movie.where('name', /^Super 8/i).where('year', 2011).limit(1).exec(callback);
+    Movie.where('name', /^Frankenweenie/i).where('year', 2012).limit(1).exec(callback);
 
-    Movie.find({ name: "Super 8", year: { $gt: 2010, $lt: 2012 } }, null, { limit: 1 }, callback);
+    Movie.find({ name: "Frankenweenie", year: { $gt: 2011, $lt: 2013 }}, null, { limit: 1 }, callback);
 
 This is all well and good but what if we look up movies by director and
 year a lot and need the query to be fast? First we'll create a _static_
 method on our Movie model:
 
     MovieSchema.statics.byNameAndYear = function (name, year, callback) {
-      // this could return multiple results
+      // NOTE: find() returns an array and may return multiple results
       return this.find({ name: name, year: year }, callback);
     }
 
@@ -165,12 +164,12 @@ up the director:
 
     MovieSchema.methods.findDirector = function (callback) {
       // Person is our imaginary Model we skipped for brevity
-      return this.db.model('Person').findById(this.director, callback);
+      return this.model('Person').findById(this.director, callback);
     }
 
 Putting it all together:
 
-    Movie.byNameAndYear("Super 8", 2011, function (err, movies) {
+    Movie.byNameAndYear("Frankenweenie", 2012, function (err, movies) {
       if (err) return console.error(err); // handle this
       var movie = movies[0];
       movie.findDirector(function (err, director) {
@@ -180,9 +179,10 @@ Putting it all together:
     });
 
 Thats it for this post. For more info check out [mongoosejs.com][7], the
-github [README][8], or the Mongoose test directory to see even [more
-examples][9].
+mongoose [plugins][10] site, the github [README][8], or the Mongoose test
+directory to see even [more examples][9].
 
 [7]: http://mongoosejs.com (Mongoosejs)
 [8]: https://github.com/LearnBoost/mongoose/blob/master/README.md (Mongoose README)
 [9]: https://github.com/LearnBoost/mongoose/tree/master/test (Mongoose examples)
+[10]: http://plugins.mongoosejs.com
