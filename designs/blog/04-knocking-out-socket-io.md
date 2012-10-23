@@ -29,10 +29,10 @@ following `package.json` inside:
 
     {
         "name": "example"
-      , "version": "0.0.1"
+      , "version": "0.0.2"
       , "dependencies": {
-            "socket.io": "0.7.7"
-          , "request": "2.0.0"
+            "socket.io": "~0.9.10"
+          , "request": "~2.11.4"
         }
     }
 
