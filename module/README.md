@@ -1,10 +1,12 @@
-# node.js knockout deploy check-ins
+node.js knockout deploy check-ins
+---------------------------------
 
 So, we need to keep track of your deploys for lots of different reasons.
 Because we want to be as platform-agnostic as possible, we now have this fancy
 module that will ping the competition website whenever you deploy.
 
-## Installation
+Installation
+============
 
 Add `nko` to the dependencies section of your package.json:
 
@@ -15,7 +17,8 @@ Add `nko` to the dependencies section of your package.json:
 
 After that, `npm install`.
 
-## Usage
+Usage
+=====
 
 Just require it somewhere in your normal execution path. We recommend at the
 top of your `server.js`:
@@ -40,7 +43,8 @@ recorded, make sure that's set correctly. Also, if you happen to have
 `NODE_ENV` set to `production` on your development machine, no worries: we'll
 be making sure the source IP address looks right before recording a deploy.
 
-## Problems?
+Problems?
+=========
 
 As always, you can contact us at [all@nodeknockout.com] or [@node_knockout].
 You can also try checking the [issue tracker].
