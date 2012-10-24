@@ -159,6 +159,8 @@ h1
           = person.location
 
 - if (team.invites.length)
+  - if (admin)
+    i  Created #{relativeDate(team.createdAt)}
   h2 Invites (#{team.invites.length} pending)
   - if (team.includes(user, session.team) || admin)
     p Check your email for invites or resend invites below.
