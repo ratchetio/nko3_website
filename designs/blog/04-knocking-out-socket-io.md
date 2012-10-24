@@ -10,7 +10,7 @@ socket.io creator [Guillermo Rauch][3]._
 
 Ready to rock the Node Knockout 3?  Considering making a
 real-time app or game? Then you're likely considering
-[Socket.IO](http://socket.io)
+[Socket.IO](http://socket.io).
 
 ## Socket.IO makes realtime easy and cross-browser
 
