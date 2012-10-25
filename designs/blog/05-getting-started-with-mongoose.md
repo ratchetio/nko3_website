@@ -1,10 +1,10 @@
-_This is the 6th in a series of posts leading up to [Node.js
+_This is the 5th in a series of posts leading up to [Node.js
 Knockout][1] on using [Mongoose][].  This post was
 written by [Node Knockout judge][2] and [Mongoose][] maintainer Aaron
 Heckmann._
 
 [1]: http://nodeknockout.com
-[2]: http://nodeknockout.com/people/4e24e73eab65aa01000005ac
+[2]: http://nodeknockout.com/people/5082d1e9a9f1fbd123eef7ba
 
 # Getting started with Mongoose and Node
 
