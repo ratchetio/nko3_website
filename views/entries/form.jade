@@ -23,7 +23,7 @@
 .instructions
   h3: label( for='entryInstructions' ) Instructions
   p.note
-    | Give judges a summary of how to use your entry.
+    | Give judges a summary of how to use your entry. 
     b If your entry only works on certain browsers list them here.
   textarea( name='entry[instructions]', id='entryInstructions' )= entry.instructions
 
@@ -37,6 +37,7 @@
   .votable
     input( type='hidden', name='entry[votable]', value=0 )
     input( type='checkbox', name='entry[votable]', id='entryVotable', checked=entry.votable )
+    | &nbsp;
     label( for='entryVotable' ) Yes! I want judges to vote on my entry.
     p.note
       | Uncheck this box if your entry isn't ready to be judged when the
@@ -45,6 +46,7 @@
 .technical
   input( type='hidden', name='entry[technical]', value=0 )
   input( type='checkbox', name='entry[technical]', id='entryTechnical', checked=entry.technical )
+  | &nbsp;
   label( for='entryTechnical' )!= "I'd prefer <a href='/judges/technical'>technical judges</a>."
   p.note
     | Please only select this box if your entry cannot be evaluated fairly

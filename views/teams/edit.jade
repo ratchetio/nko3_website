@@ -2,8 +2,10 @@
 
 form( method='POST', action='/teams/' + team )
   input( type='hidden', name='_method', value='PUT' )
-  //- h1 Entry
-  //- #entry!= partial('entries/form', { entry: team.entry })
+
+  if coding
+    h1 Entry
+    #entry!= partial('entries/form', { entry: team.entry })
 
   h1 Team
   #team!= partial('form')

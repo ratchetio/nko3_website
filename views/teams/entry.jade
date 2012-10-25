@@ -1,0 +1,25 @@
+.entry-info
+  - if (url = team.entry.url)
+    a( href=url )
+      img.screenshot( src='http://pinkyurl.com/i?url=' + encodeURIComponent(url) + '&out-format=png&resize=160x93' )
+    h2: a( href=url )= team.entry.name
+  - else
+    img.screenshot( src='/images/blank.png' )
+    h2= team.entry.name
+  h3= 'by ' + team.name
+  - if (req.vote)
+    a.vote.scary( href='#votes' )
+      img.heart( src='/images/iframe/heart.png' )
+      |  You've voted for this entry
+  - else if (voting)
+    a.button.vote.scary( href='#votes' ) Vote
+  if team.scores.overall
+    .score
+      a( href='/scores#' + team )
+        h2= team.scores.overall.toFixed(2)
+        .dimension overall
+  .clear
+  != markdown(team.entry.description)
+  - if (team.entry.instructions)
+    h4 Judging Instructions
+    != markdown(team.entry.instructions)
