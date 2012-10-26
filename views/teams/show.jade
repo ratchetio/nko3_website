@@ -35,11 +35,10 @@ h1
           = person.location
 
 - if (team.invites.length)
-  - if (admin)
-    i  Created #{relativeDate(team.createdAt)}
   h2 Invites (#{team.invites.length} pending)
   - if (admin)
     a( href='mailto:' + _.pluck(team.invites, 'email').join(',') ) Email team
+    i  Created #{relativeDate(team.createdAt)}
   - if (team.includes(user, session.team) || admin)
     p Check your email for invites or resend invites below.
     ul.invites
