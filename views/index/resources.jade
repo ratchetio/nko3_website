@@ -13,6 +13,27 @@
 
   # Services
 
+:markdown
+  ## <a name="teleportd"></a>Teleportd
+
+  [Teleportd](http://teleportd.com) provides an API for accessing mobile
+  photos that are publicly shared online. It aggregates photos from 14 social
+  networks including Twitter and Instagram, and sees an average of 100 photos/s.
+  Geolocation and keyword tags are associated with the photos, opening up a
+  wide range of use cases.
+
+if services.teleportd
+  if !user
+    p
+      a(href="/login") Sign in
+      |  to see how to get 
+      strong free access to Teleportd's unlimited api
+      |  during Node Knockout.
+  else if user && (user.contestant || user.judge)
+    h4 For free access to Teleportd's api for Node Knockout
+    != markdown(services.teleportd)
+
+:markdown
   ## <a name="monitaur"></a>Monitaur
 
   [Monitaur](http://monitaur.net) is instant server monitoring. Set it up in

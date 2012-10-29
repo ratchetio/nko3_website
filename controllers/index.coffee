@@ -23,7 +23,7 @@ app.get '/', [loadCanRegister, loadCurrentPersonWithTeam], (req, res, next) ->
   res.render2 'index/index',
     team: req.team
 
-[ 'locations', 'prizes', 'rules', 'sponsors', 'scoring', 'jobs', 'resources',
+[ 'locations', 'prizes', 'rules', 'sponsors', 'scoring', 'jobs',
   'how-to-win', 'tell-me-a-story' ].forEach (p) ->
   app.get '/' + p, (req, res) -> res.render2 "index/#{p}"
 
@@ -58,8 +58,8 @@ app.get '/scores/update', (req, res, next) ->
     next err if err
     res.redirect '/scores'
 
-app.get '/services', [m.ensureAuth], (req, res, next) ->
-  return next 401 unless req.user.contestant or req.user.judge or req.user.admin
-  Service.sorted (error, services) ->
+app.get '/resources', (req, res, next) ->
+  Service.asObject (error, services) ->
+    console.log (services)
     next error if error
-    res.render2 'index/services', services: services
+    res.render2 'index/resources', services: services
