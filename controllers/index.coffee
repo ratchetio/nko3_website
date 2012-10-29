@@ -60,6 +60,5 @@ app.get '/scores/update', (req, res, next) ->
 
 app.get '/resources', (req, res, next) ->
   Service.asObject (error, services) ->
-    console.log (services)
     next error if error
     res.render2 'index/resources', services: services
