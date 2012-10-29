@@ -31,14 +31,19 @@ ReplySchema.method 'notifyPeople', (vote) ->
     for person in others
       template = "replied_#{if vote.personId.equals(person.id) then 'judge' else 'team'}"
       util.log "Sending '#{template}' to '#{person.email}'".yellow
-      postageapp.apiCall person.email, template, null, 'all@nodeknockout.com',
-        vote_id: vote.id
-        person_id: commenter.id
-        person_name: commenter.name
-        message: @message
-        team_id: vote.team.slug
-        entry_name: vote.team.entry.name
-
+      postageapp.sendMessage
+        recipients: person.email
+        template: template
+        variables:
+          vote_id: vote.id
+          person_id: commenter.id
+          person_name: commenter.name
+          message: @message
+          team_id: vote.team.slug
+          entry_name: vote.team.entry.name
+        , (err, data) ->
+          return console.error(err) if err?
+          console.log(data)
 VoteSchema = module.exports = new mongoose.Schema
   personId:
     type: ObjectId
@@ -96,19 +101,25 @@ VoteSchema.method 'notifyTeam', ->
 
       for person in people
         util.log "Sending 'voted_on_by_#{@type}' to '#{person.email}'".yellow
-        postageapp.apiCall person.email, "voted_on_by_#{@type}", null, 'all@nodeknockout.com',
-          vote_id: @id
-          person_id: @person.id
-          person_name: @person.name
-          utility_score: @utility
-          design_score: @design
-          innovation_score: @innovation
-          completeness_score: @completeness
-          comment: @comment
-          team_id: @team.slug
-          entry_name: @team.entry.name
-          person_team_id: voterTeam?.slug
-          person_entry_name: voterTeam?.entry?.name
+        postageapp.sendMessage
+          recipients: person.email
+          template: "voted_on_by_#{@type}"
+          variables:
+            vote_id: @id
+            person_id: @person.id
+            person_name: @person.name
+            utility_score: @utility
+            design_score: @design
+            innovation_score: @innovation
+            completeness_score: @completeness
+            comment: @comment
+            team_id: @team.slug
+            entry_name: @team.entry.name
+            person_team_id: voterTeam?.slug
+            person_entry_name: voterTeam?.entry?.name
+          , (err, data) ->
+            return console.error(err) if err?
+            console.log(data)
 
 # associations
 VoteSchema.static 'people', (votes, next) ->

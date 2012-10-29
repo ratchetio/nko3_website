@@ -124,7 +124,7 @@ html
         }
 
         function unvote() {
-          del('/votes/' + nko.vote, { _csrf: _csrf }, function(xhr) {
+          del('/votes/' + nko.vote + '.iframe', { _csrf: _csrf }, function(xhr) {
             if (xhr.status === 200) {
               nko.vote = null;
               update('', -1);
@@ -144,7 +144,7 @@ html
 
         function auth(e) {
           popup("/login/facebook?returnTo=" + location.pathname + "/authed",
-            e, 600, 420, 'facebook');
+            e, 1044, 610, 'facebook');
         }
 
         // called by the popup window when auth is complete

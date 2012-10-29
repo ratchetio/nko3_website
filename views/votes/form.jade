@@ -7,7 +7,17 @@
     p Voting is now closed.
 - else
   - if (!user)
-    p.sign-in: a.scary.button( href='/login?returnTo=' + encodeURIComponent(req.url + '#votes') ) Sign in to vote
+    - var returnTo = '?returnTo=' + encodeURIComponent(req.url + '#votes');
+    .sign-in
+      a.scary.button( href='/login/facebook' + returnTo )
+        | Sign in with 
+        i.icon-facebook
+        | Facebook
+      .or
+        | or sign in as a 
+        a( href='/login/github' + returnTo ) contestant
+        |  or 
+        a( href='/login/twitter' + returnTo ) judge
   - else
     .vote.my
       form.vote(
