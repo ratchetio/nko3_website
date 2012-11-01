@@ -1,4 +1,4 @@
-_This is the 8th in a series of posts leading up to [Node.js Knockout][] on
+_This is the 9th in a series of posts leading up to [Node.js Knockout][] on
 using [Passport][].  This post was written by [Node Knockout judge][] and
 [Passport][] creator Mark Cavage._
 
