@@ -1,10 +1,10 @@
 _This is the 9th in a series of posts leading up to [Node.js Knockout][] on
 using [Passport][].  This post was written by [Node Knockout judge][] and
-[Passport][] creator Mark Cavage._
+[Passport][] creator Jared Hanson._
 
 [Node.js Knockout]: http://nodeknockout.com
 [Passport]: http://passportjs.org/
-[Node Knockout judge]: http://nodeknockout.com/people/508839a8a56717fe3d000005
+[Node Knockout judge]: http://nodeknockout.com/people/5085e10ff3d3beff1200006b
 
 [Passport](http://passportjs.org/) is middleware for Node.js that makes
 implementing authentication quick and easy.  Authentication can take a
