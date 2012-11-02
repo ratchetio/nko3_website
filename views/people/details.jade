@@ -7,12 +7,13 @@
     a.location( href='http://maps.google.com/?q=' + person.location )
       = person.location
   - if ((person.location || person.company) && (person.twitterScreenName || person.githubLogin))
-    |  &mdash;
+    |  &mdash; 
   - if (person.twitterScreenName || person.githubLogin)
     .icons
       - if (person.twitterScreenName)
         a.twitter( href='http://twitter.com/' + person.twitterScreenName )
-          img( src='/images/twitter.png' )
+          i.icon-twitter
+      | 
       - if (person.githubLogin)
         a.github( href='http://github.com/' + person.githubLogin )
-          img( src='/images/github.png' )
+          i.icon-github

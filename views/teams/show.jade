@@ -12,8 +12,8 @@ h1
   p.accept
     a.button.scary( href='/login/github' ) Accept Invitation
     |  via 
-    img( src='/images/github.png', style='margin-bottom: -4px;' )
-    | github
+    i.icon-github
+    |  github
 
 - if (coding && (admin || team.includes(user)))
   != partial('steps')

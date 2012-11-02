@@ -649,10 +649,12 @@ form.vote
       display inline-block
       margin 0 1em
       padding-left 18px
-      &.pending
-        background url('/images/cross.png') no-repeat 0 5px
-      &.done
-        background url('/images/tick.png') no-repeat 0 5px
+      &.pending:before
+        font-family fontello
+        content '\2715' // '✕'
+      &.done:before
+        font-family fontello
+        content '\2713' // '✓'
       a
         padding-bottom 8px
       a.selected

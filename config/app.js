@@ -108,6 +108,7 @@ app.configure(function() {
       },
       files: [ // order matters here
         'vendor/normalize.css',
+        'fontello.css',
         'application.styl'
       ]
     }
