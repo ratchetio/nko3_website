@@ -50,8 +50,9 @@ module.exports = (app) ->
       </a>
       """
 
-    voting: app.enabled 'voting'
     coding: app.enabled 'coding'
+    voting: app.enabled 'voting'
+
     Vote: mongoose.model 'Vote'
     stars: (count) ->
       stars = for i in [1..5]

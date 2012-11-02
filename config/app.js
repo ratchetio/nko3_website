@@ -37,8 +37,8 @@ app.events = new EventEmitter();
 app.db = require('../models')(env.mongo_url);
 
 // config
-app.disable('voting');
 app.disable('coding');
+app.disable('voting');
 
 app.configure(function() {
   var coffee = require('coffee-script')
