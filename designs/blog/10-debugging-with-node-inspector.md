@@ -81,9 +81,10 @@ Chrome. Here's a [good overview of the UI][6].
 
 2. My script runs too fast to attach the debugger.
 
-  > use `--debug-brk` to pause the script on the first line
-  > or add a `debugger` statement in your code where you want the debugger to
+  > add a `debugger` statement in your code where you want the debugger to
   stop
+
+  > or use `--debug-brk` to pause the script on the first line
 
 3. Can I debug remotely?
 
