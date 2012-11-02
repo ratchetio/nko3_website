@@ -72,7 +72,6 @@ app.configure(function() {
         'vendor/jquery-1.7.2.js',
         'vendor/jquery.ba-hashchange.js',
         'vendor/jquery.border-image.js',
-        'vendor/jquery.fancybox.js',
         'vendor/jquery.infinitescroll.js',
         'vendor/jquery.keylisten.js',
         'vendor/jquery.pjax.js',
@@ -109,7 +108,6 @@ app.configure(function() {
       },
       files: [ // order matters here
         'vendor/normalize.css',
-        'vendor/jquery.fancybox.css',
         'application.styl'
       ]
     }
