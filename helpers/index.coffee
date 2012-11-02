@@ -24,7 +24,7 @@ module.exports = (app) ->
 
     avatar_url: (person, size = 30) ->
       if person.avatarURL
-        person.avatarURL size
+        person.avatarURL size*2
       else
         person.imageURL
 
