@@ -11,5 +11,6 @@ Person.find { role: 'contestant', email: /@/, }, (err, people) ->
   people.forEach (person) ->
     person.team (err, team) ->
       throw err if err
-      console.log "#{person.name ? ""}\t#{person.email}\t#{team}"
+      if team?
+        console.log "#{person.name ? ""}\t#{person.email}\t#{team}"
       mongoose.connection.close() if --i is 0
