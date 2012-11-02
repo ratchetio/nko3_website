@@ -1,14 +1,17 @@
-_This is the 7th in a series of posts leading up to [Node.js
+_This is the 10th in a series of posts leading up to [Node.js
 Knockout][1] on debugging node processes using [Node Inspector][2].
 This post was written by [Node Knockout judge][3] and [Node Inspector][2]
 author Danny Coates._
 
 [1]: http://nodeknockout.com
 [2]: https://github.com/dannycoates/node-inspector
-[3]: http://nodeknockout.com/people/4e28baf4110fd2010000440d
+[3]: http://nodeknockout.com/people/50854751a9f1fbd123eef7ce
+
+While node has a [built in debugger](http://vimeo.com/19465332), Node
+Inspector provides a pleasant graphical interface for debugging node programs.
 
 Node Inspector is a debugger interface for node.js using the WebKit Web
-Inspector. It's the familiar javascript debugger from Safari and Chrome.
+Inspector, the familiar javascript debugger from Safari and Chrome.
 
 ## Install
 
@@ -27,6 +30,9 @@ or, to pause your script on the first line:
 
     $ node --debug-brk your/short/node/script.js
 
+**NOTE: make sure that the `--debug` flag comes before `your/node/program.js`
+or else you may see an `EADDRINUSE` error.**
+
 Or you can enable debugging on a node that is already running by sending
 it a signal:
 
@@ -42,7 +48,7 @@ or `ps -ef` are good
 
 Great! Now you're ready to attach node-inspector.
 
-### Debugging
+## Debugging
 
 1. start the inspector. I usually put it in the background
 
@@ -54,7 +60,9 @@ Great! Now you're ready to attach node-inspector.
 3. you should now see the javascript source from node. If you don't,
    click the scripts tab.
 
-4. select a script and set some breakpoints (far left line numbers)
+4. select a script and set some breakpoints (far left line numbers) or simply
+   add a `debugger` call in your code (node will break automatically on the
+   call, just as V8 does).
 
 5. then watch the [slightly outdated but hilarious screencasts][5]
 
@@ -74,11 +82,13 @@ Chrome. Here's a [good overview of the UI][6].
 2. My script runs too fast to attach the debugger.
 
   > use `--debug-brk` to pause the script on the first line
+  > or add a `debugger` statement in your code where you want the debugger to
+  stop
 
 3. Can I debug remotely?
 
-  > Yes. node-inspector needs to run on the same machine as the node process, but your
-  browser can be anywhere. Just make sure the firewall is open on 8080
+  > Yes. node-inspector needs to run on the same machine as the node process,
+  but your browser can be anywhere. Just make sure the firewall is open on 8080
 
 4. I got the ui in a weird state.
 
