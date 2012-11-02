@@ -36,7 +36,7 @@ TeamSchema = module.exports = new mongoose.Schema
   lastDeploy: {}
   code:
     type: String
-    default: -> crypto.randomBytes(12).toString('base64')
+    default: -> crypto.randomBytes(12).toString('base64').replace(/\+/g, '-').replace(/\//g, '_')
   linode: {}
   search: String
   scores:

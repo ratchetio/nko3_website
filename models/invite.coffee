@@ -12,7 +12,7 @@ InviteSchema = module.exports = new mongoose.Schema
     default: no
   code:
     type: String
-    default: -> crypto.randomBytes(12).toString('base64')
+    default: -> crypto.randomBytes(12).toString('base64').replace(/\+/g, '-').replace(/\//g, '_')
 
 InviteSchema.method 'send', (force) ->
   if not @sent or force
