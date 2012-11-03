@@ -47,7 +47,7 @@ queue = async.queue (team, next) ->
       , next
     (next) ->                 # seed repo
       createRepo = spawn './create-repo.sh',
-        [ team.slug, team.code, team.name ],
+        [ team.slug, team.code, team.name, team.github.id ],
         cwd: __dirname
       createRepo.stdout.on 'data', (s) -> console.log s.toString()
       createRepo.on 'exit', -> next()
