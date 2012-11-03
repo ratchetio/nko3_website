@@ -2,7 +2,7 @@ require 'colors'
 env = require '../config/env'
 mongoose = require('../models')(env.mongo_url)
 require('../lib/mongo-log')(mongoose.mongo)
-util = require 'util'
+spawn = require('child_process').spawn
 async = require 'async'
 request = require 'request'
 
@@ -33,7 +33,7 @@ queue = async.queue (team, next) ->
           permission: 'admin'
       , next
     (res, body, next) ->      # save team id
-      team.github ||= body
+      team.github = body if body.id
       team.save next
     (team, n, next) ->        # get people
       Person.find { _id: { $in: team.peopleIds } }, (err, people) ->
@@ -45,6 +45,12 @@ queue = async.queue (team, next) ->
           json: {}
         , next
       , next
+    (next) ->                 # seed repo
+      createRepo = spawn './create-repo.sh',
+        [ team.slug, team.code, team.name ],
+        cwd: __dirname
+      createRepo.stdout.on 'data', (s) -> console.log s.toString()
+      createRepo.on 'exit', -> next()
   ], next
 , 5
 
