@@ -21,14 +21,13 @@ ul.steps
     h2.pending Not Yet Deployed
 
   h4 GitHub &mdash; 
-    a( href='https://github.com/organizations/nko3/teams/id' ) Team
+    a( href='https://github.com/organizations/nko3/teams/#{team.github && team.github.id}' ) Team
     | , 
     a( href='https://github.com/nko3/#{team.slug}' ) Repo
   ul
     li git clone <b>git@github.com:nko3/#{team.slug}.git</b>
 
-  h4 Nodejitsu &mdash; 
-    a( href='http://blog.nodeknockout.com' ) Detailed instructions
+  h4 Nodejitsu
   ul
     li npm install -g jitsu
     li jitsu login --username <b>nko3-#{team.slug}</b> --password <b>#{team.code}</b>
