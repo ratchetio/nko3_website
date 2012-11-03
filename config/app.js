@@ -119,11 +119,10 @@ app.configure(function() {
 
 app.configure('development', function() {
   app.use(express.static(app.paths.public));
-  app.use(express.profiler());
   require('../lib/mongo-log')(app.db.mongo);
 });
 app.configure('production', function() {
-  app.use(express.static(app.paths.public, { maxAge: 1000 * 5 * 60 }));
+  app.use(express.static(app.paths.public, { maxAge: 1000*60*5 }));
   app.use(function(req, res, next) {
     if (req.headers.host !== 'nodeknockout.com')
       res.redirect('http://nodeknockout.com' + req.url);
@@ -138,7 +137,8 @@ app.configure(function() {
   app.use(express.cookieParser());
   app.use(express.session({
     secret: secrets.session,
-    store: new RedisStore
+    store: new RedisStore,
+    cookie: { path: '/', httpOnly: true, maxAge: 1000*60*60*24*28 }
   }));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
