@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "airbrake": "*",
+    "async": "*",
     "coffee-script": "*",
     "colors": "*",
     "connect-assetmanager": "*",
