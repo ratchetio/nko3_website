@@ -1,7 +1,7 @@
-require 'colors'
 env = require '../config/env'
 mongoose = require('../models')(env.mongo_url)
 require('../lib/mongo-log')(mongoose.mongo)
+
 spawn = require('child_process').spawn
 async = require 'async'
 request = require 'request'
@@ -52,7 +52,7 @@ queue = async.queue (team, next) ->
       createRepo.stdout.on 'data', (s) -> console.log s.toString()
       createRepo.on 'exit', -> next()
   ], next
-, 5
+, 5 # workers
 
 Team.find { slug: 'fortnight-labs' }, (err, teams) ->
   throw err if err
@@ -60,4 +60,4 @@ Team.find { slug: 'fortnight-labs' }, (err, teams) ->
 
 queue.drain = ->
   mongoose.connection.close()
-  console.log 'done!'
+  console.log 'done'
