@@ -1,16 +1,15 @@
 unless process.env.LOGIN
-  console.log "Usage: LOGIN=[github username]:[github password] coffee #{__filename}"
+  console.log "Usage: LOGIN=[github username]:[password] coffee #{__filename}"
   process.exit(1)
 
-env = require '../config/env'
-mongoose = require('../models')(env.mongo_url)
-require('../lib/mongo-log')(mongoose.mongo)
+mongoose = require('../models')(require('../config/env').mongo_url)
+#require('../lib/mongo-log')(mongoose.mongo)
 
 spawn = require('child_process').spawn
 async = require 'async'
 request = require 'request'
 
-url = "https://#{process.env.LOGIN}@api.github.com"
+github = (path) -> "https://#{process.env.LOGIN}@api.github.com/#{path}"
 
 Team = mongoose.model 'Team'
 Person = mongoose.model 'Person'
@@ -22,7 +21,7 @@ queue = async.queue (team, next) ->
   async.waterfall [
     (next) ->                 # create repo
       request.post
-        url: "#{url}/orgs/nko3/repos"
+        url: github 'orgs/nko3/repos'
         json:
           name: team.slug
           homepage: "http://2012.nodeknockout.com/teams/#{team}"
@@ -30,7 +29,7 @@ queue = async.queue (team, next) ->
       , next
     (res, body, next) ->      # create team
       request.post
-        url: "#{url}/orgs/nko3/teams"
+        url: github 'orgs/nko3/teams'
         json:
           name: team.name
           repo_names: [ "nko3/#{team.slug}" ]
@@ -39,7 +38,7 @@ queue = async.queue (team, next) ->
     (res, body, next) ->      # save team id
       team.github = body if body.id
       unless team.github
-        console.warn "Proceeding without accurate GitHub team id"
+        console.warn "!!! Proceeding without accurate GitHub team id"
         team.github = { id: 0 }
       team.save next
     (team, n, next) ->        # get people
@@ -48,7 +47,7 @@ queue = async.queue (team, next) ->
     (team, people, next) ->   # add members
       async.forEach people, (person, next) ->
         request.put
-          url: "#{url}/teams/#{team.github.id}/members/#{person.github.login}"
+          url: github "teams/#{team.github.id}/members/#{person.github.login}"
           json: {}
         , next
       , next
