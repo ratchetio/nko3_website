@@ -1,3 +1,7 @@
+unless process.env.LOGIN
+  console.log "Usage: LOGIN=[github username]:[github password] coffee #{__filename}"
+  process.exit(1)
+
 env = require '../config/env'
 mongoose = require('../models')(env.mongo_url)
 require('../lib/mongo-log')(mongoose.mongo)
@@ -6,7 +10,7 @@ spawn = require('child_process').spawn
 async = require 'async'
 request = require 'request'
 
-url = "https://visnup:#{process.env.PASSWORD}@api.github.com"
+url = "https://#{process.env.LOGIN}@api.github.com"
 
 Team = mongoose.model 'Team'
 Person = mongoose.model 'Person'
@@ -34,6 +38,9 @@ queue = async.queue (team, next) ->
       , next
     (res, body, next) ->      # save team id
       team.github = body if body.id
+      unless team.github
+        console.warn "Proceeding without accurate GitHub team id"
+        team.github = { id: 0 }
       team.save next
     (team, n, next) ->        # get people
       Person.find { _id: { $in: team.peopleIds } }, (err, people) ->
@@ -58,6 +65,4 @@ Team.find { slug: 'fortnight-labs' }, (err, teams) ->
   throw err if err
   queue.push teams
 
-queue.drain = ->
-  mongoose.connection.close()
-  console.log 'done'
+queue.drain = -> mongoose.connection.close()
