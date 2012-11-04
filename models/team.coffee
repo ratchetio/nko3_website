@@ -77,17 +77,11 @@ TeamSchema.static 'canRegister', (next) ->
       limit++ # +1 for fortnight labs team
       next null, count < limit, limit - count
 TeamSchema.static 'uniqueName', (name, next) ->
-  Team.count { name: name }, (err, count) ->
-    return next err if err
-    next null, !count
-TeamSchema.static 'uniqueSlug', (slug, next) ->
-  Team.count { slug: slug }, (err, count) ->
-    return next err if err
-    next null, !count
+  Team.count { name: name }, (err, count) -> next err, count is 0
 TeamSchema.static 'sortedByScore', (next) ->
-  Team.find { 'entry.votable': true, lastDeploy: {$ne:null} }, {}, {sort: [['scores.overall', -1]]}, (error,teams) ->
-    return next error if error
-    next null, teams
+  spec = { 'entry.votable': true, lastDeploy: {$ne:null} }
+  sort = { sort: [['scores.overall', -1]] }
+  Team.find spec, {}, sort, next
 
 TeamSchema.static 'updateAllSavedScores', (next) ->
   map = ->
@@ -261,29 +255,26 @@ TeamSchema.pre 'save', (next) ->
 
 ## unique slug
 
-uniquifySlug = (s, attempt, next) ->
-  unique = if attempt is 0
-      s
-    else
-      "#{s}-#{attempt}"
-  Team.uniqueSlug unique, (err, isUnique) ->
+uniquifySlug = (base, attempt, okId, next) ->
+  unique = if attempt is 0 then base else "#{base}-#{attempt}"
+  Team.count { slug: unique, _id: { $ne: okId } }, (err, count) ->
     return next err if err
-    if isUnique
+    if count is 0
       next null, unique
     else
-      uniquifySlug s, attempt + 1, next
+      uniquifySlug base, attempt + 1, okId, next
 
+TeamSchema.virtual('slugBase').get ->
+  @name
+    .toLowerCase()
+    .replace(/['"]+/g, '')
+    .replace(/[^-a-zA-Z0-9]+/g, '-')
+    .replace(/^-/, '')
+    .substring(0, 20)  # arbitrarily below some limits (email, dns, etc.)
+    .replace(/-$/, '')
 TeamSchema.pre 'save', (next) ->
   return next() if @slug?
-
-  s = @name
-    .toLowerCase()
-    .replace(/[^-a-z0-9]+/g, '-')
-    .replace(/^-/, '')
-    .substring(0, 20)  # arbitrarily below heroku's 30 limit
-    .replace(/-$/, '')
-
-  uniquifySlug s, 0, (err, uniqueSlug) =>
+  uniquifySlug @slugBase, 0, @_id, (err, uniqueSlug) =>
     return next err if err
     @slug = uniqueSlug
     next()
