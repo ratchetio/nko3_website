@@ -37,6 +37,42 @@ jitsu login --username nko3-${slug} --password ${code}
 jitsu deploy
 ~~~
 
+## Tips
+
+### Vote KO Widget
+
+Use our "Vote KO" widget to let from your app directly: ![Vote KO widget](http://f.cl.ly/items/1n3g0W0F0G3V0i0d0321/Screen%20Shot%202012-11-04%20at%2010.01.36%20AM.png)
+
+Here's the code for including it in your site:
+
+~~~html
+<iframe src="http://nodeknockout.com/iframe/${slug}" frameborder=0 scrolling=no allowtransparency=true width=115 height=25>
+</iframe>
+~~~
+
+### Tutorials & Free Services
+
+If you're feeling a bit lost about how to get started or what to use, we've
+got some [great resources for you](http://nodeknockout.com/resources).
+
+First, we've pulled together a great set of tutorials about some of node's
+best and most useful libraries:
+
+* [How to install node and npm](http://blog.nodeknockout.com/post/33857791331/how-to-install-node-npm)
+* [Getting started with Express](http://blog.nodeknockout.com/post/34180474119/getting-started-with-express)
+* [Real-time communication with Socket.IO](http://blog.nodeknockout.com/post/34243127010/knocking-out-socket-io)
+* [Data persistence with Mongoose](http://blog.nodeknockout.com/post/34302423628/getting-started-with-mongoose)
+* [OAuth integration using Passport](http://blog.nodeknockout.com/post/34765538605/getting-started-with-passport)
+* [Debugging with Node Inspector](http://blog.nodeknockout.com/post/34843655876/debugging-with-node-inspector)
+* [and many more](http://nodeknockout.com/resources#tutorials)&hellip;
+
+Also, we've got a bunch of great free services provided by sponsors,
+including:
+
+* [MongoLab](http://nodeknockout.com/resources#mongolab) - for Mongo hosting
+* [Monitaur](http://nodeknockout.com/resources#monitaur) - for server monitoring
+* [Teleportd](http://nodeknockout.com/resources#teleportd) - real-time photo streams
+* [and more](http://nodeknockout.com/resources#tutorials)&hellip;
 
 ## Have fun!
 
