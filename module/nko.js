@@ -9,7 +9,7 @@ module.exports = function ping(code, callback) {
     throw Error('Go to http://nodeknockout.com/teams/mine to get your code.');
 
   var subdomain = process.env.SUBDOMAIN
-    , hostname = subdomain ? subdomain + '.nodejitsu.com' : os.hostname();
+    , hostname = subdomain ? subdomain + '.jitsu.com' : os.hostname();
 
   var params = {
     hostname: hostname,
