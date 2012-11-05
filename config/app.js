@@ -37,10 +37,11 @@ app.events = new EventEmitter();
 app.db = require('../models')(env.mongo_url);
 app.db.app = app;  // sooo hacky
 
-// config
-app.enable('registration');
-app.disable('coding');
-app.disable('voting');
+// state (getting pretty gross)
+app.disable('registration');  // months beforehand
+app.enable('pre-coding');     // week beforehand
+app.disable('coding');        // coding + several hours before
+app.disable('voting');        // after
 
 app.configure(function() {
   var coffee = require('coffee-script')

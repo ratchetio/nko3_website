@@ -8,15 +8,17 @@
   [last year's winners]: http://2011.nodeknockout.com/
 
 section.when
-  h3
-    | node.js knockout 2012 will be
-    .dates
-      a( href="http://bit.ly/MoVN39" )
-        time.start( datetime="2012-11-10T00:00:00Z" ) Nov 10
-      |  - 
-      a( href="http://bit.ly/MoW3Pp" )
-        time.end( datetime="2012-11-12T00:00:00Z" ) Nov 12, 2012
-  #countdown from now
+  if registration || preCoding || coding
+    h3
+      | node.js knockout 2012 is on
+      .dates
+        a( href="http://bit.ly/MoVN39" )
+          time.start( datetime="2012-11-10T00:00:00Z" ) Nov 10
+        |  - 
+        a( href="http://bit.ly/MoW3Pp" )
+          time.end( datetime="2012-11-12T00:00:00Z" ) Nov 12, 2012
+        |  UTC
+    #countdown from now
 
   if registration
     if req.canRegister
@@ -34,15 +36,18 @@ section.when
       h1 Registration is Full
       p
         a( href="/teams/new" ) More spots on Nov 1 at 0:00 & 12:00 UTC
-  else
-    if coding
-      h1 Coding
-    else if voting
-      h1 Voting
-    else
-      h1 Registration is Closed
+  else if preCoding
+    h1 Registration is Closed
 
-      p Stay tuned for more info on competition weekend!
+    p
+      | Remember to read up on the <a href="/rules">rules</a> and stay tuned
+      | for more info.
+  else if coding
+    h1 Coding
+  else if voting
+    h1 Voting
+  else
+    h1 Done
 
   p.ps.
     P.S. This is a massively-multiplayer website: click around and chat with
