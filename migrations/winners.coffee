@@ -18,7 +18,7 @@ blurb = (category, slug, fn) ->
     console.log team.name
     fn """
       <div style='clear:both'></div>
-      <a href='#{team.entry.url}'><img src='#{team.screenshot()}' style='float:right;margin-left:1ex;margin-top:10px;'></a>
+      <a href='#{team.entry.url}'><img src='#{team.screenshot}' style='float:right;margin-left:1ex;margin-top:10px;'></a>
       <h2 style='margin-bottom:0'>
         #{category}:
         <a href='#{team.entry.url}'>#{team.entry.name}</a>

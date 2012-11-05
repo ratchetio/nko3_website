@@ -16,7 +16,7 @@ ul.teams
     li
       - url = team.entry.url
       a( href=url )
-        img.screenshot( src='http://pinkyurl.com/i?url=' + encodeURIComponent(url) + '&out-format=png&resize=160x93' )
+        img.screenshot( src=team.screenshot )
       h2: a( href=url )= team.entry.name
       h4 by 
         a( href='/teams/' + team )= team.name

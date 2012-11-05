@@ -99,7 +99,7 @@ module.exports = function(app) {
           { name: team.entry.name
           , by: team.name
           , slug: team.slug
-          , screenshot: team.screenshot()
+          , screenshot: team.screenshot
           , url: team.entry.url }
         , message: commit.message.trim()
         , author: commit.author.username
@@ -125,7 +125,7 @@ module.exports = function(app) {
           { name: team.entry.name
           , by: team.name
           , slug: team.slug
-          , screenshot: team.screenshot()
+          , screenshot: team.screenshot
           , url: team.entry.url }
         , platform: deploy.platform
         , updatedAt: deploy.updatedAt };
