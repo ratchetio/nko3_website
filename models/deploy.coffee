@@ -22,6 +22,7 @@ DeploySchema.path('remoteAddress').validate (v) ->
   @platform =
     if inNetwork v, '127.0.0.1/24'
       'localdomain'
+      ###
     else if inNetwork v, '72.2.126.0/23'
       'joyent'
     else if inNetwork v, """
@@ -39,7 +40,8 @@ DeploySchema.path('remoteAddress').validate (v) ->
                          178.79.128.0/18
                          """
       'linode'
-    else if @hostname?.match(/\.nodejitsu\.com$/)
+      ###
+    else if @hostname?.match(/\.jitsu\.com$/)
       'nodejitsu'
   @platform?
 , 'not production'
