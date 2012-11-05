@@ -37,6 +37,7 @@ app.events = new EventEmitter();
 app.db = require('../models')(env.mongo_url);
 
 // config
+app.disable('registration');
 app.disable('coding');
 app.disable('voting');
 

@@ -50,6 +50,7 @@ module.exports = (app) ->
       </a>
       """
 
+    registration: app.enabled 'registration'
     coding: app.enabled 'coding'
     voting: app.enabled 'voting'
 

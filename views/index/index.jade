@@ -18,21 +18,31 @@ section.when
         time.end( datetime="2012-11-12T00:00:00Z" ) Nov 12, 2012
   #countdown from now
 
-  if req.canRegister
-    h1 Registration is Open
-    - if (req.team)
-      h3
-        | Your team: 
-        a( href="/teams/#{team}" )= team.name
-    - else
-      p: a.register.button( href="/teams/new" ) Register Now
-    p
-      i= req.teamsLeft + " spots remaining"
+  if registration
+    if req.canRegister
+      h1 Registration is Open
+      - if (req.team)
+        h3
+          | Your team: 
+          a( href="/teams/#{team}" )= team.name
+      - else
+        p: a.register.button( href="/teams/new" ) Register Now
+      p
+        i= req.teamsLeft + " spots remaining"
+    else
+      h1 Registration is Full
+      p
+        a( href="/teams/new" ) More spots on Nov 1 at 0:00 & 12:00 UTC
   else
-    h1 Registration is Full
-    p
-      a( href="/teams/new" ) More spots on Nov 1 at 0:00 & 12:00 UTC
+    if coding
+      h1 Coding
+    else if voting
+      h1 Voting
+    else
+      h1 Registration is Closed
 
-  :markdown
+      p Stay tuned for more info on competition weekend!
+
+  p.ps.
     P.S. This is a massively-multiplayer website: click around and chat with
     other visitors. Click on the lamp post for easier chatting.
