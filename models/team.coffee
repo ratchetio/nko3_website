@@ -1,6 +1,5 @@
 _ = require 'underscore'
 mongoose = require 'mongoose'
-app = mongoose.app
 crypto = require 'crypto'
 querystring = require 'querystring'
 request = require 'request'
@@ -70,7 +69,7 @@ TeamSchema.index updatedAt: -1
 TeamSchema.static 'findBySlug', (slug, rest...) ->
   Team.findOne { slug: slug }, rest...
 TeamSchema.static 'canRegister', (next) ->
-  return next null, false, 0 if app.disabled('registration')
+  return next null, false, 0 if mongoose.app.disabled('registration')
   Team.count {}, (err, count) ->
     return next err if err
     TeamLimit.current (err, limit) ->
