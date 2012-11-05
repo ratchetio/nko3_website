@@ -38,7 +38,7 @@ app.db = require('../models')(env.mongo_url);
 app.db.app = app;  // sooo hacky
 
 // config
-app.disable('registration');
+app.enable('registration');
 app.disable('coding');
 app.disable('voting');
 
