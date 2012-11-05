@@ -35,6 +35,7 @@ app.events = new EventEmitter();
 
 // db
 app.db = require('../models')(env.mongo_url);
+app.db.app = app;  // sooo hacky
 
 // config
 app.disable('registration');

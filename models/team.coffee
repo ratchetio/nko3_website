@@ -1,6 +1,6 @@
 _ = require 'underscore'
-app = require '../config/app'
 mongoose = require 'mongoose'
+app = mongoose.app
 crypto = require 'crypto'
 querystring = require 'querystring'
 request = require 'request'

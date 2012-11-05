@@ -27,6 +27,17 @@ queue = async.queue (team, next) ->
           homepage: "http://2012.nodeknockout.com/teams/#{team}"
           private: true
       , next
+    (res, body, next) ->      # create push hook
+      return next(null, null, null) unless body.id
+      request.post
+        url: github "repos/nko3/#{team.slug}/hooks"
+        json:
+          name: 'web'
+          active: true
+          config:
+            url: "http://nodeknockout.com/teams/#{team.code}/commits"
+            content_type: 'json'
+      , next
     (res, body, next) ->      # create team
       request.post
         url: github 'orgs/nko3/teams'
