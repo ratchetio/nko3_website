@@ -23,11 +23,9 @@ section.when
   if registration
     if req.canRegister
       h1 Registration is Open
-      - if (req.team)
-        h3
-          | Your team: 
-          a( href="/teams/#{team}" )= team.name
-      - else
+      if req.team
+        h3 Your team: <a href="/teams/#{team}">#{team.name}</a>
+      else
         p: a.register.button( href="/teams/new" ) Register Now
       p
         i= req.teamsLeft + " spots remaining"
@@ -41,7 +39,8 @@ section.when
       | Remember to read up on the <a href="/rules">rules</a> and stay tuned
       | for more info.
   else if coding
-    h1 Coding
+    if req.team
+      h3 Your team: <a href="/teams/#{team}">#{team.name}</a>
   else if voting
     h1 Voting
   else

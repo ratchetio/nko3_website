@@ -26,7 +26,7 @@ load = ->
             $this.append append if append
             setTimeout tick, 800
           else
-            $this.html $('<h1>GOGOGOGO</h1>')
+            $this.html $('<a class="button" href="/teams/mine">GOGOGOGO</a>')
 
 $(load)
 $(document).bind 'end.pjax', load
