@@ -7,10 +7,9 @@
   [rules]: /rules
   [last year's winners]: http://2011.nodeknockout.com/
 
-section.when
-  if registration || preCoding || coding
-    h3
-      | node.js knockout 2012 is on
+if registration || preCoding || coding
+  section.when
+    h3 node.js knockout 2012 is
       .dates
         a( href="http://bit.ly/MoVN39" )
           time.start( datetime="2012-11-10T00:00:00Z" ) Nov 10
@@ -20,32 +19,60 @@ section.when
         |  UTC
     #countdown from now
 
-  if registration
-    if req.canRegister
-      h1 Registration is Open
-      if req.team
-        h3 Your team: <a href="/teams/#{team}">#{team.name}</a>
+    if registration
+      if req.canRegister
+        h1 Registration is Open
+        if req.team
+          p Your team: <a href="/teams/#{team}">#{team.name}</a>
+        else
+          p: a.register.button( href="/teams/new" ) Register Now
+        p: i= req.teamsLeft + " spots remaining"
       else
-        p: a.register.button( href="/teams/new" ) Register Now
-      p
-        i= req.teamsLeft + " spots remaining"
-        | . Closes in an hour.
-    else
-      h1 Registration is Full
-      p: a( href="/teams/new" ) More spots on Nov 1 at 0:00 & 12:00 UTC
-  else if preCoding
-    h1 Registration is Closed
-    p
-      | Remember to read up on the <a href="/rules">rules</a> and stay tuned
-      | for more info.
-  else if coding
-    if req.team
-      h3 Your team: <a href="/teams/#{team}">#{team.name}</a>
-  else if voting
-    h1 Voting
-  else
-    h1 Done
+        h1 Registration is Full
+        p: a( href="/teams/new" ) More spots on Nov 1 at 0:00 & 12:00 UTC
+    else if preCoding
+      h2 Registration is Closed
+      if req.team
+        p Your team: <a href="/teams/#{team}">#{team.name}</a>
 
+if preCoding
+  :markdown
+    # Rules
+
+    This is just a summary. But be sure to check out the [rules page](/rules)
+    for complete details.
+
+    1. **Node.js** - All applications must be built using node.js
+    2. **48 hours** - All work must take place between Nov 10 0:00 UTC and Nov
+       12 0:00 UTC. You may not create **any** digital assets before then.
+    3. **Teams** - Teams must be between 1-4 people.
+    4. **Source control** - All code must be checked into a private GitHub
+       repository that we will provide.
+    5. **Deployment** - Code must be deployed to Nodejitsu (we will provide
+       instructions).
+    6. **Web application** - Code should be accessible to judges via the web.
+       If you aren't writing a web app, it's up to you to come up with a clever
+       way to let people judge it via the web.
+    7. **Technical Entries** - You may opt-in to have judges with technical
+       backgrounds review your app.
+    8. **Libraries and 3rd party digital assets** - We encourage you to use
+       free and publicly available libraries, stock photos, and icon sets.
+       Paying for libraries or other assets is not allowed.
+    8. **Web services and their APIs** - Go for it, everybody loves mashups.
+    9. **Ownership** - Node.js Knockout makes no claim to the code you create
+       during the contest. It's all yours.
+    10. **Judging** - Winners will be picked by expert judges, contestants, and
+       the general public.
+    11. **Misc** - Don't break any laws or harm any animals.
+    
+else if coding
+  h1 Coding
+else if voting
+  h1 Voting
+else
+  h1 Done
+
+section.ps
   p.ps.
     P.S. This is a massively-multiplayer website: click around and chat with
     other visitors. Click on the lamp post for easier chatting.
