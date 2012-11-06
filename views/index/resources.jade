@@ -18,6 +18,23 @@
   # <a name="services"></a>Services
 
 :markdown
+  ## <a name="ratchetio"></a>Ratchet.io
+  
+  [Ratchet.io](https://ratchet.io) is real-time execption tracking on steroids. 
+  It has the basics covered&mdash;de-duplication, alerts, context, graphs, a 
+  solid backend&mdash;and adds a dashboard, search, replays, Github integration,
+  an API, and more. Set it up in 5 minutes.
+
+if !user
+  p
+    a(href="/login") Sign in
+    |  for the super-secret free signup link.
+else if user && (user.contestant || user.judge)
+  h4 For free access to Ratchet.io for Node Knockout
+    p 
+      a(href="https://ratchet.io/fasttrack/nk2012/") https://ratchet.io/fasttrack/nk2012/
+
+:markdown
   ## <a name="teleportd"></a>Teleportd
 
   [Teleportd](http://teleportd.com) provides an API for accessing mobile

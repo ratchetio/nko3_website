@@ -71,6 +71,7 @@ including:
 
 * [MongoLab](http://nodeknockout.com/resources#mongolab) - for Mongo hosting
 * [Monitaur](http://nodeknockout.com/resources#monitaur) - for server monitoring
+* [Ratchet.io](http://nodeknockout.com/resources#ratchetio) - for exception tracking
 * [Teleportd](http://nodeknockout.com/resources#teleportd) - real-time photo streams
 * [and more](http://nodeknockout.com/resources#tutorials)&hellip;
 
