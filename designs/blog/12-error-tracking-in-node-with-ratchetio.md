@@ -1,4 +1,4 @@
-_This is the 11th in a series of posts leading up to [Node.js
+_This is the 12th in a series of posts leading up to [Node.js
 Knockout][1], and covers using [Ratchet.io][2] in your node app._
 
 [1]: http://nodeknockout.com
