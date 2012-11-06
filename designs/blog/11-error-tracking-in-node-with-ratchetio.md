@@ -204,10 +204,10 @@ functionality or at our [API docs][apidocs] for even more.
 Send us an email at [support@ratchet.io](mailto:support@ratchet.io) or a 
 pull request for bugfixes and/or new features!
 
-[ss1]: //ratchet.io/static/img/blog/nk2012-1.png
-[ss2]: //ratchet.io/static/img/blog/nk2012-2.png
-[ss3]: //ratchet.io/static/img/blog/nk2012-3.png
-[ss4]: //ratchet.io/static/img/blog/nk2012-4.png
-[ss5]: //ratchet.io/static/img/blog/nk2012-5.png
+[ss1]: //d2tf6sbdgil6xr.cloudfront.net/static/img/blog/nk2012-1.png
+[ss2]: //d2tf6sbdgil6xr.cloudfront.net/static/img/blog/nk2012-2.png
+[ss3]: //d2tf6sbdgil6xr.cloudfront.net/static/img/blog/nk2012-3.png
+[ss4]: //d2tf6sbdgil6xr.cloudfront.net/static/img/blog/nk2012-4.png
+[ss5]: //d2tf6sbdgil6xr.cloudfront.net/static/img/blog/nk2012-5.png
 [apijs]: https://github.com/ratchetio/node_ratchet/blob/master/lib/api.js
 [apidocs]: https://ratchet.io/docs/api_items
