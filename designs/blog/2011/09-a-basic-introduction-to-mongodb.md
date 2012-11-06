@@ -4,7 +4,7 @@ This post was written by [Node Knockout judge][3] and
 [node-mongo-db-native][2] author Christian Kvalheim._
 
 [1]: http://nodeknockout.com
-[2]: https://github.com/christkv/node-mongodb-native
+[2]: https://github.com/mongodb/node-mongodb-native
 [3]: http://nodeknockout.com/people/4e469032c0d8572b29002612
 
 # Countdown to KO #9: A Basic Introduction to Mongo DB
@@ -84,21 +84,23 @@ look at the code.
       Server = mongo.Server,
       Db = mongo.Db;
 
-    var server = new Server('localhost', 27017, {auto_reconnect: true});
-    var db = new Db('exampleDb', server);
-
-    db.open(function(err, db) {
+    Db.connect("mongodb://localhost:27017/exampleDb", {auto_reconnect:true}, function(err, db) {
       if(!err) {
         console.log("We are connected");
       }
     });
 
-Let's have a quick look at the simple connection. The **new
-Server(...)** sets up a configuration for the connection and the
-**auto_reconnect** tells the driver to retry sending a command to the
-server if there is a failure. Another option you can set is
+Let's have a quick look at how the connection code works. The **Db.connect**
+method let's use use a uri to connect to the Mongo database, where 
+**localhost:27017** is the server host and port and **exampleDb** the db
+we wish to connect to. After the url notice the hash containing the 
+**auto_reconnect** key. Auto reconnect tells the driver to retry sending 
+a command to the server if there is a failure during it's execution.
+
+Another useful option you can pass in is 
+
 **poolSize**, this allows you to control how many tcp connections are
-opened in parallel. The default value for this is 1 but you can set it
+opened in parallel. The default value for this is 5 but you can set it
 as high as you want. The driver will use a round-robin strategy to
 dispatch and read from the tcp connection.
 
@@ -116,15 +118,16 @@ at the code.
 **the requires and and other initializing stuff omitted for brevity**
 
     db.open(function(err, db) {
-      if(!err) {
-        db.collection('test', function(err, collection) {});
+      if(err) { return console.dir(err); }
 
-        db.collection('test', {safe:true}, function(err, collection) {});
+      db.collection('test', function(err, collection) {});
 
-        db.createCollection('test', function(err, collection) {});
+      db.collection('test', {w:1}, function(err, collection) {});
 
-        db.createCollection('test', {safe:true}, function(err, collection) {});
-      }
+      db.createCollection('test', function(err, collection) {});
+
+      db.createCollection('test', {w:1}, function(err, collection) {});
+
     });
 
 Three different ways of creating a collection object but slightly
@@ -135,9 +138,9 @@ different in behavior. Let's go through them and see what they do
 This function will not actually create a collection on the database
 until you actually insert the first document.
 
-    db.collection('test', {safe:true}, function(err, collection) {});
+    db.collection('test', {w:1}, function(err, collection) {});
 
-Notice the **{safe:true}** option. This option will make the driver
+Notice the **{w:1}** option. This option will make the driver
 check if the collection exists and issue an error if it does not.
 
     db.createCollection('test', function(err, collection) {});
@@ -146,9 +149,9 @@ This command will create the collection on the Mongo DB database before
 returning the collection object. If the collection already exists it
 will ignore the creation of the collection.
 
-    db.createCollection('test', {safe:true}, function(err, collection) {});
+    db.createCollection('test', {w:1}, function(err, collection) {});
 
-The **{safe:true}** option will make the method return an error if the
+The **{w:1}** option will make the method return an error if the
 collection already exists.
 
 With an open db connection and a collection defined we are ready to do
@@ -166,19 +169,19 @@ insert first and do it with some code.
 **the requires and and other initializing stuff omitted for brevity**
 
     db.open(function(err, db) {
-      if(!err) {
-        db.collection('test', function(err, collection) {
-          var doc1 = {'hello':'doc1'};
-          var doc2 = {'hello':'doc2'};
-          var lotsOfDocs = [{'hello':'doc3'}, {'hello':'doc4'}];
+      if(err) { return console.dir(err); }
 
-          collection.insert(doc1);
+      var collection = db.collection('test');
+      var doc1 = {'hello':'doc1'};
+      var doc2 = {'hello':'doc2'};
+      var lotsOfDocs = [{'hello':'doc3'}, {'hello':'doc4'}];
 
-          collection.insert(doc2, {safe:true}, function(err, result) {});
+      collection.insert(doc1);
 
-          collection.insert(lotsOfDocs, {safe:true}, function(err, result) {});
-        });
-      }
+      collection.insert(doc2, {w:1}, function(err, result) {});
+
+      collection.insert(lotsOfDocs, {w:1}, function(err, result) {});
+
     });
 
 A couple of variations on the theme of inserting a document as we can
@@ -191,8 +194,8 @@ operation where the database does not reply with the status of the
 insert operation. To retrieve the status of the operation you have to
 issue a query to retrieve the last error status of the connection. To
 make it simpler to the developer, the driver implements the
-**{safe:true}** options so that this is done automatically when
-inserting the document. **{safe:true}** becomes especially important
+**{w:1}** options so that this is done automatically when
+inserting the document. **{w:1}** becomes especially important
 when you do **update** or **remove** as otherwise it's not possible to
 determine the number of documents modified or removed.
 
@@ -206,12 +209,12 @@ about the persisting of the data to Mongo DB we just fire off the insert
 (we are doing live analytics, losing a couple of records does not
 matter).
 
-    collection.insert(doc2, {safe:true}, function(err, result) {});
+    collection.insert(doc2, {w:1}, function(err, result) {});
 
-That document needs to stick. Using the **{safe:true}** option ensure
+That document needs to stick. Using the **{w:1}** option ensure
 you get the error back if the document fails to insert correctly.
 
-    collection.insert(lotsOfDocs, {safe:true}, function(err, result) {});
+    collection.insert(lotsOfDocs, {w:1}, function(err, result) {});
 
 A batch insert of document with any errors being reported. This is much
 more efficient if you need to insert large batches of documents as you
@@ -225,21 +228,20 @@ how Mongo DB updates work and how to do them efficiently.
 **the requires and and other initializing stuff omitted for brevity**
 
     db.open(function(err, db) {
-      if(!err) {
-        db.collection('test', function(err, collection) {
-          var doc = {mykey:1, fieldtoupdate:1};
+      if(err) { return console.dir(err); }
 
-          collection.insert(doc, {safe:true}, function(err, result) {
-            collection.update({mykey:1}, {$set:{fieldtoupdate:2}}, {safe:true}, function(err, result) {});
-          });
+      var collection = db.collection('test');
+      var doc = {mykey:1, fieldtoupdate:1};
 
-          var doc2 = {mykey:2, docs:[{doc1:1}]};
+      collection.insert(doc, {w:1}, function(err, result) {
+        collection.update({mykey:1}, {$set:{fieldtoupdate:2}}, {w:1}, function(err, result) {});
+      });
 
-          collection.insert(doc2, {safe:true}, function(err, result) {
-            collection.update({mykey:2}, {$push:{docs:{doc2:1}}, {safe:true}, function(err, result) {});
-          });
-        });
-      };
+      var doc2 = {mykey:2, docs:[{doc1:1}]};
+
+      collection.insert(doc2, {w:1}, function(err, result) {
+        collection.update({mykey:2}, {$push:{docs:{doc2:1}}, {w:1}, function(err, result) {});
+      });
     });
 
 Alright before we look at the code we want to understand how document
@@ -267,16 +269,16 @@ outlined below.
 Now that the operations are outline let's dig into the specific cases
 show in the code example.
 
-    collection.update({mykey:1}, {$set:{fieldtoupdate:2}}, {safe:true}, function(err, result) {});
+    collection.update({mykey:1}, {$set:{fieldtoupdate:2}}, {w:1}, function(err, result) {});
 
 Right, so this update will look for the document that has a field
 **mykey** equal to **1** and apply an update to the field
 **fieldtoupdate** setting the value to **2**. Since we are using the
-**{safe:true}** option the result parameter in the callback will return
+**{w:1}** option the result parameter in the callback will return
 the value **1** indicating that 1 document was modified by the update
 statement.
 
-    collection.update({mykey:2}, {$push:{docs:{doc2:1}}, {safe:true}, function(err, result) {});
+    collection.update({mykey:2}, {$push:{docs:{doc2:1}}, {w:1}, function(err, result) {});
 
 This updates adds another document to the field **docs** in the document
 identified by **{mykey:2}** using the atomic operation **$push**. This
@@ -288,20 +290,19 @@ let's start with a piece of code.
 **the requires and and other initializing stuff omitted for brevity**
 
     db.open(function(err, db) {
-      if(!err) {
-        db.collection('test', function(err, collection) {
-          var docs = [{mykey:1}, {mykey:2}, {mykey:3}];
+      if(err) { return console.dir(err); }
 
-          collection.insert(docs, {safe:true}, function(err, result) {
+      var collection = db.collection('test');
+      var docs = [{mykey:1}, {mykey:2}, {mykey:3}];
 
-            collection.remove({mykey:1});
+      collection.insert(docs, {w:1}, function(err, result) {
 
-            collection.remove({mykey:2}, {safe:true}, function(err, result) {});
+        collection.remove({mykey:1});
 
-            collection.remove();
-          });
-        });
-      };
+        collection.remove({mykey:2}, {w:1}, function(err, result) {});
+
+        collection.remove();
+      });
     });
 
 Let's examine the 3 remove variants and what they do.
@@ -313,10 +314,10 @@ not return a result for **insert/update/remove** to allow for
 **synchronous** style execution. This particular remove query will
 remove the document where **mykey** equals **1**.
 
-    collection.remove({mykey:2}, {safe:true}, function(err, result) {});
+    collection.remove({mykey:2}, {w:1}, function(err, result) {});
 
 This remove statement removes the document where **mykey** equals **2**
-but since we are using **{safe:true}** it will back to Mongo DB to get
+but since we are using **{w:1}** it will back to Mongo DB to get
 the status of the remove operation and return the number of documents
 removed in the result variable.
 
@@ -339,23 +340,22 @@ dealing with queries in different ways.
 **the requires and and other initializing stuff omitted for brevity**
 
     db.open(function(err, db) {
-      if(!err) {
-        db.collection('test', function(err, collection) {
-          var docs = [{mykey:1}, {mykey:2}, {mykey:3}];
+      if(err) { return console.dir(err); }
 
-          collection.insert(docs, {safe:true}, function(err, result) {
+      var collection = db.collection('test');
+      var docs = [{mykey:1}, {mykey:2}, {mykey:3}];
 
-            collection.find().toArray(function(err, items) {});
+      collection.insert(docs, {w:1}, function(err, result) {
 
-            var stream = collection.find({mykey:{$ne:2}}).streamRecords();
-            stream.on("data", function(item) {});
-            stream.on("end", function() {});
+        collection.find().toArray(function(err, items) {});
 
-            collection.findOne({mykey:1}, function(err, item) {});
+        var stream = collection.find({mykey:{$ne:2}}).streamRecords();
+        stream.on("data", function(item) {});
+        stream.on("end", function() {});
 
-          });
-        });
-      };
+        collection.findOne({mykey:1}, function(err, item) {});
+
+      });
     });
 
 Before we start picking apart the code there is one thing that needs to
@@ -373,7 +373,7 @@ might cause a lot of memory usage as it will instantiate all the
 document into memory before returning the final array of items. If you
 have a big resultset you could run into memory issues.
 
-    var stream = collection.find({mykey:{$ne:2}}).streamRecords();
+    var stream = collection.find({mykey:{$ne:2}}).stream();
     stream.on("data", function(item) {});
     stream.on("end", function() {});
 
@@ -397,7 +397,7 @@ express JS and mongo DB.
 
 ## Links and stuff
 
-* [The driver examples, good starting point for basic usage](https://github.com/christkv/node-mongodb-native/tree/master/examples)
-* [All the integration tests, they have tons of different usage cases](https://github.com/christkv/node-mongodb-native/tree/master/test)
+* [The driver examples, good starting point for basic usage](https://github.com/mongodb/node-mongodb-native/tree/master/examples)
+* [All the integration tests, they have tons of different usage cases](https://github.com/mongodb/node-mongodb-native/tree/master/test)
 * [The Mongo DB wiki pages such as the advanced query link](http://www.mongodb.org/display/DOCS/Advanced+Queries)
 * [A silly simple location based application using Express JS and Mongo DB](https://github.com/christkv/mongodb-hamburg)
