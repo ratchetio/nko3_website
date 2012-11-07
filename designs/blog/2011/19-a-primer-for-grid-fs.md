@@ -23,23 +23,19 @@ Let's dive straight into a simple example on how to write a file to the
 grid using the simplified Grid class.
 
     var mongo = require('mongodb'),
-      Server = mongo.Server,
       Db = mongo.Db,
       Grid = mongo.Grid;
+  
+    Db.connect("mongodb://localhost:27017/exampleDb", function(err, db) {
+      if(err) return console.dir(err);
 
-    var server = new Server('localhost', 27017, {auto_reconnect: true});
-    var db = new Db('exampleDb', server);
-
-    db.open(function(err, db) {
-      if(!err) {
-        var grid = new Grid(db, 'fs');
-        var buffer = new Buffer("Hello world");
-        grid.put.(buffer, {metadata:{category:'text'}, content_type: 'text'}, function(err, fileInfo) {
-          if(!err) {
-            console.log("Finished writing file to Mongo");
-          }
-        });
-      }
+      var grid = new Grid(db, 'fs');    
+      var buffer = new Buffer("Hello world");
+      grid.put(buffer, {metadata:{category:'text'}, content_type: 'text'}, function(err, fileInfo) {
+        if(!err) {
+          console.log("Finished writing file to Mongo");
+        }
+      });
     });
 
 All right let's dissect the example. The first thing you'll notice is
@@ -82,18 +78,22 @@ simple functions supported by the Grid class.
 
 **the requires and and other initializing stuff omitted for brevity**
 
-    db.open(function(err, db) {
-      if(!err) {
-        var grid = new Grid(db, 'fs');
-        var buffer = new Buffer("Hello world");
-        grid.put.(buffer, {metadata:{category:'text'}, content_type: 'text'}, function(err, fileInfo) {
-          grid.get(fileInfo._id, function(err, data) {
-            console.log("Retrieved data: " + data.toString());
-            grid.delete(fileInfo._id, function(err, result) {
-            });
-          });
+    var mongo = require('mongodb'),
+      Db = mongo.Db,
+      Grid = mongo.Grid;
+  
+    Db.connect("mongodb://localhost:27017/exampleDb", function(err, db) {
+      if(err) return console.dir(err);
+
+      var grid = new Grid(db, 'fs');    
+      var buffer = new Buffer("Hello world");
+      grid.put.(buffer, {metadata:{category:'text'}, content_type: 'text'}, function(err, fileInfo) {        
+        grid.get(fileInfo._id, function(err, data) {
+          console.log("Retrieved data: " + data.toString());
+          grid.delete(fileInfo._id, function(err, result) {
+          });        
         });
-      }
+      });
     });
 
 Let's have a look at the two operations **get** and **delete**
