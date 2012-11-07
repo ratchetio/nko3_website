@@ -1,13 +1,9 @@
 - title('2012')
 
 :markdown
-  Node.js Knockout is a 48-hour node.js hackathon. For more info, check out
-  the [rules] or [last year's winners].
+  Node.js Knockout is a 48-hour node.js hackathon. [Learn more](/about)
 
-  [rules]: /rules
-  [last year's winners]: http://2011.nodeknockout.com/
-
-if registration || preCoding || coding
+if registration
   section.when
     h3 node.js knockout 2012 is
       .dates
@@ -19,59 +15,122 @@ if registration || preCoding || coding
         |  UTC
     #countdown from now
 
-    if registration
-      if req.canRegister
-        h1 Registration is Open
-        if req.team
-          p Your team: <a href="/teams/#{team}">#{team.name}</a>
-        else
-          p: a.register.button( href="/teams/new" ) Register Now
-        p: i= req.teamsLeft + " spots remaining"
-      else
-        h1 Registration is Full
-        p: a( href="/teams/new" ) More spots on Nov 1 at 0:00 & 12:00 UTC
-    else if preCoding
-      h2 Registration is Closed
+    if req.canRegister
+      h1 Registration is Open
       if req.team
         p Your team: <a href="/teams/#{team}">#{team.name}</a>
+      else
+        p: a.register.button( href="/teams/new" ) Register Now
+      p: i= req.teamsLeft + " spots remaining"
+    else
+      h1 Registration is Full
+      p: a( href="/teams/new" ) More spots on Nov 1 at 0:00 & 12:00 UTC
 
-if preCoding
-  :markdown
-    # Rules
-
-    This is just a summary. But be sure to check out the [rules page](/rules)
-    for complete details.
-
-    1. **Node.js** - All applications must be built using node.js
-    2. **48 hours** - All work must take place between Nov 10 0:00 UTC and Nov
-       12 0:00 UTC. You may not create **any** digital assets before then.
-    3. **Teams** - Teams must be between 1-4 people.
-    4. **Source control** - All code must be checked into a private GitHub
-       repository that we will provide.
-    5. **Deployment** - Code must be deployed to Nodejitsu (we will provide
-       instructions).
-    6. **Web application** - Code should be accessible to judges via the web.
-       If you aren't writing a web app, it's up to you to come up with a clever
-       way to let people judge it via the web.
-    7. **Technical Entries** - You may opt-in to have judges with technical
-       backgrounds review your app.
-    8. **Libraries and 3rd party digital assets** - We encourage you to use
-       free and publicly available libraries, stock photos, and icon sets.
-       Paying for libraries or other assets is not allowed.
-    8. **Web services and their APIs** - Go for it, everybody loves mashups.
-    9. **Ownership** - Node.js Knockout makes no claim to the code you create
-       during the contest. It's all yours.
-    10. **Judging** - Winners will be picked by expert judges, contestants, and
-       the general public.
-    11. **Misc** - Don't break any laws or harm any animals.
-    
-else if coding
-  h1 Coding
-else if voting
-  h1 Voting
 else
-  h1 Done
+  h1 Timeline
 
+  table.timeline
+    thead: tr: th.time Local Time
+    tbody
+      tr.header
+        td.time( datetime='2012-11-03T00:00:00Z' )
+        td Registration closes
+      tr: td( colspan=3 ): .details
+        :markdown
+          ### Getting ready
+
+          Be sure to review the [rules](/rules).
+
+          If you're in SF or NYC, check out available team gathering
+          [locations](/locations).
+
+          We'll be setting up [GitHub repos](https://github.com/nko3) and
+          [Nodejitsu](http://nodejitsu.com/) accounts for teams soon. You can
+          still make changes to your team membership now, but please remember:
+          no coding nor depoys yet.
+    tbody
+      tr.header
+        td.time( datetime='2012-11-10T00:00:00Z' )
+        td Competition starts
+      tr: td( colspan=3 ): .details
+        :markdown
+          ### START CODING
+
+          Stay tuned for deploy instructions.
+    tbody
+      tr.header
+        td.time( datetime='2012-11-12T00:00:00Z' )
+        td Competition ends
+      tr: td( colspan=3 ): .details
+        :markdown
+          ### Pencils down!
+
+          Something horribly broken? You have a short grace period to activate
+          any snapshot you've previously deployed. Use `jitsu snapshots
+          activate` to do this.
+    tbody
+      tr.header
+        td.time( datetime='2012-11-12T00:30:00Z' )
+        td Deploy grace period ends
+      tr: td( colspan=3 ): .details
+        :markdown
+          ### Congratulations!!
+
+          Check out [all of the entries](/entries) now.
+
+          If you're still with us, you guys are awesome. Pat your teammate on
+          the back. If you're solo, come to IRC and we'll virtually pat you on
+          the back.
+
+          Give us a few moments to turn on contestant and public judging.
+
+          <!--
+          entry info can be edited any time to update judges on current state
+          screencast
+          remove yourself from voting any time
+          -->
+    //- Presentations
+    tbody
+      tr.header
+        td.time( datetime='2012-11-12T01:00:00Z' )
+        td Contestant, public judging open
+      tr: td( colspan=3 ): .details
+        :markdown
+          ### Get out the vote
+
+          Check out [the entries](/entries) and vote on your fellow
+          contestants.
+
+          Show all your friends what you spent the last 48 hours doing. They
+          can help you win the popular vote: just point them to your entry or
+          [team page](/teams/mine).
+
+          Expert judges will be officially weighing in soon too.
+
+          <!--
+          remove yourself from voting any time
+          screencast
+          other tips?
+          -->
+    tbody
+      tr.header
+        td.time( datetime='2012-11-12T12:00:00Z' )
+        td Expert judging starts
+      tr: td( colspan=3 ): .details
+        p More info soon
+    tbody
+      tr.header
+        td.time( datetime='2012-11-18T00:00:00Z' )
+        td Judging ends
+      tr: td( colspan=3 ): .details
+        p More info soon
+    tbody
+      tr.header
+        td.time( datetime='2012-11-19T00:00:00Z' )
+        td Winners announced
+      tr: td( colspan=3 ): .details
+        p No winners yet
+    
 section.ps
   p.ps.
     P.S. This is a massively-multiplayer website: click around and chat with

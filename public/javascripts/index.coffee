@@ -1,32 +1,76 @@
 load = ->
-  # countdown
-  $('#page.index-index time:first').each ->
-    $.get '/now', (data) =>
-      serverLoadTime = new Date parseInt data
-      localLoadTime = new Date
-      parts = $(this).attr('datetime').split(/[-:TZ]/)
-      parts[1]--; # js dates :( js dates are hot dates.
-      start = Date.UTC.apply null, parts
+  $('#page.index-index').each ->  # TODO beware pjax throwing this off
+    # server offset
+    skew = 0
+    $.get '/now', (server) -> skew = new Date(parseInt(server)) - new Date
 
-      $('#countdown').each ->
-        $this = $(this)
-        append = $(this).text()
+    $('table.timeline').each ->
+      $table = $(this)
+      $current = $next = null
 
-        pluralize = (count, str) ->
-          count + ' ' + str + (if parseInt(count) != 1 then 's ' else ' ')
+      toggleDetails = (tbody) ->
+        details = $(tbody).find('.details').css('height', 'auto')
+        if $(tbody).hasClass('current')
+          details.height details.height()
+        else
+          details.height 0
 
-        names = ['day', 'hour', 'minute', 'second']
-        do tick = ->
-          secs = ((start - serverLoadTime) - (new Date - localLoadTime)) / 1000
-          if secs > 0
-            parts = [secs / 86400, secs % 86400 / 3600, secs % 3600 / 60, secs % 60]
-            $this.html null
-            $.each parts, (i, num) ->
-              $this.append pluralize(Math.floor(num), names[i])
-            $this.append append if append
-            setTimeout tick, 800
-          else
-            $this.html $('<a class="button" href="/teams/mine">GOGOGOGO</a>')
+      setCurrent = (tbody) ->
+        $('tbody.current', $table).removeClass('current')
+        $current = $(tbody).addClass('current')
+
+        $('tbody.next', $table).removeClass('next')
+        $next = $current.next('tbody').addClass('next')
+
+        $('.details', $table).height 0
+        toggleDetails $current
+
+      $table.on 'click', 'tr.header', (e) ->
+        if e.altKey
+          setCurrent $(this).closest('tbody')
+        else
+          toggleDetails $(this).closest('tbody').toggleClass('current')
+
+      now = new Date
+      $('tbody', $table).each ->
+        $tbody = $(this)
+
+        # translate to local time
+        $time = $('[datetime]', this)
+        $tbody.data 'moment', t = moment $time.attr('datetime')
+        $time.text t.format('MMM DD LT')
+
+        # add countdown td
+        $('tr.header', this).append $('<td class="countdown">')
+
+        # set which one is current
+        if t < now
+          $(this).addClass('old')
+        else if $current is null
+          setCurrent $(this).prev('tbody')
+
+      # countdown
+      parts = (s) ->
+        s /= 1000
+        _.map([s / 86400, s % 86400 / 3600, s % 3600 / 60, s % 60], Math.floor)
+      pad = (s) -> if s >= 10 then s else '0' + s
+
+      do tick = ->
+        diff = $next.data('moment') - new Date - skew
+
+        return if isNaN diff
+
+        if diff > 0
+          p = parts diff
+          $countdown = $('td.countdown', $next).text 'in '
+          $countdown.append "#{p[0]}d " if p[0]
+          $countdown.append _.map(p[1..3], pad).join(':')
+
+          setTimeout tick, 800
+        else
+          $next.addClass 'old'
+          setCurrent $next
+          tick()
 
 $(load)
 $(document).bind 'end.pjax', load

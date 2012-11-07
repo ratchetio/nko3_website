@@ -465,6 +465,44 @@ form.vote
   #countdown
     display inline-block
     font-weight bold
+  .timeline
+    margin 1em 0
+    line-height 150%
+    .header
+      cursor pointer
+    .time
+      text-align center
+      padding-right 1em
+    .details
+      padding 0 10px
+      border-radius 2px
+      height 0
+      overflow hidden
+      transition height 100ms ease, background-color 100ms ease, margin 100ms ease
+      h3
+        margin-top 0.5em
+      p
+        margin 0.5em 0
+    .countdown
+      display none
+      width 7em
+      text-align right
+    .old
+      tr.header
+        text-decoration line-through
+        color gray
+    .current
+      .details
+        margin 0.5em 0
+        box-shadow inset 0 0 5px hsla(0, 0%, 0%, 0.1)
+        background-color hsl(0, 0%, 95%)
+        background-color hsla(0, 0%, 95%, 0.5)
+    .next
+      tr.header
+        font-weight bold
+      .countdown
+        display table-cell
+        color red
   .ps
     margin-top 2em
     color gray
