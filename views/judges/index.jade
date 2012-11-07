@@ -13,6 +13,8 @@ ul.judges
       img.avatar( src=avatar_url(judge, 80) )
       h3: a( href='/people/' + judge )= judge.name
       != partial('people/details', { person: judge })
+      if (judge.hiring)
+        a.button.hiring( href="/jobs#" + judge.hiring ) Hiring
       .bio!= markdown(judge.bio)
       if admin && judge.nomination
         p.buttons
