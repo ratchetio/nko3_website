@@ -99,6 +99,33 @@ module.exports =
       req.vote = vote
       next()
 
+  # sets `req.canSeeVotes` based on if `req.user` can see the votes in `req.votes`
+  loadCanSeeVotes: (req, res, next) ->
+    # once voting is over, everybody can see votes
+    if not app.enabled('voting')
+      req.canSeeVotes = true
+      return next()
+    # else, voting is going on
+
+    # if you are not logged in, you can't see votes
+    if not req.user
+      req.canSeeVotes = false
+      return next()
+    # else, you are logged in
+
+    # get a consolidated list of votes, handling the team page, where
+    # req.votes exclude's the current user's vote on the team
+    votes = if req.vote and not req.vote.isNew
+        req.votes.concat(req.vote)
+      else
+        req.votes
+
+    # delegate to the logged in user's `canSeeVotes` method
+    req.user.canSeeVotes votes, (err, canSeeVotes) ->
+      return next err if err
+      req.canSeeVotes = canSeeVotes
+      next()
+
   loadVote: (req, res, next) ->
     if id = req.params.voteId or req.params.id
       Vote.findById id, (err, vote) ->

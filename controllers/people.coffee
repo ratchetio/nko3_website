@@ -29,7 +29,7 @@ app.get '/people/me(\/edit)?', [m.ensureAuth], (req, res, next) ->
   res.redirect "/people/#{req.user.id}#{req.params[0] || ''}"
 
 # show
-app.get '/people/:id', [m.loadPerson, m.loadPersonTeam, m.loadPersonVotes], (req, res, next) ->
+app.get '/people/:id', [m.loadPerson, m.loadPersonTeam, m.loadPersonVotes, m.loadCanSeeVotes], (req, res, next) ->
   render = (nextTeam) ->
     nextVote = new Vote
     nextVote.team = nextTeam
@@ -39,6 +39,7 @@ app.get '/people/:id', [m.loadPerson, m.loadPersonTeam, m.loadPersonVotes], (req
       team: req.team
       votes: req.votes
       nextVote: nextVote
+      canSeeVotes: req.canSeeVotes
   if req.user and (req.person.id is req.user.id) and (req.user.contestant or req.user.judge or req.user.voter)
     req.user.nextTeam (err, nextTeam) ->
       return next err if err

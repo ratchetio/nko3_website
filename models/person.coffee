@@ -137,6 +137,33 @@ PersonSchema.method 'avatarURL', (size = 30) ->
   else
     '/images/gravatar_fallback.png'
 
+PersonSchema.method 'canSeeVotes', (votes, callback) ->
+  # judges can see all votes
+  return callback(null, true) if @judge
+
+  # if you've left any of the votes in the list, then you can see them all
+  #
+  # this works on the team page (since you can see all the votes for any of
+  # the teams that you've voted for) and on your own profile page (since all
+  # the votes are ones that you've left)
+  for vote in votes
+    return callback(null, true) if vote.personId.equals(@_id)
+
+  # else, we need to check if your team has any votes in the list
+  #
+  # this works on the person page (since you can see all the votes for any
+  # judge that has voted on your team), as well as on your team page (since
+  # all the votes are for your team)
+  @team (err, team) ->
+    return callback(err) if err
+    return callback(null, false) unless team
+
+    for vote in votes
+      return callback(null, true) if vote.teamId.equals(team._id)
+
+    # oops, the team doesn't have any votes, return false
+    return callback(null, false)
+
 # class methods
 PersonSchema.static 'findBySlug', (slug, rest...) ->
   Person.findOne { slug: slug }, rest...
@@ -157,8 +184,13 @@ PersonSchema.method 'nextTeam', (next) ->
     'peopleIds': ($ne: @id) # not mine
   # TBD - running
 
-  # if you're a judge and not-technical, can't be technical
-  filter.technical = ($ne: true) if @judge and not @technical
+  # if you're a judge
+  if @judge
+    # non-technical judges don't see technical entries
+    filter.technical = ($ne: true) if not @technical
+
+    # judges focus on good stuff
+    filter['scores.overall'] = ($gt: 15)
 
   sort = []
   # sort by minimum vote count for your type
@@ -171,12 +203,8 @@ PersonSchema.method 'nextTeam', (next) ->
     next err if err
 
     # every third vote should be for something good
-    # if votedOn.length % 3 is 0
-    #   filter['scores.overall'] = ($gt: 35)
-
-    # between 2 and 20 votes, focus on good stuff
-    if 2 < votedOn.length < 20
-      filter['scores.overall'] = ($gt: 30)
+    if votedOn.length % 3 is 0
+      sort.unshift ['scores.overall', -1]
 
     # not already voted on or skipped
     filter._id = $nin: votedOn.concat @skippedTeamIds

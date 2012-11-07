@@ -9,10 +9,8 @@ h2 Your Vote
     p: a( href='/people/' + req.user + '#votes' )  View all your votes &rarr;
 
 h2 Other Votes
-ul.votes
-  - if (!publicVotes.length)
-    li No votes yet.
-  -else
+if publicVotes.length
+  ul.votes
     li.vote
       .info.hearts
         - each vote in publicVotes
@@ -23,4 +21,11 @@ ul.votes
           - if (vote.person)
             a( href='/people/' + vote.person, title=vote.person.login )
               img.avatar( src=avatar_url(vote.person, 30) )
-ul.votes!= partial('votes/vote', votes)
+if shouldShowVoteList
+  ul.votes
+    if canSeeVotes
+      != partial('votes/vote', votes)
+    else
+      li Votes are hidden. 
+        a( href='#votes' ) Vote on this entry
+        |  to reveal them.

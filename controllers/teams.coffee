@@ -77,7 +77,7 @@ app.get '/teams/mine(\/edit)?', [m.ensureAuth, m.loadPerson, m.loadPersonTeam], 
   res.redirect "/teams/#{req.team}#{req.params[0] || ''}"
 
 # show (join)
-app.get '/teams/:id', [m.loadTeam, m.loadTeamPeople, m.loadTeamVotes, m.loadMyVote], (req, res) ->
+app.get '/teams/:id', [m.loadTeam, m.loadTeamPeople, m.loadTeamVotes, m.loadMyVote, m.loadCanSeeVotes], (req, res) ->
   req.session.invite = req.param('invite') if req.param('invite')
 
   vote = req.vote or new Vote
@@ -89,6 +89,7 @@ app.get '/teams/:id', [m.loadTeam, m.loadTeamPeople, m.loadTeamVotes, m.loadMyVo
     publicVotes: req.publicVotes
     votes: req.votes
     vote: vote
+    canSeeVotes: req.canSeeVotes
 
 # resend invitation
 app.all '/teams/:id/invites/:inviteId', [m.loadTeam, m.ensureAccess], (req, res) ->

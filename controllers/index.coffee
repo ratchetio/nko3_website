@@ -50,12 +50,12 @@ app.get '/now', (req, res) ->
   #res.send Date.UTC(2012, 10, 9, 23, 59, 55).toString()     # 0 days left
   #res.send Date.UTC(2012, 10, 8, 23, 59, 55).toString() # 1 -> 0 days left
 
-app.get '/scores', (req, res, next) ->
+app.get '/scores', [m.ensureAdmin], (req, res, next) ->
   Team.sortedByScore (error, teams) ->
     return next error if error
     res.render2 'index/scores', teams: teams
 
-app.get '/scores/update', (req, res, next) ->
+app.get '/scores/update', [m.ensureAdmin], (req, res, next) ->
   Team.updateAllSavedScores (err) ->
     next err if err
     res.redirect '/scores'

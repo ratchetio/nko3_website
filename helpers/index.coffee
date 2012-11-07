@@ -94,6 +94,13 @@ module.exports = (app) ->
         _.extend q, options
         req.url.split('?')[0] + '?' + qs.stringify(q)
 
+    # show the vote list if
+    # 1. voting is finished, or
+    # 2. voting is happening and a contestant or judge is logged in
+    shouldShowVoteList: (req, res) ->
+      not app.enabled('voting') or
+        (req.user?.contestant or req.user?.judge)
+
 favicons =
   ratchetio: '''
 data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAghJREFUeNpiYMADEhKS+kvLKgLwqWHEJeGw/E6CxKd78d/ZBR785RdfuCVQ/gBRBkj0nRVQl+Dbz8POavDm608GdhZmBtYvrxmsflyd0JyXUoiungldQJCLLUGIk83g+vMPDF9+/Gb4/usPw68nNxkeXjheoOPg5UDQAD52Fv/7b78w/Ht264Ewyx+Gbx/fP+AWl2O4qRnC8O3pnX4FKXEBvAYwMzJ++PP3H8OfQ8sm/n5w+cLXp3cXfrl5ZsM/UUUGfo/0Cxxeuefd19xPgKlnQTfgz79/hV9+/hFgjWiQZ+TneiDFyCgvJcD14fPP3wsYhfgb3zx44fDk4AYFvLHA235iPg8HawI/JxsDPxcQc7J94OVgnch6+7g9y7nNG5csWTSBYDSqTrvUwMHGXC/Mzf5A8MODiYxPr8c/V3NTOB6nLog3DEAgPj6xQeDrs3pOhj8MTExMCgyfXuXzPD7XiK4Zqws8Vt1bz/L5pcOlF18/CPx8q8AtpcjAyifUeChKpQGbZRgueP/lZ+Hn2xcKf3z9IvCIW4HhxR82hg/ffpKelG3Lpzv8Z2SK5/z/w0Ht693AqVMmXcCmjgWXAaKW3vEvvvxQ+MfMxHDh7/8ABlIN+HJg2UbBn58MfgnLKwhxcBwgyQvC3afWSwpwB4jwclx48u6LgLQgtwIwLRhuCpDDcAVAgAEAp3PGptnqdxkAAAAASUVORK5CYII=
