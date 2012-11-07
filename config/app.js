@@ -116,6 +116,8 @@ app.configure(function() {
       ]
     }
   });
+
+  app.use(express.compress());
   app.use(assetManager);
   app.helpers({ assetManager: assetManager });
 });
