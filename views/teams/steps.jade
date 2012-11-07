@@ -25,14 +25,14 @@ ul.steps
     | , 
     a( href='https://github.com/nko3/#{team.slug}' ) Repo
   ul
-    li git clone <b>git@github.com:nko3/#{team.slug}.git</b>
+    li: code git clone <b>git@github.com:nko3/#{team.slug}.git</b>
 
   h4 Nodejitsu &mdash; 
     a( href='http://handbook.jit.su' ) Handbook
   ul
-    li npm install -g jitsu
-    li jitsu login --username <b>nko3-#{team.slug}</b> --password <b>#{team.code}</b>
-    li jitsu deploy
+    li: code npm install -g jitsu
+    li: code jitsu login --username <b>nko3-#{team.slug}</b> --password <b>#{team.code}</b>
+    li: code jitsu deploy
 
 .step#entry
   if !team.entry.name
