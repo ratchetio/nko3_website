@@ -1,12 +1,12 @@
-# Countdown to KO #19: A primer for GridFS using the Mongo DB driver
+# Countdown to KO #14: A primer for GridFS using the Mongo DB driver
 
-_This is the 19th in a series of posts leading up to [Node.js
+_This is the 14th in a series of posts leading up to [Node.js
 Knockout][1] on using mongodb with [node-mongodb-native][2]
 This post was written by [Node Knockout judge][3] and
 [node-mongo-db-native][2] author Christian Kvalheim._
 
 [1]: http://nodeknockout.com
-[2]: https://github.com/christkv/node-mongodb-native
+[2]: https://github.com/mongodb/node-mongodb-native
 [3]: http://nodeknockout.com/people/4e469032c0d8572b29002612
 
 In the first tutorial we targeted general usage of the database. But

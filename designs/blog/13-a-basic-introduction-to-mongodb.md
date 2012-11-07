@@ -1,4 +1,4 @@
-_This is the 9th in a series of posts leading up to [Node.js
+_This is the 13th in a series of posts leading up to [Node.js
 Knockout][1] on using mongodb with [node-mongodb-native][2]
 This post was written by [Node Knockout judge][3] and
 [node-mongo-db-native][2] author Christian Kvalheim._
@@ -7,7 +7,7 @@ This post was written by [Node Knockout judge][3] and
 [2]: https://github.com/mongodb/node-mongodb-native
 [3]: http://nodeknockout.com/people/4e469032c0d8572b29002612
 
-# Countdown to KO #9: A Basic Introduction to Mongo DB
+# Countdown to KO #13: A Basic Introduction to Mongo DB
 
 Mongo DB has rapidly grown to become a popular database for web
 applications and is a perfect fit for Node.JS applications, letting you
