@@ -1,6 +1,7 @@
 _This is the 11th in a series of posts leading up to [Node.js
 Knockout][1] on debugging node processes using [Bonsai.js][2].
-This post was written by [Bonsai.js][2] contributor [Dustan Kasten][3]._
+This post was written by [Bonsai.js][2] contributor [Dustan Kasten][3] of
+[Skookum Digital Works](http://skookum.com/)._
 
 [1]: http://nodeknockout.com
 [2]: http://bonsaijs.org/
