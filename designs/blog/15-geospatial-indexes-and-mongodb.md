@@ -5,9 +5,8 @@ This post was written by [Node Knockout judge][3] and
 
 [1]: http://nodeknockout.com
 [2]: https://github.com/mongodb/node-mongodb-native
-[3]: http://nodeknockout.com/people/4e469032c0d8572b29002612
+[3]: http://nodeknockout.com/people/50996df7a9f1fbd123eef7e9
 
-# The wonderful world of GEO spatial indexes in MongoDB
 MongoDB has native support for geospatial indexes and extensions to the query language to
 support a lot of different ways of querying your geo spatial documents. We will touch on a 
 all of the available features of the MongoDB geospatial support point by point as outlined

@@ -5,9 +5,7 @@ This post was written by [Node Knockout judge][3] and
 
 [1]: http://nodeknockout.com
 [2]: https://github.com/mongodb/node-mongodb-native
-[3]: http://nodeknockout.com/people/4e469032c0d8572b29002612
-
-# Countdown to KO #13: A Basic Introduction to Mongo DB
+[3]: http://nodeknockout.com/people/50996df7a9f1fbd123eef7e9
 
 Mongo DB has rapidly grown to become a popular database for web
 applications and is a perfect fit for Node.JS applications, letting you
