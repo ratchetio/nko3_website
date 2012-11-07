@@ -6,6 +6,11 @@
       img.avatar( src=avatar_url(vote.person, 40) )
       = vote.person.login
     .role= vote.person.role
+    if vote.person.company
+      .company
+        != markdown(vote.person.company)
+        if vote.person.hiring
+          a.button.hiring( href="/jobs#" + vote.person.hiring ) Hiring
   - else if (vote.team)
     a( href=vote.team.entry.url )= vote.team.entry.name
     .by by 

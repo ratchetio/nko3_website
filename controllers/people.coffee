@@ -53,7 +53,7 @@ app.get '/people/:id/edit', [m.loadPerson, m.ensureAccess], (req, res, next) ->
 # update
 app.put '/people/:id', [m.loadPerson, m.ensureAccess], (req, res) ->
   unless req.user.admin
-    delete req.body[attr] for attr in ['role', 'admin', 'technical']
+    delete req.body[attr] for attr in ['role', 'admin', 'technical', 'hiring']
 
   if skip = req.body.skipTeamId
     req.person.skippedTeamIds.push skip

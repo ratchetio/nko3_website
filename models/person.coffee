@@ -13,6 +13,7 @@ PersonSchema = module.exports = new mongoose.Schema
   imageURL: String
   location: String
   company: String
+  hiring: String
   twitterScreenName: String
   bio: String
   admin: Boolean
@@ -99,7 +100,7 @@ PersonSchema.plugin auth,
 
 # validations
 twitterValidator = (twitterHandle, callback) ->
-  return callback(true) unless @nomination or @judge
+  return callback(true) unless @nomination
   request
     url: 'http://api.twitter.com/1/users/show.json'
     qs: { screen_name: twitterHandle }

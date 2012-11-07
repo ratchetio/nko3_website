@@ -20,6 +20,7 @@
     select( name='role', id='role' )
       - each role in ['nomination', 'contestant', 'judge', 'voter']
         option( value=role, selected=(person.role === role) )= role.charAt(0).toUpperCase() + role.slice(1)
+    | &nbsp;
     span.technical
       input( type='hidden', name='technical', value=0 )
       input( type='checkbox', name='technical', checked=person.technical, id='technical' )
@@ -28,6 +29,10 @@
       input( type='hidden', name='admin', value=0 )
       input( type='checkbox', name='admin', checked=person.admin, id='admin' )
       label( for='admin' ) Admin
+
+  .hiring.tabular
+    label( for='hiring' ) Hiring?
+    input( type='text', name='hiring', id='hiring', value=person.hiring )
 
 - if (person.role !== 'voter')
   h2.optional Optional
