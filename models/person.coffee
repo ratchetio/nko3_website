@@ -58,7 +58,9 @@ PersonSchema.plugin auth,
             else
               Person.createWithGithub ghUser, accessTok, (err, createdUser) ->
                 return promise.fail err if err
-                promise.fulfill createdUser
+                createdUser.updateWithGithub ghUser, accessTok, (err, updatedUser) ->
+                  return promise.fail err if err
+                  promise.fulfill updatedUser
         promise
   twitter:
     everyauth:
@@ -221,6 +223,7 @@ PersonSchema.method 'updateWithGithub', (ghUser, token, callback) ->
       @slug = @github.login.toLowerCase()
       @company ||= @github.company
       @location ||= @github.location
+      @role ||= 'voter'
       @save callback
     , ghUser, token, callback
 
