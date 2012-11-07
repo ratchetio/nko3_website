@@ -24,10 +24,12 @@
     span.technical
       input( type='hidden', name='technical', value=0 )
       input( type='checkbox', name='technical', checked=person.technical, id='technical' )
+      | &nbsp;
       label( for='technical' ) Technical
     .admin
       input( type='hidden', name='admin', value=0 )
       input( type='checkbox', name='admin', checked=person.admin, id='admin' )
+      | &nbsp;
       label( for='admin' ) Admin
 
   .hiring.tabular

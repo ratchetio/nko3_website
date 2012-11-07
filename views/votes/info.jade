@@ -6,11 +6,6 @@
       img.avatar( src=avatar_url(vote.person, 40) )
       = vote.person.login
     .role= vote.person.role
-    if vote.person.company
-      .company
-        != markdown(vote.person.company)
-        if vote.person.hiring
-          a.button.hiring( href="/jobs#" + vote.person.hiring ) Hiring
   - else if (vote.team)
     a( href=vote.team.entry.url )= vote.team.entry.name
     .by by 
@@ -19,6 +14,13 @@
   - if (!vote.isNew)
     time.created-at( datetime=vote.updatedAt.toJSON(), title=vote.updatedAt )
       = relativeDate(vote.updatedAt)
+
+  if vote.person && vote.person.company
+    .clear
+    .company
+      != markdown(vote.person.company)
+      if vote.person.hiring
+        a.button.hiring( href="/jobs#" + vote.person.hiring ) Hiring
 
   // show the change link only when the user is a voter, owns the vote, and the info partial is in a form
   - if (voting && user && vote.personId && !user.voter && (typeof(form) !== 'undefined') && (vote.personId.toString() === user.id))
