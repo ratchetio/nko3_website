@@ -130,7 +130,7 @@ app.configure('development', function() {
 app.configure('production', function() {
   app.use(express.static(app.paths.public, { maxAge: 1000*60*5 }));
   app.use(function(req, res, next) {
-    if (req.headers.host !== 'nodeknockout.com')
+    if (req.connection.remoteAddress !== '127.0.0.1' && req.headers.host !== 'nodeknockout.com')
       res.redirect('http://nodeknockout.com' + req.url);
     else
       next();
