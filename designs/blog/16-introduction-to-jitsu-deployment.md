@@ -11,9 +11,9 @@ Support Engineer [Colton Baker][3] (Southern)._
 
 ## TL;DR
 
-    $ git clone https://github.com/nko3/[slug] myapp
+    $ git clone git@github.com:nko3/[slug].git myapp
     $ cd myapp
-    $ sudo npm install -g jitsu
+    $ [sudo] npm install -g jitsu
     $ jitsu login # username and password provided on your NKO team page
     $ jitsu deploy
 
