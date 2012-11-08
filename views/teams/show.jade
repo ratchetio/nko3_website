@@ -3,6 +3,18 @@
 
 h1= title(team.entry.name || team.name)
 
+if coding || team.stats.pushes || team.stats.deploys
+  ul.team-stats( data-team-id=team.id )
+    li.commits
+      .number= team.stats.commits
+      .name Commits
+    li.pushes
+      .number= team.stats.pushes
+      .name Pushes
+    li.deploys
+      .number= team.stats.deploys
+      .name Deploys
+
 != markdown(team.description, { sanitize: true })
 
 - if (team.invited(session.invite))

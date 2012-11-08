@@ -13,10 +13,10 @@ load = ->
 
   # update the stats billboard on the team page
   ws.on 'updateTeamStats', (json) ->
-    console.dir(json)
-    # { teamId, stats } = json
-    # for k, v of stats
-    #   $("#team-#{teamId}-stats .#{k}.number").text(v)
+    { teamId, stats } = json
+    $stats = $(".team-stats[data-team-id=#{teamId}]")
+    for k, v of stats
+      $stats.find(".#{k} .number").text(v)
 
 $(load)
 # note no pjax load here

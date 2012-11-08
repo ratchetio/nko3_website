@@ -63,9 +63,15 @@ TeamSchema = module.exports = new mongoose.Schema
     contestant: Number
     voter: Number
   stats:
-    pushes: Number
-    commits: Number
-    deploys: Number
+    pushes:
+      type: Number
+      default: 0
+    commits:
+      type: Number
+      default: 0
+    deploys:
+      type: Number
+      default: 0
 TeamSchema.plugin require('../lib/use-timestamps')
 TeamSchema.index updatedAt: -1
 
