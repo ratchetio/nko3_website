@@ -10,16 +10,7 @@ pushd repos/${slug}
 git init
 
 cat <<EOF >README.md
-# ${name}
-
-## require('nko')
-
-We've generated a \`package.json\` and \`server.js\` for you. Feel free to
-change anything you like, but please **preserve the \`require('nko')\` call at
-the top of \`server.js\`** for [deploy check-ins][1] to work. You can of course
-rename \`server.js\` to anything you like too, but make sure to copy over that
-\`require('nko')\` line.
-
+# Hello ${name}!
 
 ## Deploy instructions
 
@@ -41,9 +32,10 @@ jitsu deploy
 
 ### Vote KO Widget
 
-Use our "Vote KO" widget to let from your app directly: ![Vote KO widget](http://f.cl.ly/items/1n3g0W0F0G3V0i0d0321/Screen%20Shot%202012-11-04%20at%2010.01.36%20AM.png)
+![Vote KO widget](http://f.cl.ly/items/1n3g0W0F0G3V0i0d0321/Screen%20Shot%202012-11-04%20at%2010.01.36%20AM.png)
 
-Here's the code for including it in your site:
+Use our "Vote KO" widget to let from your app directly. Here's the code for
+including it in your site:
 
 ~~~html
 <iframe src="http://nodeknockout.com/iframe/${slug}" frameborder=0 scrolling=no allowtransparency=true width=115 height=25>
@@ -81,7 +73,6 @@ If you have any issues, we're on IRC in #nodeknockout and #nodejitsu on
 freenode, email us at <all@nodeknockout.com>, or tweet
 [@node_knockout](https://twitter.com/node_knockout).
 
-[1]: https://github.com/nko3/website/blob/master/module/README.md
 [2]: https://github.com/organizations/nko3/teams/${github}
 [3]: https://github.com/nko3/${slug}
 [4]: http://handbook.jit.su
@@ -101,7 +92,6 @@ cat <<EOF >package.json
     "url": "git@github.com:nko3/${slug}.git"
   },
   "dependencies": {
-    "nko": "*"
   },
   "engines": {
     "node": "0.8.x"
@@ -110,8 +100,6 @@ cat <<EOF >package.json
 EOF
 
 cat <<EOF >server.js
-require('nko')('${code}');  // ! Don't change or remove during competition
-
 var http = require('http');
 http.createServer(function (req, res) {
   res.writeHead(200, {'Content-Type': 'text/plain'});
