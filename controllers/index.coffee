@@ -51,7 +51,7 @@ app.get '/now', (req, res) ->
   #res.send Date.UTC(2012, 10, 10, 0, 59, 55).toString()     # go!
   #res.send Date.UTC(2012, 10, 8, 23, 59, 55).toString() # 1 -> 0 days left
 
-app.get '/reload', (req, res) ->
+app.get '/reload', (req, res, next) ->
   # only allow this to be called from localhost
   return next(401) unless req.connection.remoteAddress is '127.0.0.1'
   app.ws?.sockets.emit 'reload'
