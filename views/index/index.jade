@@ -55,10 +55,22 @@ else
         td.time( datetime='2012-11-10T00:00:00Z' )
         td Competition starts
       tr: td( colspan=3 ): .details
+        ul#overall-stats
+          li.commits
+            .number= stats.commits
+            .name Commits
+          li.pushes
+            .number= stats.pushes
+            .name Pushes
+          li.deploys
+            .number= stats.deploys
+            .name Deploys
+
         :markdown
           ### START CODING
 
           Stay tuned for deploy instructions.
+
     tbody
       tr.header
         td.time( datetime='2012-11-12T00:00:00Z' )

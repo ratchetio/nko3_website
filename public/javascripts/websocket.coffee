@@ -8,15 +8,17 @@ load = ->
         window.location.reload()
     , (Math.random() * 10000)
 
-  ws.on 'updateStats', (json) ->
-    console.dir(json)
+  ws.on 'updateStats', (stats) ->
+    updateStats $("#overall-stats"), stats
 
   # update the stats billboard on the team page
   ws.on 'updateTeamStats', (json) ->
     { teamId, stats } = json
-    $stats = $(".team-stats[data-team-id=#{teamId}]")
+    updateStats $(".team-stats[data-team-id=#{teamId}]"), stats
+
+  updateStats = ($el, stats) ->
     for k, v of stats
-      $stats.find(".#{k} .number").text(v)
+      $el.find(".#{k} .number").text(v)
 
 $(load)
 # note no pjax load here

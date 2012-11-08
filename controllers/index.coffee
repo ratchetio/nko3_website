@@ -22,6 +22,7 @@ loadCanRegister = (req, res, next) ->
 app.get '/', [loadCanRegister, loadCurrentPersonWithTeam], (req, res, next) ->
   res.render2 'index/index',
     team: req.team
+    stats: app.stats
 
 [ 'locations', 'prizes', 'rules', 'sponsors', 'scoring', 'jobs',
   'how-to-win', 'tell-me-a-story' ].forEach (p) ->
