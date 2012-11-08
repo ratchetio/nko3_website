@@ -5,7 +5,6 @@ var express = require('express')
   , port = env.port
   , secrets = env.secrets
   , EventEmitter = require('events').EventEmitter
-  , commits = require('./../controllers/commits')
   , Stats = require('../models/stats');
 
 // express
@@ -76,23 +75,32 @@ app.configure('production', function() {
 app.configure(function() {
   var RedisStore = require('connect-redis')(express);
 
+  // cookies and sessions
   app.use(express.cookieParser());
   app.use(express.session({
     secret: secrets.session,
     store: new RedisStore,
     cookie: { path: '/', httpOnly: true, maxAge: 1000*60*60*24*28 }
   }));
+
   app.use(express.bodyParser());
   app.use(express.methodOverride());
 
   // hacky solution for post commit hooks not to check csrf
-  app.use(commits(app));
+  app.use(require('../controllers/commits')(app));
+  app.use(require('../controllers/deploys')(app));
 
+  // csrf protection
   app.use(express.csrf());
-  app.use(function(req, res, next) { if (req.body) delete req.body._csrf; next(); });
+  app.use(function(req, res, next) {
+    if (req.body) delete req.body._csrf;
+    next();
+  });
+
   app.use(express.logger());
   app.use(auth.middleware());
   app.use(app.router);
+
   app.use(function(e, req, res, next) {
     if (typeof(e) === 'number')
       return res.render2('errors/' + e, { status: e });

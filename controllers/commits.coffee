@@ -19,5 +19,6 @@ module.exports = (app) ->
         team.incrementStats $inc, (err, team) ->
           return next(err) if err
           app.events.emit 'updateTeamStats', team
+          req.session.destroy()
           res.send 200
     else next()

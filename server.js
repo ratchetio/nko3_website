@@ -6,7 +6,6 @@ require('coffee-script');
   'people',
   'judges',
   'teams',
-  'deploys',
   'votes',
   'websocket',
   'live',
@@ -14,3 +13,5 @@ require('coffee-script');
 ].forEach(function(controller) {
   require('./controllers/' + controller);
 });
+
+// commits and deploys are required directly in app.js

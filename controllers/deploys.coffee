@@ -1,26 +1,30 @@
 _ = require 'underscore'
-app = require '../config/app'
 m = require './middleware'
 util = require 'util'
 
-Deploy = app.db.model 'Deploy'
+module.exports = (app) ->
+  Team = app.db.model 'Team'
+  Deploy = app.db.model 'Deploy'
 
-# create (if anyone finds the team by code, they're authorized)
+  (req, res, next) ->
+    return next() unless req.method is 'POST' and req.url is '/deploys'
 
-app.all '/teams/:code/deploys', [m.loadTeam], (req, res) ->
-  util.log "#{'DEPLOY'.magenta} #{req.team.name} (#{req.team.id})"
-  req.session.destroy()
+    slug = req.body.user.replace('nko3-', '')
+    Team.findBySlug slug, (err, team) ->
+      return next err if err
+      return next 404 unless team
 
-  return res.end 'ok' if req.query.nop?
+      util.log "#{'DEPLOY'.magenta} #{team.name} (#{team.id})"
+      req.session.destroy()
 
-  attr = _.clone req.query || {}
-  attr.teamId = req.team.id
-  attr.remoteAddress = req.socket.remoteAddress
+      attr = _.clone req.body
+      attr.teamId = team.id
+      attr.remoteAddress = req.socket.remoteAddress
 
-  deploy = new Deploy attr
-  deploy.save (err, deploy) ->
-    if err
-      util.error err.toString().red
-      return res.end JSON.stringify(err)
-    res.end JSON.stringify(deploy)
-    app.events.emit 'deploy', deploy, req.team
+      deploy = new Deploy attr
+      deploy.save (err, deploy) ->
+        if err
+          util.error err.toString().red
+          return res.end JSON.stringify(err)
+        res.end JSON.stringify(deploy)
+        app.events.emit 'deploy', deploy, req.team
