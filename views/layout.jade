@@ -50,14 +50,14 @@ html
           li.interested
             a( href='/sponsors#interested' ) Interested in sponsoring?
           li.icons Services: 
-            each sponsor in [ 'ratchetio', 'teleportd', 'mongolab', 'monitaur' ]
-              a( href='/jobs##{sponsor}' ): img( src=favicon(sponsor) )
+            each sponsor in [ 'ratchetio', 'teleportd', 'mongolab', 'mongohq', 'monitaur' ]
+              a( href='/resources#services' ): img( src=favicon(sponsor) )
           li.icons Jobs: 
             each sponsor in [ 'joyent', 'nodejitsu', 'bislr', 'sequoia', 'nomic', 'voxer' ]
               a( href='/jobs##{sponsor}' ): img( src=favicon(sponsor) )
           li.icons Prizes: 
-            each sponsor in [ 'github', 'nodetime', 'dropbox', 'mongolab', 'coderwall', 'nodeconf' ]
-              a( href='/jobs##{sponsor}' ): img( src=favicon(sponsor) )
+            each sponsor in [ 'dropbox', 'heroku', 'github', 'mongolab', 'mongohq', 'nodetime', 'nodeconf', 'coderwall' ]
+              a( href='/prizes' ): img( src=favicon(sponsor) )
 
       #inner
         header
