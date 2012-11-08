@@ -48,6 +48,7 @@ app.get '/judging', (req, res) ->
 app.get '/now', (req, res) ->
   res.send Date.now().toString()
   #res.send Date.UTC(2012, 10, 9, 23, 59, 55).toString()     # 0 days left
+  #res.send Date.UTC(2012, 10, 10, 0, 59, 55).toString()     # go!
   #res.send Date.UTC(2012, 10, 8, 23, 59, 55).toString() # 1 -> 0 days left
 
 app.get '/reload', (req, res) ->
