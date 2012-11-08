@@ -54,7 +54,7 @@ app.get '/now', (req, res) ->
 app.get '/reload', (req, res, next) ->
   # only allow this to be called from localhost
   return next(401) unless req.connection.remoteAddress is '127.0.0.1'
-  app.ws?.sockets.emit 'reload'
+  app.events.emit 'reload'
   res.redirect '/'
 
 app.get '/scores', [m.ensureAdmin], (req, res, next) ->

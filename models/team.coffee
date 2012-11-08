@@ -62,6 +62,10 @@ TeamSchema = module.exports = new mongoose.Schema
     judge: Number
     contestant: Number
     voter: Number
+  stats:
+    pushes: Number
+    commits: Number
+    deploys: Number
 TeamSchema.plugin require('../lib/use-timestamps')
 TeamSchema.index updatedAt: -1
 
@@ -209,6 +213,15 @@ TeamSchema.method 'updateScreenshot', (callback) ->
   r = request.get "#{@screenshot}&expire=1", (error, response, body) ->
     throw error if error
     # no callback
+
+TeamSchema.method 'incrementStats', (stats, callback) ->
+  $inc = {}
+  for k, v of stats
+    $inc["stats.#{k}"] = v
+  @update $inc: $inc, (err, res) =>
+    return callback(err) if err
+    # return the reloaded the team (after the increment has been applied)
+    Team.findOne _id: @id, callback
 
 # associations
 TeamSchema.method 'people', (next) ->

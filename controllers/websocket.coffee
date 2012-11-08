@@ -1,7 +1,5 @@
 util = require 'util'
 app = require '../config/app'
-#dashboard = require './dashboard'
-#dashboard app
 
 app.ws?.sockets.on 'connection', (client) ->
   client.on 'message', (data) ->
@@ -11,3 +9,14 @@ app.ws?.sockets.on 'connection', (client) ->
     client.json.broadcast.send data
   client.on 'disconnect', ->
     client.json.broadcast.send id: client.id, disconnect: true
+
+app.events.on 'reload', ->
+  app.ws?.sockets.emit 'reload'
+
+app.events.on 'updateTeamStats', (team) ->
+  app.ws?.sockets.json.emit 'updateTeamStats',
+    teamId: team.id
+    stats: team.stats
+
+app.events.on 'updateStats', (stats) ->
+  app.ws?.sockets.json.emit 'updateStats', stats

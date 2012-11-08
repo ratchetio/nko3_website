@@ -5,7 +5,8 @@ var express = require('express')
   , port = env.port
   , secrets = env.secrets
   , EventEmitter = require('events').EventEmitter
-  , commits = require('./../controllers/commits');
+  , commits = require('./../controllers/commits')
+  , Stats = require('../models/stats');
 
 // express
 var app = module.exports = express.createServer();
@@ -36,6 +37,13 @@ app.events = new EventEmitter();
 // db
 app.db = require('../models')(env.mongo_url);
 app.db.app = app;  // sooo hacky
+
+// stats (kinda hacky)
+app.stats = new Stats();
+app.stats.on('change', function(stats) {
+  app.events.emit('updateStats', stats);
+});
+
 
 // state (getting pretty gross)
 app.disable('registration');  // months beforehand

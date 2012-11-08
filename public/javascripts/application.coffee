@@ -87,14 +87,5 @@ load = ->
     f[0].reset()
     false
 
-  # reload
-  # when getting a 'reload' message, reload the page after ~10 seconds (if
-  # you're on the index page)
-  nko.ws?.on 'reload', ->
-    setTimeout ->
-      if window.location.pathname is '/'
-        window.location.reload()
-    , (Math.random() * 10000)
-
 $(load)
 $(document).bind 'end.pjax', load
