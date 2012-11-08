@@ -38,7 +38,9 @@ app.db = require('../models')(env.mongo_url);
 app.db.app = app;  // sooo hacky
 
 // stats (kinda hacky)
-app.stats = new Stats();
+app.stats = new Stats(app.db, function(err) {
+  if (err) throw err;
+});
 app.stats.on('change', function(stats) {
   app.events.emit('updateStats', stats);
 });
