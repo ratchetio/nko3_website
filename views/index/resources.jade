@@ -44,9 +44,8 @@ if !user
     a(href="/login") Sign in
     |  for the super-secret free signup link.
 else if user && (user.contestant || user.judge)
-  h4 For free access to Ratchet.io for Node Knockout
-    p 
-      a(href="https://ratchet.io/fasttrack/nk2012/") https://ratchet.io/fasttrack/nk2012/
+  b For free access to Ratchet.io for Node Knockout
+  p: a(href="https://ratchet.io/fasttrack/nk2012/") https://ratchet.io/fasttrack/nk2012/
 
 :markdown
   ## <a name="teleportd">Teleportd</a>
@@ -65,7 +64,7 @@ if services.teleportd
       strong free access to Teleportd's unlimited api
       |  during Node Knockout.
   else if user && (user.contestant || user.judge)
-    h4 For free access to Teleportd's api for Node Knockout
+    b For free access to Teleportd's api for Node Knockout
     != markdown(services.teleportd)
 
 :markdown
