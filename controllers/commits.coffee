@@ -5,7 +5,6 @@ module.exports = (app) ->
 
   (req, res, next) ->
     return next() unless req.method is 'POST' and m = req.url.match /^\/teams\/(.+)\/commits$/
-    console.dir req.body
 
     # custom error handler (since the default one dies w/o session)
     error = (err) ->
@@ -25,7 +24,7 @@ module.exports = (app) ->
       util.log "#{'POST-RECEIVE'.magenta} #{team.name} (#{team.id})"
 
       try
-        $inc = pushes: 1, commits: req.body.repository.commits.length
+        $inc = pushes: 1, commits: req.body.commits.length
       catch e
         return error(e)
 
