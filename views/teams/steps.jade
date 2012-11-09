@@ -24,15 +24,17 @@ ul.steps
     a( href='https://github.com/organizations/nko3/teams/#{team.github && team.github.id}' ) Team
     | , 
     a( href='https://github.com/nko3/#{team.slug}' ) Repo
-  ul
-    li: code git clone <b>git@github.com:nko3/#{team.slug}.git</b>
+  pre: code.
+    $ git clone <b>git@github.com:nko3/#{team.slug}.git</b>
 
   h4 Nodejitsu &mdash; 
+    a( href='http://blog.nodeknockout.com/post/35279199042/introduction-to-jitsu-deployment' ) More details
+    | , 
     a( href='http://handbook.jit.su' ) Handbook
-  ul
-    li: code npm install -g jitsu
-    li: code jitsu login --username <b>nko3-#{team.slug}</b> --password <b>#{team.code}</b>
-    li: code jitsu deploy
+  pre: code.
+    $ npm install -g jitsu
+    $ jitsu login --username <b>nko3-#{team.slug}</b> --password <b>#{team.code}</b>
+    $ jitsu deploy
 
 .step#entry
   if !team.entry.name
