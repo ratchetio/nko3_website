@@ -27,6 +27,8 @@ TeamSchema = module.exports = new mongoose.Schema
       type: Boolean
       default: false
     technical: Boolean
+    alert: Boolean
+    videoURL: String
   emails:
     type: [ mongoose.SchemaTypes.Email ]
     validate: [ ((v) -> v.length <= 4), 'max' ]

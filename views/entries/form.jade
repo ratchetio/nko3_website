@@ -51,3 +51,14 @@
   p.note
     | Please only select this box if your entry cannot be evaluated fairly
     | by non-technical judges.
+
+.alert
+  input( type='hidden', name='entry[alert]', value=0 )
+  input( type='checkbox', name='entry[alert]', id='entryAlert', checked=entry.alert )
+  | &nbsp;
+  label( for='entryAlert' ) Alert me when judges visit my site.
+  p.note
+    | We will DM you on Twitter so you can join judges evaluating your site. 
+    strong To receive tweets, ensure your profile has your
+      != ' <a href="/people/me/edit">Twitter username</a> and that you'
+      != ' follow <a href="http://twitter.com/node_knockout">@node_knockout</a>.'
