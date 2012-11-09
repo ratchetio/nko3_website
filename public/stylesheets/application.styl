@@ -494,6 +494,7 @@ form.vote
     .time
       text-align center
       padding-right 1em
+      white-space nowrap
     .details
       padding 0 10px
       border-radius 2px
@@ -501,9 +502,11 @@ form.vote
       overflow hidden
       transition height 100ms ease, background-color 100ms ease, margin 100ms ease
       h3
-        margin-top 0.5em
+        margin 0.75em 2px 0
       p
         margin 0.5em 0
+      p, ul, ol
+        font-size small
       p + ul, p + ol
         margin-top 0
     .countdown
