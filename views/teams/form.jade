@@ -4,7 +4,11 @@
 .name
   h3: label( for='name' ) Name
   input( type='text', name='name', id='name', placeholder='Witty Team Name',
-    value=team.get('name') )
+    value=team.name )
+
+  if admin
+    h3: label( for='slug' ) Slug
+    input( type='text', name='slug', id='slug', value=team.slug )
 
 .members
   h3 Member Emails (including yours)
