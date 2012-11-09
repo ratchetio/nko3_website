@@ -6,7 +6,7 @@ name=$3
 github=$4
 
 mkdir -p repos/${slug}
-pushd repos/${slug}
+cd repos/${slug}
 git init
 
 cat <<EOF >README.md
@@ -115,4 +115,3 @@ git add .
 git commit -m Instructions
 git remote add origin git@github.com:nko3/${slug}.git
 git push origin master
-popd
