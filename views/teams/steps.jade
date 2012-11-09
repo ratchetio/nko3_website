@@ -3,7 +3,7 @@ ul.steps
     a( href='#deploy' ) Deploy
   li( class=team.entry.name ? 'done' : 'pending' )
     a( href='#entry' ) Entry info
-  li( class=team.entry.votable ? 'done' : 'pending' )
+  li( class=team.entry.votable && team.entry.videoURL ? 'done' : 'pending' )
     a( href='#votable' ) Submit for voting
 
 .step#deploy
@@ -65,6 +65,19 @@ ul.steps
         | You can submit your app for voting any time between now and the end
         | of judging. You can also change your mind and remove it from voting
         | at any time.
+    else if !team.entry.videoURL
+      h2.pending Not Ready for Expert Review
+
+      p
+        | Your app is submitted for public and contestant voting. But, it is 
+        b not ready for expert review, as it doesn't have a pitch video.
+
+      .buttons: a.button.scary( href='/teams/mine/edit#pitch' ) Add a Video &raquo;
+
+      p.note
+        | You can add a pitch video any time between now and the end of
+        | judging. We recommend doing it as soon as you can after the
+        | competition ends.
 
     else
       h2.done Submitted for Voting

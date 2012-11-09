@@ -192,6 +192,9 @@ PersonSchema.method 'nextTeam', (next) ->
     # judges focus on good stuff
     filter['scores.overall'] = ($gt: 15)
 
+    # judges only see entries with pitch videos
+    filter['entry.videoURL'] = /./
+
   sort = []
   # sort by minimum vote count for your type
   sort.push ['voteCounts.' + @role, 1] if @judge or @contestant
