@@ -34,6 +34,53 @@
   # <a name="services"></a>Services
 
 :markdown
+  ## <a name="nodejitsu">Nodejitsu</a>
+
+  Nodejitsu's platform actually gives you access to [free instances of several
+  popular databases](https://github.com/nodejitsu/handbook#databases).
+
+  - **[CouchDB](https://github.com/nodejitsu/handbook#couchdb)** —
+    If you run `jitsu databases create couchdb myCouch`, jitsu will tell you
+    the url for your new couchdb from iriscouch.
+
+  - **[Redis](https://github.com/nodejitsu/handbook#redis)** —
+    Running `jitsu databases create redis myRedis` will create a redis instance
+    supplied by redistogo.
+
+  - **[MongoDB](https://github.com/nodejitsu/handbook#mongodb)** —
+    Both [MongoLab](#mongolab) and [MongoHQ](#mongohq) are providing larger
+    instances for use during Node.js Knockout. Find instructions for each
+    below. If you want, `jitsu databases create mongo myMongo` works though.
+
+  ## <a name="mongolab">MongoLab</a>
+
+  [MongoLab](http://mongolab.com) is a full-featured MongoDB-as-a-Service
+  cloud solution that completely automates the operational aspects of running
+  MongoDB. With the MongoLab cloud platform developers can deploy and manage
+  highly available databases for their applications and leverage automated
+  backups, web-based tools, 24/7 monitoring, and expert support. Free 500MB
+  databases are available on Amazon AWS, Azure, Joyent, and Rackspace.
+
+  No special credentials are needed to use MongoLab's free 500MB plan during
+  Node Knockout. Just [sign up to get a free
+  account](https://mongolab.com/signup/).
+
+  Check out the [getting started blog post](http://blog.nodeknockout.com/post/35339780516/mongolabs-joyent-hosted-mongodb-quick-start)
+  for how to quickly get up and running with MongoLab.
+
+  ## <a name="mongohq">MongoHQ</a>
+  MongoHQ is the fastest and easiest way to create a MongoDB database to use
+  with your application. Our goal is to allow developers to focus on what they
+  do best while we keep your database fast, optimized and reliable. It takes
+  [less than 30 seconds to sign up and create a MongoDB
+  database](https://www.mongohq.com/signup).
+
+  For NodeKnockout, we have available 512MB plans in multiple data centers.
+  Simply sign up and create a database and you will have full access to our
+  industry-leading tools and a friendly and intelligent support team. We're
+  excited to see what you build ... Good luck!
+
+:markdown
   ## <a name="apigee">Apigee</a>
 
   **Apigee will give out $4,000 in November to great apps that use node.js + App Services — read the [blog post](http://blog.nodeknockout.com/post/35360694905/using-apigee-with-node) for details!**
@@ -95,34 +142,6 @@ if services.teleportd
     != markdown(services.teleportd)
 
 :markdown
-  ## <a name="mongolab">MongoLab</a>
-
-  [MongoLab](http://mongolab.com) is a full-featured MongoDB-as-a-Service
-  cloud solution that completely automates the operational aspects of running
-  MongoDB. With the MongoLab cloud platform developers can deploy and manage
-  highly available databases for their applications and leverage automated
-  backups, web-based tools, 24/7 monitoring, and expert support. Free 500MB
-  databases are available on Amazon AWS, Azure, Joyent, and Rackspace.
-
-  No special credentials are needed to use MongoLab's free 500MB plan during
-  Node Knockout. Just [sign up to get a free
-  account](https://mongolab.com/signup/).
-
-  Check out the [getting started blog post](http://blog.nodeknockout.com/post/35339780516/mongolabs-joyent-hosted-mongodb-quick-start)
-  for how to quickly get up and running with MongoLab.
-
-  ## <a name="mongohq">MongoHQ</a>
-  MongoHQ is the fastest and easiest way to create a MongoDB database to use
-  with your application. Our goal is to allow developers to focus on what they
-  do best while we keep your database fast, optimized and reliable. It takes
-  [less than 30 seconds to sign up and create a MongoDB
-  database](https://www.mongohq.com/signup).
-
-  For NodeKnockout, we have available 512MB plans in multiple data centers.
-  Simply sign up and create a database and you will have full access to our
-  industry-leading tools and a friendly and intelligent support team. We're
-  excited to see what you build ... Good luck!
-
   ## <a name="monitaur"></a>Monitaur
 
   [Monitaur](http://monitaur.net) is instant server monitoring. Set it up in
