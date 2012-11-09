@@ -9,7 +9,11 @@ module.exports = (app) ->
   (req, res, next) ->
     return next() unless req.method is 'POST' and req.url is '/deploys'
 
-    slug = req.body.user.replace('nko3-', '')
+    try
+      slug = req.body.user.replace('nko3-', '')
+    catch err
+      return next(err)
+
     Team.findBySlug slug, (err, team) ->
       return next err if err
       return next 404 unless team
@@ -21,10 +25,20 @@ module.exports = (app) ->
       attr.teamId = team.id
       attr.remoteAddress = req.socket.remoteAddress
 
+      # save the deploy in the db
       deploy = new Deploy attr
       deploy.save (err, deploy) ->
         if err
           util.error err.toString().red
           return res.end JSON.stringify(err)
-        res.end JSON.stringify(deploy)
-        app.events.emit 'deploy', deploy, req.team
+
+        # increment overall/team deploy count
+        $inc = deploys: 1
+        app.stats.increment $inc
+        team.incrementStats $inc, (err, team) ->
+          return next(err) if err
+
+          app.events.emit 'updateTeamStats', team
+          app.events.emit 'deploy', deploy, req.team
+
+          res.end JSON.stringify(deploy)
