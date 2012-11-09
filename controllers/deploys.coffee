@@ -8,6 +8,7 @@ module.exports = (app) ->
 
   (req, res, next) ->
     return next() unless req.method is 'POST' and req.url is '/deploys'
+    console.log req.body
 
     # custom error handler (since the default one dies w/o session)
     error = (err) ->
@@ -29,6 +30,7 @@ module.exports = (app) ->
       attr = _.clone req.body
       attr.teamId = team.id
       attr.remoteAddress = req.socket.remoteAddress
+      attr.hostname = "#{req.body.subdomain}.jitsu.com"
 
       # save the deploy in the db
       deploy = new Deploy attr
