@@ -79,7 +79,7 @@ createTeam = (team, next) ->
       createRepo.on 'exit', -> next()
   ], next
 
-Team.find { slug: 'fortnight-labs' }, (err, teams) ->
+Team.find { 'github.id': null }, (err, teams) ->
   throw err if err
   async.forEachSeries teams, createTeam, (err) ->
     throw err if err
