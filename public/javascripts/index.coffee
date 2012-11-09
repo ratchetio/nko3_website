@@ -11,7 +11,9 @@ load = ->
       toggleDetails = (tbody) ->
         details = $(tbody).find('.details').css('height', 'auto')
         if $(tbody).hasClass('current')
-          details.height details.height()
+          details
+            .height(details.height())
+            .children().redraw()  # dirty, dirty hack
         else
           details.height 0
 

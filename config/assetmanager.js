@@ -35,6 +35,7 @@ module.exports = function(app) {
         'vendor/jquery.infinitescroll.js',
         'vendor/jquery.keylisten.js',
         'vendor/jquery.pjax.js',
+        'vendor/jquery.redraw.js',
         'vendor/jquery.transform.light.js',
         'vendor/jquery.transloadit2.js',
         'vendor/md5.js',
