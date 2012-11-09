@@ -20,7 +20,7 @@ cat <<EOF >README.md
 git clone git@github.com:nko3/${slug}.git
 ~~~
 
-### Nodejitsu — [Handbook][4]
+### Nodejitsu — [More details][5], [Handbook][4]
 
 ~~~sh
 npm install -g jitsu
@@ -76,11 +76,12 @@ freenode, email us at <all@nodeknockout.com>, or tweet
 [2]: https://github.com/organizations/nko3/teams/${github}
 [3]: https://github.com/nko3/${slug}
 [4]: http://handbook.jit.su
+[5]: http://blog.nodeknockout.com/post/35279199042/introduction-to-jitsu-deployment
 EOF
 
 cat <<EOF >package.json
 {
-  "name": "${slug}",
+  "name": "nko3-${slug}",
   "version": "0.0.0",
   "description": "${name}",
   "main": "server.js",
@@ -95,7 +96,8 @@ cat <<EOF >package.json
   },
   "engines": {
     "node": "0.8.x"
-  }
+  },
+  "subdomain": "${slug}.nko3"
 }
 EOF
 
