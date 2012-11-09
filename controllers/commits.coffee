@@ -10,7 +10,7 @@ module.exports = (app) ->
     # custom error handler (since the default one dies w/o session)
     error = (err) ->
       util.error err.toString().red
-      res.end JSON.stringify(err)
+      res.end err.toString()
 
     try
       req.session.destroy()
@@ -27,7 +27,7 @@ module.exports = (app) ->
       try
         $inc = pushes: 1, commits: req.body.repository.commits.length
       catch e
-        return next(e)
+        return error(e)
 
       app.stats.increment $inc
       team.incrementStats $inc, (err, team) ->
