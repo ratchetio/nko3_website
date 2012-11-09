@@ -14,12 +14,13 @@ github = (path) -> "https://#{process.env.LOGIN}@api.github.com/#{path}"
 Team = mongoose.model 'Team'
 Person = mongoose.model 'Person'
 
-queue = async.queue (team, next) ->
+createTeam = (team, next) ->
   # skip empty teams
   return next() if team.peopleIds.length is 0
 
   async.waterfall [
     (next) ->                 # create repo
+      console.log team.slug, 'create repo'
       request.post
         url: github 'orgs/nko3/repos'
         json:
@@ -28,7 +29,9 @@ queue = async.queue (team, next) ->
           private: true
       , next
     (res, body, next) ->      # create push hook
-      return next(null, null, null) unless body.id
+      return next(Error(JSON.stringify(body))) unless body.id
+
+      console.log team.slug, 'create hook'
       request.post
         url: github "repos/nko3/#{team.slug}/hooks"
         json:
@@ -39,6 +42,9 @@ queue = async.queue (team, next) ->
             content_type: 'json'
       , next
     (res, body, next) ->      # create team
+      return next(Error(JSON.stringify(body))) unless body.id
+
+      console.log team.slug, 'create team'
       request.post
         url: github 'orgs/nko3/teams'
         json:
@@ -47,32 +53,34 @@ queue = async.queue (team, next) ->
           permission: 'admin'
       , next
     (res, body, next) ->      # save team id
-      team.github = body if body.id
-      unless team.github
-        console.warn "!!! Proceeding without accurate GitHub team id"
-        team.github = { id: 0 }
+      return next(Error(JSON.stringify(body))) unless body.id
+
+      console.log team.slug, 'save github info'
+      team.github = body
       team.save next
     (team, n, next) ->        # get people
+      console.log team.slug, 'get people'
       Person.find { _id: { $in: team.peopleIds } }, (err, people) ->
         next err, team, people
     (team, people, next) ->   # add members
       async.forEach people, (person, next) ->
+        console.log team.slug, 'add people', person.github.login
         request.put
           url: github "teams/#{team.github.id}/members/#{person.github.login}"
           json: {}
         , next
       , next
     (next) ->                 # seed repo
+      console.log team.slug, 'seed repo'
       createRepo = spawn './create-repo.sh',
         [ team.slug, team.code, team.name, team.github.id ],
         cwd: __dirname
       createRepo.stdout.on 'data', (s) -> console.log s.toString()
       createRepo.on 'exit', -> next()
   ], next
-, 5 # workers
 
 Team.find { slug: 'fortnight-labs' }, (err, teams) ->
   throw err if err
-  queue.push teams
-
-queue.drain = -> mongoose.connection.close()
+  async.forEachSeries teams, createTeam, (err) ->
+    throw err if err
+    mongoose.connection.close()
