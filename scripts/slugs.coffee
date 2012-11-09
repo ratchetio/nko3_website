@@ -14,6 +14,7 @@ Team.find {}, (err, teams) ->
   async.mapSeries teams, (team, next) ->
     return next(null, team) if team.peopleIds.length is 0  # skip empty
     return next(null, team) if team.slug is team.slugBase
+    return next(null, team) # don't modify right now
 
     old = team.slug
     team.slug = null
