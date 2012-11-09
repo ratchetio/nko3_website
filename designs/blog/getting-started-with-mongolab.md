@@ -9,11 +9,11 @@ need that.
 ## tl;dr
 
 1. Visit http://mongolab.com and sign in / create a free account
-2. Click **Create new** in the Databases section
+2. Click _Create new_ in the _Databases_ section
 3. Select JoyentCloud as the provider, with the Free plan (500 MB), us-east-1
 datacenter
 4. Populate the database name and at the bottom, the username and password
-fields, then click **Create database**
+fields, then click _Create database_
 5. In the database list, click on the new database to get to the detail page
 6. Connection string is at the top of the page and should look like
 `ds??????.mongolab.com:??????/databasename`.  Username and password are as you
@@ -24,7 +24,7 @@ entered them.
 
 1. Visit <http://mongolab.com> and create an account or sign in if you have
 one already.
-2. Click **Create new** in the Databases section.  Alternatively, you can clone
+2. Click _Create new_ in the _Databases_ section.  Alternatively, you can clone
 an existing database if it's accessible on the Internet and you have a
 username and password for it.
 
@@ -35,7 +35,7 @@ username and password for it.
 3. Select JoyentCloud as the provider, with the Free plan (0.5 GB), us-east-1
 datacenter.
 4. Populate the database name and at the bottom, the username and password
-fields, then click **Create database**.
+fields, then click _Create database_.
 
 ![Database Form][databaseform]
 
