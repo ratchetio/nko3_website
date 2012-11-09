@@ -48,8 +48,8 @@ app.stats.on('change', function(stats) {
 
 // state (getting pretty gross)
 app.disable('registration');  // months beforehand
-app.enable('pre-coding');     // week beforehand
-app.disable('coding');        // coding + several hours before
+app.disable('pre-coding');     // week beforehand
+app.enable('coding');        // coding + several hours before
 app.disable('voting');        // after
 
 app.configure(function() {
