@@ -5,18 +5,24 @@ module.exports = (app) ->
 
   (req, res, next) ->
     return next() unless req.method is 'POST' and m = req.url.match /^\/teams\/(.+)\/commits$/
+    console.dir req.body
+
+    # custom error handler (since the default one dies w/o session)
+    error = (err) ->
+      util.error err.toString().red
+      res.end JSON.stringify(err)
 
     try
+      req.session.destroy()
       code = decodeURIComponent m[1]
     catch err
-      return next(err)
+      return error(err)
 
     Team.findOne code: code, (err, team) ->
-      return next err if err
-      return next 404 unless team
+      return error(err) if err
+      return res.send(404) unless team
 
       util.log "#{'POST-RECEIVE'.magenta} #{team.name} (#{team.id})"
-      req.session.destroy()
 
       try
         $inc = pushes: 1, commits: req.body.repository.commits.length
