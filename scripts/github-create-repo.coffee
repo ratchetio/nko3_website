@@ -15,6 +15,7 @@ createTeam = (team, next) ->
     [ team.slug, team.code, team.name, team.github.id ],
     cwd: __dirname
   createRepo.stdout.on 'data', (s) -> console.log s.toString()
+  createRepo.stderr.on 'data', (s) -> console.log s.toString()
   createRepo.on 'exit', -> next()
 
 Team.find { slug: {$in: process.argv[2..]} }, (err, teams) ->
