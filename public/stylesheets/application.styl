@@ -59,6 +59,9 @@ code
   border-radius 2px
   padding 2px 4px
 
+pre > code
+  display block
+
 h1, h2, h3, h4, h5, h6
   font-family '04b_03', monospace
   margin-bottom 0
@@ -468,6 +471,24 @@ form.vote
   .timeline
     margin 1em 0
     line-height 150%
+    p.button
+      margin 1em 0 !important
+      text-align center
+    ul.steps
+      text-align center
+      margin 1.25em 0 0
+      padding-bottom 1em
+      li
+        display inline-block
+        margin 0 1em
+        padding-left 18px
+        &.done:before
+          font-family fontello
+          margin-right 0.5ex
+          content '\2713' // '✓'
+          color green
+        a
+          padding-bottom 9px
     .header
       cursor pointer
     .time
@@ -483,18 +504,21 @@ form.vote
         margin-top 0.5em
       p
         margin 0.5em 0
+      p + ul, p + ol
+        margin-top 0
     .countdown
       display none
       width 7em
       padding-right 10px
       text-align right
       color red
-    .old
+    .old, .minor
       tr.header
-        text-decoration line-through
         font-size small
         line-height 125%
         color gray
+    .old tr.header
+      text-decoration line-through
     .current
       .details
         margin 0.5em 0
